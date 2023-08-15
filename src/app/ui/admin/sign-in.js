@@ -29,7 +29,7 @@ class SignIn extends Component {
       email: "",
     };
     this.#pathName = props.route;
-    this.#params = props.params.forgotPasswordId;
+    // this.#params = props.params.forgotPasswordId;
     this.#size = this.#pathName === INITIAL_ACCOUNT.SIGNIN ? 12 : 6;
 
     this.handleSubmit = this.handleSubmit.bind(this);
