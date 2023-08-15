@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { styled } from "@mui/material/styles";
 import {
   Box,
-  Toolbar,
   Grid,
   Container,
   Typography,
@@ -11,47 +9,40 @@ import {
   Card,
   CardMedia,
   CardContent,
-  AppBar,
 } from "@mui/material";
-import { PhotoCamera as CameraIcon } from "@mui/icons-material";
 import Slider from "../common/component/slider";
-
-export default class LandingPage extends Component {
+import Header from "../common/component/appBar";
+class LandingPage extends Component {
+  handleLogin() {
+    window.location.href = "/signin";
+  }
   render() {
-    const cards = [1, 2, 3];
-
     return (
-      <Box sx={{ flexGrow: 1, width: 1 }}>
-        <Grid container spacing={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Header />
           <Grid item xs={12}>
-            <AppBar
-              position="relative"
-              style={{ backgroundColor: "secondary" }}
-            >
-              <Toolbar>
-                <CameraIcon sx={{ mr: 2 }} />
-                <Typography variant="h6" color="secondary" noWrap>
-                  Album layout
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            <Grid item xs={12}>
-              <Grid item xs={8}>
+            <Grid container spacing={2} xs={6} sm={12} md={12}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Box
                   sx={{
-                    pt: 8,
-                    pb: 6,
+                    padding: 5,
                   }}
                 >
-                  <Container maxWidth="sm">
+                  <Container
+                    sx={{
+                      mt: 10,
+                    }}
+                  >
                     <Typography
                       component="h1"
                       variant="h2"
                       align="left"
-                      color="text.primary"
                       gutterBottom
+                      color="#fc8800"
+                      sx={{ fontWeight: "bold" }}
                     >
-                      Album layout
+                      Business Permit ng Bayan
                     </Typography>
                     <Typography
                       variant="h5"
@@ -59,10 +50,7 @@ export default class LandingPage extends Component {
                       color="text.secondary"
                       paragraph
                     >
-                      Something short and leading about the collection below—its
-                      contents, the creator, etc. Make it short and sweet, but
-                      not too short so folks don&apos;t simply skip over it
-                      entirely.
+                      Register and renew your business to us
                     </Typography>
                     <Stack
                       sx={{ pt: 4 }}
@@ -70,59 +58,112 @@ export default class LandingPage extends Component {
                       spacing={2}
                       justifyContent="left"
                     >
-                      <Button variant="contained">Main call to action</Button>
-                      <Button variant="outlined">Secondary action</Button>
+                      <Button variant="contained" onClick={this.handleLogin}>
+                        Sign in
+                      </Button>
                     </Stack>
                   </Container>
                 </Box>
               </Grid>
-              <Grid item xs={4}></Grid>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Box fixed backgroundColor="background.main">
-                <Slider />
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <Container sx={{ py: 8 }} maxWidth="md">
-                {/* End hero unit */}
-                <Grid container spacing={4}>
-                  {cards.map((card) => (
-                    <Grid item key={card} xs={12} sm={6} md={4}>
-                      <Card
-                        sx={{
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <CardMedia
-                          component="div"
-                          sx={{
-                            // 16:9
-                            pt: "56.25%",
-                          }}
-                          image="https://source.unsplash.com/random?wallpapers"
-                        />
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            Heading
-                          </Typography>
-                          <Typography>
-                            This is a media card. You can use this section to
-                            describe the content.
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Container>
+              <Grid item xs={12} sm={12} md={6}>
+                <img
+                  src={`https://res.cloudinary.com/dm1hejbuu/image/upload/v1691764299/SARIAYA-2_nbitmr.png`}
+                  padding={20}
+                  width={500}
+                  height={500}
+                  alt="Gilas Sariaya"
+                />
+              </Grid>{" "}
             </Grid>
           </Grid>
+
+          <Grid item xs={12}>
+            <Box fixed backgroundColor="background.main" height="300">
+              <Slider />
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Container sx={{ py: 8 }} maxWidth="md">
+              {/* End hero unit */}
+              <Grid container spacing={4}>
+                <Grid item xs={12} sm={6} md={4} key={1}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    key={1}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691846963/365314564_298204166124108_5704273225682686802_n_zl06vr.jpg"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Business One Stop Shop 2023
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} key={2}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    key={1}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691846962/331699752_891749258542275_4612334168093100302_n_ov8gd6.jpg"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Meeting
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} key={2}>
+                  <Card
+                    sx={{
+                      height: "100%",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    key={1}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: "56.25%",
+                      }}
+                      image="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691846986/365861931_1297196344273029_2267868302849748795_n_co4djq.jpg"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        House to house visit
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+            </Container>
+          </Grid>
         </Grid>
-      </Box>
+      </Grid>
     );
   }
 }
+export default LandingPage;

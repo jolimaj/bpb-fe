@@ -25,8 +25,8 @@ class Copyright extends Component {
       >
         <Typography variant="body2" color="secondary" align="center">
           {"Copyright © "}
-          <Link color="inherit" href="https://mui.com/">
-            Your Website
+          <Link color="inherit" href="/">
+            Business Permit ng Bayan@
           </Link>
           {this.#date}
         </Typography>

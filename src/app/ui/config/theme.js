@@ -11,6 +11,9 @@ const theme = createTheme({
     background: {
       main: "#1e6ea5",
     },
+    tertiary: {
+      main: "#fc8800",
+    },
   },
   typography: {
     palette: {
@@ -19,6 +22,12 @@ const theme = createTheme({
       },
       secondary: {
         main: "#FFFF",
+      },
+      tertiary: {
+        main: "#fc8800",
+      },
+      fourth: {
+        main: "#006ba1",
       },
     },
     typographyInput: "PoppinsRegular",

@@ -10,6 +10,7 @@ export default class Slider extends Component {
         containerStyle={{ maxWidth: "auto" }}
         sx={{ width: 1 }}
         loop
+        padding={10}
       >
         <Carousel.Item>
           <Container
@@ -22,22 +23,23 @@ export default class Slider extends Component {
           >
             <Box pt={10}>
               <Typography
-                variant="h5"
+                variant="subtitle1"
                 align="center"
-                color="text.secondary"
-                paragraph
+                color="secondary"
+                sx={{ fontWeight: "bold", fontStyle: "italic" }}
               >
-                Title
+                Mission & Vision
               </Typography>
               <Typography
-                variant="p"
+                variant="h6"
                 align="center"
-                color="text.secondary"
+                color="secondary"
                 paragraph
               >
-                Something short and leading about the collection below—its
-                contents, the creator, etc. Make it short and sweet, but not too
-                short so folks don&apos;t simply skip over it entirely.
+                To deliver fast and efficient services and encourage businessmen
+                to augment revenues and job opportunities in the locality and
+                inspect every establishment in accordance with the rules and
+                guidelines imposed.
               </Typography>
             </Box>
           </Container>
@@ -48,27 +50,26 @@ export default class Slider extends Component {
               position: "relative",
               color: "primary",
               backgroundSize: "cover",
-              height: 500,
+              height: 300,
             }}
           >
-            <Box sx={{ position: "absolute" }}>
+            <Box pt={10}>
               <Typography
-                variant="h5"
+                variant="subtitle1"
                 align="center"
-                color="text.secondary"
-                paragraph
+                color="secondary"
+                sx={{ fontWeight: "bold", fontStyle: "italic" }}
               >
-                Title
+                Mission & Vision
               </Typography>
               <Typography
-                variant="p"
+                variant="h6"
                 align="center"
-                color="text.secondary"
+                color="secondary"
                 paragraph
               >
-                Something short and leading about the collection below—its
-                contents, the creator, etc. Make it short and sweet, but not too
-                short so folks don&apos;t simply skip over it entirely.
+                Be the most efficient, prompt and busaness-friendly business
+                permits and licensing office.
               </Typography>
             </Box>
           </Container>
