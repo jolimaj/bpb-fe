@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint"
   },
-   "engines": {
+  "engines": {
     "node": ">=16 <17"
   },
   "dependencies": {
@@ -25,7 +25,8 @@
     "next": "^13.4.13",
     "react-grid-carousel": "^1.0.1",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "react": "^18.2.0",
