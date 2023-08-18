@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import { styled } from "@mui/material/styles";
 import {
-  Link,
-  Paper,
-  Grid,
-  Container,
   Badge,
   IconButton,
   Divider,
@@ -23,11 +19,10 @@ import {
 } from "@mui/icons-material";
 
 import Sidebar from "./sidebar";
-import Page1 from "../pages/page1";
 
 class DashboardPage extends Component {
   #drawerWidth = 240;
-
+  #componentName;
   constructor(props) {
     super(props);
     this.state = {
@@ -37,17 +32,31 @@ class DashboardPage extends Component {
       anchorEl: null,
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.pathName = props.route;
+    this.isUser = props.isUser;
+    this.#componentName = props.pageName;
   }
 
   toggleDrawer() {
     this.setState({ isOpen: !this.state.isOpen });
   }
 
+  #userPage(index) {
+    switch (index) {
+      case 0:
+        window.location.href = "/account";
+        break;
+      case 1:
+        window.location.href = "/account/services";
+        break;
+      default:
+        window.location.href = "/account";
+    }
+  }
   selectPage(event, index) {
-    console.log(
-      "🚀 ~ file: dashboard.js:47 ~ DashboardPage ~ selectPage ~ index:",
-      index
-    );
+    if (this.isUser) {
+      this.#userPage(index);
+    }
   }
 
   render() {
@@ -118,11 +127,15 @@ class DashboardPage extends Component {
             <Typography
               component="h1"
               variant="h6"
-              color="inherit"
+              color="secondary"
               noWrap
-              sx={{ flexGrow: 1 }}
+              sx={{
+                flexGrow: 1,
+                textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
             >
-              Dashboard
+              Business Permit ng Bayan
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -140,13 +153,23 @@ class DashboardPage extends Component {
               px: [1],
             }}
           >
+            <Box
+              component="img"
+              src="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691674279/endUser/SARIAYA-SEAL1_etumcp.jpg"
+              alt="logo"
+              sx={{
+                display: { sm: "block" },
+                margin: "auto",
+                width: 50,
+              }}
+            />
             <IconButton onClick={this.toggleDrawer}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
           <Divider />
           <List component="nav">
-            <Sidebar selectPage={this.selectPage} />
+            <Sidebar selectPage={this.selectPage} pathName={this.pathName} />
           </List>
         </Drawer>
         <Box
@@ -162,7 +185,7 @@ class DashboardPage extends Component {
           }}
         >
           <Toolbar />
-          <Page1 />
+          {this.#componentName}
         </Box>
       </Box>
     );

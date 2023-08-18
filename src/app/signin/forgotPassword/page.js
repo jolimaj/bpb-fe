@@ -1,9 +1,9 @@
 "use client";
 import { React } from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import Copyright from "../../../ui/common/component/copyright";
-import PasswordResetForm from "../../../ui/admin/forms/initial/password/forgotPassword";
-import theme from "../../../ui/config/theme";
+import Copyright from "../../ui/common/component/copyright";
+import PasswordForgot from "../../ui/admin/forms/initial/password/forgotPassword";
+import theme from "../../ui/config/theme";
 import { usePathname, useParams } from "next/navigation";
 
 export default function SignInPage() {
@@ -11,7 +11,7 @@ export default function SignInPage() {
   const params = useParams();
   return (
     <ThemeProvider theme={theme}>
-      <PasswordResetForm route={pathName} params={params} />
+      <PasswordForgot route={pathName} params={params} />
       <Copyright />
     </ThemeProvider>
   );

@@ -15,15 +15,20 @@
     "@emotion/styled": "^11.10.6",
     "@mui/base": "^5.0.0-alpha.126",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.12.1",
+    "@mui/joy": "^5.0.0-beta.2",
+    "@mui/material": "^5.14.5",
+    "@mui/styled-engine-sc": "^5.12.0",
     "@mui/system": "^5.12.1",
+    "@mui/x-date-pickers": "^6.11.2",
     "@remix-run/router": "^1.8.0",
     "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
     "next": "^13.4.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-grid-carousel": "^1.0.1",
     "react-router-dom": "^6.15.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "styled-components": "^6.0.7"
   }
 }

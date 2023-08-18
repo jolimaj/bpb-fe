@@ -10,11 +10,11 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
-import Slider from "../common/component/slider";
-import Header from "../common/component/appBar";
+import Slider from "../../common/component/slider";
+import Header from "../../common/component/appBar";
 class LandingPage extends Component {
   handleLogin() {
-    window.location.href = "/services";
+    window.location.href = "/signin";
   }
   render() {
     return (

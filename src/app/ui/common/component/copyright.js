@@ -25,7 +25,7 @@ class Copyright extends Component {
       >
         <Typography variant="body2" color="secondary" align="center">
           {"Copyright © "}
-          <Link color="inherit" href="/">
+          <Link color="inherit" href="/" underline="none">
             Business Permit ng Bayan@
           </Link>
           {this.#date}

@@ -1,7 +1,14 @@
 const ADMIN_ENDPOINTS = {
   SIGN_IN: "/",
-  DASHBOARD: "/dashboad",
+  USERS_DASHBOARD: "/account/",
+  ADMIN_DASHBOARD: "/admin/",
   USERS: "/users",
 };
 
-module.exports = { ADMIN_ENDPOINTS };
+const USERS_ENDPOINTS = {
+  SIGN_IN: "/",
+  USERS_DASHBOARD: "/account",
+  SERVICES: "/account/services",
+};
+
+module.exports = { ADMIN_ENDPOINTS, USERS_ENDPOINTS };
