@@ -2,15 +2,15 @@
 import { React } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Copyright from "../ui/common/component/copyright";
-import ForgotPasswordForm from "../ui/admin/formIndex";
+import Forms from "../ui/admin/formIndex";
 import theme from "../ui/config/theme";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, redirect } from "next/navigation";
 
-export default function ForgotPasswordFormPage() {
+export default function FormsPage() {
   const pathName = usePathname();
   return (
     <ThemeProvider theme={theme}>
-      <ForgotPasswordForm route={pathName} />
+      <Forms route={pathName} redirect={redirect} />
       <Copyright />
     </ThemeProvider>
   );

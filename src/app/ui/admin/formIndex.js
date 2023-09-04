@@ -11,12 +11,20 @@ import {
   Box,
   Grid,
   Typography,
+  Alert,
 } from "@mui/material";
 import { INITIAL_ACCOUNT } from "../common/constant/endpoints/users";
+
+import { AxiosInterceptor } from "../common/interceptor";
+import ServiceConfig from "../common/service-config";
+import { errorResponse } from "../common/erroResponse";
+import { SERVICES } from "../common/constant/services-constant";
 
 class SignIn extends Component {
   #pathName;
   #size;
+  #axios;
+  #serviceConfig;
 
   constructor(props) {
     super(props);
@@ -30,12 +38,66 @@ class SignIn extends Component {
     };
     this.#pathName = props.route;
     this.#size = this.#pathName === INITIAL_ACCOUNT.SIGNIN ? 12 : 6;
-
+    //button
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
   }
+
+  async handleSignUp() {
+    try {
+      const { password, email, fName, lName, mName } = this.state;
+      const req = await this.#axios.post(`/sign-up`, {
+        password,
+        email,
+        fName,
+        lName,
+        mName,
+      });
+      return req;
+    } catch (error) {
+      const response = errorResponse(error.response.data);
+      this.setState(() => ({
+        errorMessage: response,
+      }));
+    }
+  }
+  async handlePageRedirect(roleID) {
+    switch (roleID) {
+      case 1:
+        window.location.href = "/admin";
+        break;
+      case 2:
+        window.location.href = "/account";
+        break;
+      default:
+        window.location.href = "/account/department";
+        break;
+    }
+  }
+  async handleSignIn() {
+    try {
+      const { password, email } = this.state;
+      const res = await this.#axios.post(`/sign-in`, { password, email });
+      window.localStorage.setItem("session", JSON.stringify(res.data.session));
+      window.location.href = "/admin";
+    } catch (error) {
+      const response = errorResponse(error.response);
+      this.setState({ errorMessage: response });
+    }
+  }
+
   async handleSubmit(e) {
     e.preventDefault();
-    this.setState({ errorMessage: "s" });
+    if (this.#pathName === INITIAL_ACCOUNT.SIGNIN) {
+      await this.handleSignIn();
+    } else {
+      await this.handleSignUp();
+    }
   }
 
   render() {
@@ -73,22 +135,20 @@ class SignIn extends Component {
               src="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691674279/endUser/SARIAYA-SEAL1_etumcp.jpg"
             />
 
-            <Box
-              component="form"
-              noValidate
-              onSubmit={this.handleSubmit}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <Grid container spacing={2}>
+                <Grid item xs={12} sm={12} md={12}>
+                  {this.state.errorMessage ? (
+                    <Alert
+                      severity="error"
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {this.state.errorMessage}
+                    </Alert>
+                  ) : null}
+                </Grid>
                 {this.#pathName !== INITIAL_ACCOUNT.SIGNIN ? (
                   <>
-                    <Grid item xs={12} sm={12} md={12}>
-                      {this.state.errorMessage ? (
-                        <Alert severity="error">
-                          {this.state.errorMessage}
-                        </Alert>
-                      ) : null}
-                    </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                       <TextField
                         margin="normal"
@@ -176,6 +236,7 @@ class SignIn extends Component {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={(e) => this.handleSubmit(e)}
               >
                 {this.#pathName === INITIAL_ACCOUNT.SIGNIN
                   ? "Sign In"

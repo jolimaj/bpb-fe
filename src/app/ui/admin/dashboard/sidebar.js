@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-import { Work as ServiceIcon, House as HouseIcon } from "@mui/icons-material";
+import {
+  Work as ServiceIcon,
+  House as HouseIcon,
+  Business as BusinessIcon,
+  Group as EmployeeIcon,
+} from "@mui/icons-material";
 import {
   ADMIN_PAGE_NAME,
   USER_PAGE_NAME,
@@ -14,7 +19,7 @@ import {
 class Sidebar extends Component {
   constructor(props) {
     super(props);
-    this.sideBars = [
+    this.userSide = [
       {
         name: USER_PAGE_NAME.DASHBOARD,
         path: USERS_ENDPOINTS.USERS_DASHBOARD,
@@ -40,6 +45,48 @@ class Sidebar extends Component {
         ),
       },
     ];
+    this.adminSide = [
+      {
+        name: ADMIN_PAGE_NAME.DASHBOARD,
+        path: ADMIN_ENDPOINTS.ADMIN_DASHBOARD,
+        icon: (
+          <HouseIcon
+            color={
+              props.pathName === ADMIN_ENDPOINTS.ADMIN_DASHBOARD
+                ? "primary"
+                : "fourth"
+            }
+          />
+        ),
+      },
+      {
+        name: ADMIN_PAGE_NAME.DEPARTMENT,
+        path: ADMIN_ENDPOINTS.DEPARTMENT,
+        icon: (
+          <BusinessIcon
+            color={
+              props.pathName === ADMIN_ENDPOINTS.DEPARTMENT
+                ? "primary"
+                : "fourth"
+            }
+          />
+        ),
+      },
+      {
+        name: ADMIN_PAGE_NAME.STAFF,
+        path: ADMIN_ENDPOINTS.STAFF,
+        icon: (
+          <EmployeeIcon
+            color={
+              props.pathName === ADMIN_ENDPOINTS.STAFF ? "primary" : "fourth"
+            }
+          />
+        ),
+      },
+    ];
+    this.sideBars = props.pathName.includes(ADMIN_ENDPOINTS.ADMIN_DASHBOARD)
+      ? this.adminSide
+      : this.userSide;
     this.state = {
       selected: 0,
     };

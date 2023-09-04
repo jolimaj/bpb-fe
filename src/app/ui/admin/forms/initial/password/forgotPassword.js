@@ -18,9 +18,16 @@ import Modal from "../../../../common/component/dialog";
 import { INITIAL_ACCOUNT } from "../../../../common/constant/endpoints/users";
 import { Helpers } from "../../../../common/helpers";
 
+import { AxiosInterceptor } from "../../../../common/interceptor";
+import ServiceConfig from "../../../../common/service-config";
+import { SERVICES } from "../../../../common/constant/services-constant";
+import { errorResponse } from "../../../../common/erroResponse";
+
 class SignIn extends Component {
   #pathName;
   #params;
+  #serviceConfig;
+  #axios;
 
   constructor(props) {
     super(props);
@@ -32,7 +39,7 @@ class SignIn extends Component {
       email: "",
       showPassword: false,
       showConfirmPassword: false,
-      errorMessage: "",
+      errorResponse: "",
       modal: false,
       alert:
         this.#pathName === INITIAL_ACCOUNT.FORGOT
@@ -47,18 +54,34 @@ class SignIn extends Component {
     this.handleSendLink = this.handleSendLink.bind(this);
 
     this.helpers = new Helpers();
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
   }
 
   async handleSendLink(e) {
     e.preventDefault();
-    this.setState({ modal: true });
+    try {
+      await this.#axios.post(`/sign-in/forgotPassword`, {
+        email: this.state.email,
+      });
+      this.setState({ modal: true });
+    } catch (error) {
+      const response = errorResponse(error.response);
+
+      this.setState(() => ({
+        errorResponse: response,
+      }));
+    }
   }
 
   async handleSubmit(e) {
     e.preventDefault();
     if (this.#pathName.includes(`${INITIAL_ACCOUNT.FORGOT}/${this.#params}`)) {
-      const errorMessage = this.helpers.compareField(this.state);
-      this.setState({ errorMessage });
+      const erroResponse = this.helpers.compareField(this.state);
+      this.setState({ erroResponse });
       this.setState({ modal: true });
     }
   }
@@ -73,6 +96,7 @@ class SignIn extends Component {
     window.location.href = INITIAL_ACCOUNT.SIGNIN;
   }
   render() {
+    console.log(this.state.errorResponse);
     return (
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
@@ -115,18 +139,25 @@ class SignIn extends Component {
             {!this.#pathName.includes(
               `${INITIAL_ACCOUNT.FORGOT}/${this.#params}`
             ) ? (
-              <Box
-                component="form"
-                noValidate
-                onSubmit={this.handleSendLink}
-                sx={{ mt: 1 }}
-              >
+              <Box component="form" noValidate sx={{ mt: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
                     <Typography variant="body2" color="#fc8800" align="center">
                       Please enter your email address associated with your
                       account. We will send you a link to reset your password.
                     </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    {this.state.errorResponse ? (
+                      <Alert
+                        severity="error"
+                        style={{ textTransform: "capitalize" }}
+                      >
+                        {this.state.errorResponse}
+                      </Alert>
+                    ) : null}
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
                     <TextField
                       margin="normal"
                       required
@@ -147,6 +178,7 @@ class SignIn extends Component {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3 }}
+                  onClick={(e) => this.handleSendLink(e)}
                 >
                   Send Reset Link
                 </Button>
@@ -169,8 +201,8 @@ class SignIn extends Component {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
-                    {this.state.errorMessage ? (
-                      <Alert severity="error">{this.state.errorMessage}</Alert>
+                    {this.state.errorResponse ? (
+                      <Alert severity="error">{this.state.errorResponse}</Alert>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} sm={12} md={12}>

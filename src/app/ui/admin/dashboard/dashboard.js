@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { styled } from "@mui/material/styles";
 import {
-  Badge,
+  Menu,
+  MenuItem,
   IconButton,
   Divider,
   Typography,
@@ -13,7 +14,7 @@ import {
   Box,
 } from "@mui/material";
 import {
-  Notifications as NotificationsIcon,
+  AccountCircle,
   ChevronLeft as ChevronLeftIcon,
   Menu as MenuIcon,
 } from "@mui/icons-material";
@@ -30,11 +31,17 @@ class DashboardPage extends Component {
       selected: 0,
       mobileMoreAnchorEl: null,
       anchorEl: null,
+      anchorElUser: null,
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
+    this.handleCloseUserMenu = this.handleCloseUserMenu.bind(this);
+    this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.selectPage = this.selectPage.bind(this);
     this.pathName = props.route;
     this.isUser = props.isUser;
     this.#componentName = props.pageName;
+    this.settings = ["Account", "Logout"];
   }
 
   toggleDrawer() {
@@ -53,12 +60,42 @@ class DashboardPage extends Component {
         window.location.href = "/account";
     }
   }
+  #adminPage(index) {
+    switch (index) {
+      case 0:
+        window.location.href = "/admin";
+        break;
+      case 1:
+        window.location.href = "/admin/departments";
+        break;
+      case 3:
+        window.location.href = "/admin/staff";
+        break;
+      default:
+        window.location.href = "/admin";
+    }
+  }
   selectPage(event, index) {
     if (this.isUser) {
       this.#userPage(index);
+    } else {
+      this.#adminPage(index);
     }
   }
 
+  handleCloseUserMenu() {
+    this.setState({ anchorElUser: null });
+  }
+
+  handleOpenUserMenu() {
+    this.setState({ anchorElUser: "open" });
+  }
+  handleClick(event) {
+    if (event === "Logout") {
+      localStorage.removeItem("sessions");
+      window.location.href = "/signin";
+    }
+  }
   render() {
     const AppBar = styled(MuiAppBar, {
       shouldForwardProp: (prop) => prop !== "open",
@@ -102,7 +139,6 @@ class DashboardPage extends Component {
         }),
       },
     }));
-
     return (
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
@@ -137,11 +173,31 @@ class DashboardPage extends Component {
             >
               Business Permit ng Bayan
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton color="inherit" onClick={this.handleOpenUserMenu}>
+              <AccountCircle />
             </IconButton>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={this.state.anchorElUser}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(this.state.anchorElUser)}
+              onClose={this.handleCloseUserMenu}
+            >
+              {this.settings.map((setting) => (
+                <MenuItem key={setting} onClick={this.handleClick(setting)}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={this.state.isOpen}>
