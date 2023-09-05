@@ -1,3 +1,4 @@
+import { Cookies } from "react-cookie";
 import React, { Component } from "react";
 import { styled } from "@mui/material/styles";
 import {
@@ -42,6 +43,7 @@ class DashboardPage extends Component {
     this.isUser = props.isUser;
     this.#componentName = props.pageName;
     this.settings = ["Account", "Logout"];
+    this.cookies = new Cookies();
   }
 
   toggleDrawer() {
@@ -92,7 +94,7 @@ class DashboardPage extends Component {
   }
   handleClick(event) {
     if (event === "Logout") {
-      localStorage.removeItem("sessions");
+      this.cookies.remove("session");
       window.location.href = "/signin";
     }
   }

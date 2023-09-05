@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
 import {
   Avatar,
   Button,
@@ -20,6 +22,8 @@ import ServiceConfig from "../common/service-config";
 import { errorResponse } from "../common/erroResponse";
 import { SERVICES } from "../common/constant/services-constant";
 
+const cookies = new Cookies();
+
 class SignIn extends Component {
   #pathName;
   #size;
@@ -28,6 +32,7 @@ class SignIn extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       fName: "",
       mName: "",
@@ -35,6 +40,7 @@ class SignIn extends Component {
       password: "",
       email: "",
       errorMessage: "",
+      session: cookies.get("session") || null,
     };
     this.#pathName = props.route;
     this.#size = this.#pathName === INITIAL_ACCOUNT.SIGNIN ? 12 : 6;
@@ -80,10 +86,16 @@ class SignIn extends Component {
     }
   }
   async handleSignIn() {
+    console.log(
+      "🚀 ~ file: formIndex.js:94 ~ SignIn ~ handleSignIn ~ this.props:",
+      this.props
+    );
     try {
       const { password, email } = this.state;
       const res = await this.#axios.post(`/sign-in`, { password, email });
-      window.localStorage.setItem("session", JSON.stringify(res.data.session));
+      cookies.set("session", JSON.stringify(res.data.session));
+      this.setState({ session: JSON.stringify(res.data.session) });
+      // window.localStorage.setItem("session", JSON.stringify(res.data.session));
       window.location.href = "/admin";
     } catch (error) {
       const response = errorResponse(error.response);

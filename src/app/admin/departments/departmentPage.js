@@ -30,6 +30,7 @@ class DepartmentPage extends Component {
       page: 0,
       rowsPerPage: 10,
       code: "",
+      session: props.session,
     };
     this.columns = [
       { id: "ID", label: "Dept ID", minWidth: 100 },
@@ -61,7 +62,7 @@ class DepartmentPage extends Component {
   }
 
   async getDepartmentList() {
-    const data = JSON.parse(localStorage.getItem("session"));
+    const data = this.state.session;
     if (!data) {
       window.location.href = "/signin";
     }

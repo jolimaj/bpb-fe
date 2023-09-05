@@ -38,6 +38,7 @@ class StaffPage extends Component {
       mobile: null,
       openForm: false,
       departmentList: [],
+      session: props.session,
     };
     this.columns = [
       { id: "ID", label: "Staff ID", minWidth: 100 },
@@ -73,7 +74,7 @@ class StaffPage extends Component {
     this.getDepartmentList();
   }
   async getDepartmentList() {
-    const data = JSON.parse(localStorage.getItem("session"));
+    const data = this.state.session;
     if (!data) {
       window.location.href = "/signin";
     }

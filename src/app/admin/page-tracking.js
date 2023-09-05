@@ -36,8 +36,7 @@ class DashBoardPage extends Component {
     this.getDashBoardData();
   }
   async getDashBoardData() {
-    const session = JSON.parse(localStorage.getItem("session"));
-    if (!session) {
+    if (!this.state.session) {
       window.location.href = "/signin";
     }
     ChartJS.register(
@@ -62,10 +61,7 @@ class DashBoardPage extends Component {
           backgroundColor: "rgba(255, 99, 132, 0.5)",
         },
       ];
-      console.log(
-        "🚀 ~ file: page-tracking.js:57 ~ DashBoardPage ~ getDashBoardData ~ datasets:",
-        datasets
-      );
+
       this.setState({ record: req.data, data: { labels, datasets } });
       return req;
     } catch (error) {
