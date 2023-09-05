@@ -29,7 +29,6 @@ class AxiosInterceptor {
 
     instance.interceptors.response.use(
       (response) => {
-        console.log(`AxiosResponse ${JSON.stringify(response?.data)}`);
         return response.data;
       },
       (error) => this.#error(error)

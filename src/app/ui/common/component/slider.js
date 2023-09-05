@@ -21,7 +21,7 @@ export default class Slider extends Component {
               height: 300,
             }}
           >
-            <Box pt={10}>
+            <Box p={10}>
               <Typography
                 variant="subtitle1"
                 align="center"
@@ -53,7 +53,7 @@ export default class Slider extends Component {
               height: 300,
             }}
           >
-            <Box pt={10}>
+            <Box p={10}>
               <Typography
                 variant="subtitle1"
                 align="center"

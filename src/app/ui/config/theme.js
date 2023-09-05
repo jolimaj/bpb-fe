@@ -14,23 +14,18 @@ const theme = createTheme({
     tertiary: {
       main: "#fc8800",
     },
+    fourth: {
+      main: "#8f8e7c",
+    },
+    fifth: {
+      main: "#000000",
+    },
   },
   typography: {
-    palette: {
-      primary: {
-        main: "#1e6ea5",
-      },
-      secondary: {
-        main: "#FFFF",
-      },
-      tertiary: {
-        main: "#fc8800",
-      },
-      fourth: {
-        main: "#006ba1",
-      },
+    fontFamily: "Poppins",
+    allVariants: {
+      color: "#8f8e7c",
     },
-    typographyInput: "PoppinsRegular",
   },
 });
 responsiveFontSizes(theme);
