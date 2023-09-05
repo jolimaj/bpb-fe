@@ -93,10 +93,10 @@ class DashboardPage extends Component {
     this.setState({ anchorElUser: "open" });
   }
   handleClick(event) {
-    if (event === "Logout") {
-      this.cookies.remove("session");
-      window.location.href = "/signin";
-    }
+    // if (event === "Logout") {
+    //   this.cookies.remove("session");
+    //   window.location.href = "/signin";
+    // }
   }
   render() {
     const AppBar = styled(MuiAppBar, {
