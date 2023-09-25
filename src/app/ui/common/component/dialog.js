@@ -4,6 +4,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  DialogActions,
+  Link,
 } from "@mui/material";
 
 import { INITIAL_ACCOUNT } from "../constant/endpoints/users";
@@ -13,6 +15,8 @@ export default function AlertDialog(props) {
     switch (props.pathName) {
       case INITIAL_ACCOUNT.FORGOT:
       case `${INITIAL_ACCOUNT.FORGOT}/${props.params}`:
+      case `${INITIAL_ACCOUNT.FORGOT}/${props.uuid}`:
+      case `${INITIAL_ACCOUNT.SIGNUP}`:
         window.location.href = INITIAL_ACCOUNT.SIGNIN;
         break;
         break;
@@ -22,7 +26,7 @@ export default function AlertDialog(props) {
   };
 
   return (
-    <div>
+    <>
       <Dialog
         open={props.openModal}
         aria-labelledby="alert-dialog-title"
@@ -35,7 +39,19 @@ export default function AlertDialog(props) {
             {props.alertMessage}
           </DialogContentText>
         </DialogContent>
+        <DialogActions>
+          {props.pathName === `${INITIAL_ACCOUNT.FORGOT}/${props.uuid}` ||
+            (props.pathName === `${INITIAL_ACCOUNT.SIGNIN}/${props.uuid}` ? (
+              <Link
+                href="/signin"
+                variant="body2"
+                sx={{ textAlign: "center", textDecoration: "none" }}
+              >
+                Back to Login Page
+              </Link>
+            ) : null)}
+        </DialogActions>
       </Dialog>
-    </div>
+    </>
   );
 }

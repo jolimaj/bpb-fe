@@ -22,7 +22,7 @@ class LandingPage extends Component {
         <Grid item xs={12}>
           <Header />
           <Grid item xs={12}>
-            <Grid container spacing={2} xs={6} sm={12} md={12}>
+            <Grid container spacing={2} xs={6} sm={12}>
               <Grid item xs={12} sm={12} md={6}>
                 <Box
                   sx={{
@@ -73,7 +73,7 @@ class LandingPage extends Component {
                   height={500}
                   alt="Gilas Sariaya"
                 />
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Grid>
 

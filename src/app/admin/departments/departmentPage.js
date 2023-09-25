@@ -11,9 +11,11 @@ import {
   Button,
   IconButton,
   InputAdornment,
+  MenuItem,
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
 import { Search as SearchIcon } from "@mui/icons-material";
+import RemoveApproverForm from "../formDialog";
 
 import { AxiosInterceptor } from "../../ui/common/interceptor";
 import ServiceConfig from "../../ui/common/service-config";
@@ -31,6 +33,10 @@ class DepartmentPage extends Component {
       rowsPerPage: 10,
       code: "",
       session: props.session,
+      openForm: false,
+      approverList: [],
+      userID: "",
+      departmentID: "",
     };
     this.columns = [
       { id: "ID", label: "Dept ID", minWidth: 100 },
@@ -42,7 +48,7 @@ class DepartmentPage extends Component {
         minWidth: 200,
       },
       {
-        id: "approver",
+        id: "action",
         label: "",
         minWidth: 200,
       },
@@ -53,21 +59,44 @@ class DepartmentPage extends Component {
       this.#serviceConfig.getServicesConfig(SERVICES.ADMIN)
     ).axios;
 
-    this.getStaffList = this.getDepartmentList.bind(this);
+    this.getDepartmentList = this.getDepartmentList.bind(this);
+    this.getStaffList = this.getStaffList.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.updateApprover = this.updateApprover.bind(this);
   }
 
   componentDidMount() {
     this.getDepartmentList();
+    this.getStaffList();
   }
 
+  async updateApprover() {
+    const data = this.state.session;
+    try {
+      await this.#axios.put(
+        `/departments/${this.state.departmentID}`,
+        this.state,
+        data
+      );
+      this.setState({ openForm: false });
+      await this.getDepartmentList();
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   async getDepartmentList() {
     const data = this.state.session;
     if (!data) {
       window.location.href = "/signin";
     }
     try {
-      const req = await this.#axios.get(`/departments`, data.session);
+      const req = await this.#axios.get(`/departments`, data);
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
@@ -78,12 +107,27 @@ class DepartmentPage extends Component {
       return error;
     }
   }
+  async getStaffList() {
+    const data = this.state.session;
+    try {
+      const req = await this.#axios.get(`/staff`, data);
+      this.setState({ approverList: req.data });
+
+      return req;
+    } catch (error) {
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   async searchCode() {
-    const data = JSON.parse(localStorage.getItem("session"));
+    const data = this.state.session;
     try {
       const req = await this.#axios.get(
         `/departments?code=${this.state.code.toUpperCase()}`,
-        data.session
+        data
       );
       this.setState({ rows: req.data });
       return req;
@@ -106,6 +150,12 @@ class DepartmentPage extends Component {
     this.setState({ rowsPerPage: +event.target.value });
     this.setState({ page: 0 });
   }
+  async handleChange(e) {
+    this.setState({ openForm: !this.state.openForm, departmentID: e });
+  }
+  handleClose() {
+    this.setState({ openForm: false });
+  }
   render() {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -121,7 +171,7 @@ class DepartmentPage extends Component {
           }}
         >
           Departments
-        </Typography>{" "}
+        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={12}>
             <Paper
@@ -176,18 +226,23 @@ class DepartmentPage extends Component {
                               hover
                               role="checkbox"
                               tabIndex={-1}
-                              key={row.code}
+                              key={row.id}
                             >
-                              <TableCell>{row.id}</TableCell>
-                              <TableCell>{row.code}</TableCell>
-                              <TableCell>{row.name}</TableCell>
-                              <TableCell>
+                              <TableCell align="center">{`000-${row.id}`}</TableCell>
+                              <TableCell align="center">{row.code}</TableCell>
+                              <TableCell align="center">{row.name}</TableCell>
+                              <TableCell align="center">
                                 {row?.User
                                   ? `${row?.User?.firstName} ${row?.User?.lastName}`
                                   : ""}
                               </TableCell>
-                              <TableCell>
-                                <Button>Change Approver </Button>
+                              <TableCell key={row.id}>
+                                <Button
+                                  key={row.id}
+                                  onClick={() => this.handleChange(row.id)}
+                                >
+                                  {row?.User ? "Edit Approver" : "Add Approver"}
+                                </Button>
                               </TableCell>
                             </TableRow>
                           );
@@ -196,11 +251,11 @@ class DepartmentPage extends Component {
                   ) : (
                     <TableBody>
                       <TableRow hover>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableBody>
                   )
@@ -209,6 +264,36 @@ class DepartmentPage extends Component {
             </Paper>
           </Grid>
         </Grid>
+        {this.state.openForm ? (
+          <RemoveApproverForm
+            openForm={this.state.openForm}
+            handleClose={this.handleClose}
+            formInput={this.state}
+            title="Approver"
+            btnFunction={this.updateApprover}
+            departmentComponent={
+              <>
+                <TextField
+                  select // tell TextField to render select
+                  required
+                  name="userID"
+                  label="Staff"
+                  fullWidth
+                  defaultValue=""
+                  onChange={(e) => {
+                    this.setState({ userID: e.target.value });
+                  }}
+                >
+                  {this.state.approverList.map((page) => (
+                    <MenuItem value={page.id} key={page.id}>
+                      {`${page.firstName} ${page.lastName}`}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </>
+            }
+          />
+        ) : null}
       </Container>
     );
   }

@@ -13,4 +13,9 @@ const USERS_ENDPOINTS = {
   SERVICES: "/account/services",
 };
 
-module.exports = { ADMIN_ENDPOINTS, USERS_ENDPOINTS };
+const STAFF_ENDPOINTS = {
+  SIGN_IN: "/",
+  USERS_DASHBOARD: "/account/departments",
+  BUSINESS_PERMIT: "/account/departments/businessPermit",
+};
+module.exports = { ADMIN_ENDPOINTS, USERS_ENDPOINTS, STAFF_ENDPOINTS };

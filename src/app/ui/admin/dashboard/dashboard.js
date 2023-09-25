@@ -42,7 +42,10 @@ class DashboardPage extends Component {
     this.pathName = props.route;
     this.isUser = props.isUser;
     this.#componentName = props.pageName;
-    this.settings = ["Account", "Logout"];
+    this.settings = [
+      { id: 1, name: "Account" },
+      { id: 2, name: "Logout" },
+    ];
     this.cookies = new Cookies();
   }
 
@@ -93,10 +96,16 @@ class DashboardPage extends Component {
     this.setState({ anchorElUser: "open" });
   }
   handleClick(event) {
-    // if (event === "Logout") {
-    //   this.cookies.remove("session");
-    //   window.location.href = "/signin";
-    // }
+    switch (event) {
+      case 1:
+        break;
+      case 2:
+        this.cookies.remove("session");
+        window.location.href = "/signin";
+        break;
+      default:
+        break;
+    }
   }
   render() {
     const AppBar = styled(MuiAppBar, {
@@ -195,8 +204,13 @@ class DashboardPage extends Component {
               onClose={this.handleCloseUserMenu}
             >
               {this.settings.map((setting) => (
-                <MenuItem key={setting} onClick={this.handleClick(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem
+                  key={setting.id}
+                  onClick={(event) => {
+                    this.handleClick(setting.id);
+                  }}
+                >
+                  <Typography textAlign="center">{setting.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>

@@ -23,7 +23,7 @@ import ServiceConfig from "../../../../common/service-config";
 import { SERVICES } from "../../../../common/constant/services-constant";
 import { errorResponse } from "../../../../common/erroResponse";
 
-class SignIn extends Component {
+class PasswordService extends Component {
   #pathName;
   #params;
   #serviceConfig;
@@ -40,7 +40,10 @@ class SignIn extends Component {
       showPassword: false,
       showConfirmPassword: false,
       errorResponse: "",
+      expired: "",
       modal: false,
+      timePassed: false,
+      uuid: "",
       alert:
         this.#pathName === INITIAL_ACCOUNT.FORGOT
           ? "Open the email and click on the provided password reset link. If you do not see the email in your inbox, please check your spam or junk folder."
@@ -52,6 +55,7 @@ class SignIn extends Component {
     this.handleClickShowConfirmPassword =
       this.handleClickShowConfirmPassword.bind(this);
     this.handleSendLink = this.handleSendLink.bind(this);
+    this.handleCheckExpiry = this.handleCheckExpiry.bind(this);
 
     this.helpers = new Helpers();
     //api
@@ -61,28 +65,66 @@ class SignIn extends Component {
     ).axios;
   }
 
+  componentDidMount() {
+    this.handleCheckExpiry();
+    setTimeout(() => {
+      if (this.state.timePassed) window.location.href = "/signin";
+    }, 1000);
+  }
+  async handleCheckExpiry() {
+    try {
+      const uuid = this.#pathName.split(`${this.#params}/`)[1];
+      this.setState({ uuid: `${this.#params}/${uuid}` });
+      await this.#axios.put(`/sign-in/${this.#params}/${uuid}`);
+    } catch (error) {
+      const response = errorResponse(error.response);
+      this.setState({ modal: true, expired: response });
+      return response;
+    }
+  }
   async handleSendLink(e) {
     e.preventDefault();
     try {
-      await this.#axios.post(`/sign-in/forgotPassword`, {
+      await this.#axios.put(`/sign-in/forgotPassword`, {
         email: this.state.email,
       });
       this.setState({ modal: true });
     } catch (error) {
       const response = errorResponse(error.response);
 
-      this.setState(() => ({
+      this.setState({
         errorResponse: response,
-      }));
+        timePassed: true,
+      });
+
+      return response;
     }
   }
 
   async handleSubmit(e) {
     e.preventDefault();
-    if (this.#pathName.includes(`${INITIAL_ACCOUNT.FORGOT}/${this.#params}`)) {
+    try {
       const erroResponse = this.helpers.compareField(this.state);
-      this.setState({ erroResponse });
-      this.setState({ modal: true });
+      if (erroResponse) this.setState({ erroResponse });
+      await this.#axios.put(
+        `/account/${
+          this.#pathName.split(
+            this.#pathName.includes(INITIAL_ACCOUNT.PASSWORD_CREATION)
+              ? "/account/passwordCreation/"
+              : "/signin/forgotPassword/"
+          )[1]
+        }`,
+        {
+          password: this.state.password,
+        }
+      );
+      window.location.href = "/signin";
+    } catch (error) {
+      const response = errorResponse(error.response);
+
+      this.setState({
+        errorResponse: response,
+      });
     }
   }
 
@@ -93,16 +135,18 @@ class SignIn extends Component {
     this.setState({ showConfirmPassword: !this.state.showConfirmPassword });
   }
   handleCancel() {
-    window.location.href = INITIAL_ACCOUNT.SIGNIN;
+    window.location.href = "/signin";
   }
   render() {
-    console.log(this.state.errorResponse);
     return (
       <Grid container component="main" sx={{ height: "100vh" }}>
         <CssBaseline />
         <Modal
           openModal={this.state.modal}
-          alertMessage={this.state.alert}
+          uuid={this.state.uuid}
+          alertMessage={
+            this.state.expired ? this.state.expired : this.state.alert
+          }
           pathName={this.#pathName}
           params={this.#params}
         />
@@ -136,9 +180,98 @@ class SignIn extends Component {
               sx={{ m: 2, height: 80, width: 80, bgcolor: "secondary" }}
               src="https://res.cloudinary.com/dm1hejbuu/image/upload/v1691674279/endUser/SARIAYA-SEAL1_etumcp.jpg"
             />
-            {!this.#pathName.includes(
+            {this.#pathName.includes(
               `${INITIAL_ACCOUNT.FORGOT}/${this.#params}`
-            ) ? (
+            ) || this.#pathName.includes(INITIAL_ACCOUNT.PASSWORD_CREATION) ? (
+              <Box
+                component="form"
+                noValidate
+                onSubmit={this.handleSubmit}
+                sx={{ mt: 1 }}
+              >
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    {this.state.errorResponse ? (
+                      <Alert severity="error">{this.state.errorResponse}</Alert>
+                    ) : null}
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="New Password"
+                      type={this.state.showPassword ? "text" : "password"}
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={(e) => {
+                        this.setState({ password: e.target.value });
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={this.handleClickShowPassword}
+                              edge="end"
+                            >
+                              {this.state.showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="confirmpassword"
+                      label="Confirm Password"
+                      type={
+                        this.state.showConfirmPassword ? "text" : "password"
+                      }
+                      id="confirmpassword"
+                      autoComplete="confirm-password"
+                      onChange={(e) => {
+                        this.setState({ confirmPassword: e.target.value });
+                      }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={this.handleClickShowConfirmPassword}
+                              edge="end"
+                            >
+                              {this.state.showConfirmPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            ) : (
               <Box component="form" noValidate sx={{ mt: 1 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
@@ -192,95 +325,6 @@ class SignIn extends Component {
                   Cancel
                 </Button>
               </Box>
-            ) : (
-              <Box
-                component="form"
-                noValidate
-                onSubmit={this.handleSubmit}
-                sx={{ mt: 1 }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12} sm={12} md={12}>
-                    {this.state.errorResponse ? (
-                      <Alert severity="error">{this.state.errorResponse}</Alert>
-                    ) : null}
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12}>
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="New Password"
-                      type={this.state.showPassword ? "text" : "password"}
-                      id="password"
-                      autoComplete="current-password"
-                      onChange={(e) => {
-                        this.setState({ password: e.target.value });
-                      }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={this.handleClickShowPassword}
-                              edge="end"
-                            >
-                              {this.state.showPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={12}>
-                    <TextField
-                      margin="normal"
-                      required
-                      fullWidth
-                      name="password"
-                      label="Confirm Password"
-                      type={
-                        this.state.showConfirmPassword ? "text" : "password"
-                      }
-                      id="password"
-                      autoComplete="confirm-password"
-                      onChange={(e) => {
-                        this.setState({ confirmPassword: e.target.value });
-                      }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={this.handleClickShowConfirmPassword}
-                              edge="end"
-                            >
-                              {this.state.showConfirmPassword ? (
-                                <VisibilityOff />
-                              ) : (
-                                <Visibility />
-                              )}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                >
-                  Submit
-                </Button>
-              </Box>
             )}
           </Box>
         </Grid>
@@ -288,4 +332,4 @@ class SignIn extends Component {
     );
   }
 }
-export default SignIn;
+export default PasswordService;

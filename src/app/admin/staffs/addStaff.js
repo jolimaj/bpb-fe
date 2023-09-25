@@ -9,7 +9,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Typography, MenuItem } from "@mui/material";
 
 export default function FormDialog(props) {
-  console.log("🚀 ~ file: addStaff.js:12 ~ FormDialog ~ props:", props);
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

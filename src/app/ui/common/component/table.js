@@ -15,6 +15,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 class TableComponent extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       page: 0,
       rowsPerPage: 10,
@@ -33,8 +34,8 @@ class TableComponent extends Component {
     this.setState({ page: 0 });
   }
   initChild = () => {
-    if (this.props.rows) {
-      const properties = this.props.rows.map((property) => [property.name]);
+    if (this.rowData.length > 0) {
+      const properties = this.rowData.map((property) => [property.name]);
       return properties;
     }
   };
@@ -73,8 +74,14 @@ class TableComponent extends Component {
                   {this.columnData.map((column) => (
                     <TableCell
                       key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
+                      align="center"
+                      style={{
+                        minWidth: column.minWidth,
+                        textTransform: "uppercase",
+                        fontWeight: "bold",
+                        backgroundColor: "#1e6ea5",
+                        color: "white",
+                      }}
                     >
                       {column.label}
                     </TableCell>
@@ -87,7 +94,7 @@ class TableComponent extends Component {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={this.props.pageLength}
+            count={this.props?.pageLength ?? 0}
             rowsPerPage={this.state.rowsPerPage}
             page={this.state.page}
             onPageChange={this.handleChangePage}

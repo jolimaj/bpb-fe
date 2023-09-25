@@ -2,16 +2,17 @@
 import { React } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Copyright from "../../../ui/common/component/copyright";
-import PasswordResetForm from "../../../ui/admin/forms/initial/password/forgotPassword";
+import Forms from "../../../ui/admin/formIndex";
 import theme from "../../../ui/config/theme";
 import { usePathname, useParams } from "next/navigation";
 
-export default function SignInPage() {
+export default function FormsPage() {
   const pathName = usePathname();
   const params = useParams();
+
   return (
     <ThemeProvider theme={theme}>
-      <PasswordResetForm route={pathName} params={params} />
+      <Forms route={pathName} params={params} />
       <Copyright />
     </ThemeProvider>
   );
