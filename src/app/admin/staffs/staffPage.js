@@ -11,10 +11,13 @@ import {
   IconButton,
   InputAdornment,
   MenuItem,
+  Alert,
+  Chip,
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
-import AddStaffForm from "./addStaff";
+import RemoveApproverForm from "../formDialog";
 import { Search as SearchIcon } from "@mui/icons-material";
+import { errorResponse } from "../../ui/common/erroResponse";
 
 import { AxiosInterceptor } from "../../ui/common/interceptor";
 import ServiceConfig from "../../ui/common/service-config";
@@ -27,7 +30,7 @@ class StaffPage extends Component {
     super(props);
     this.state = {
       rows: [],
-      errorResponse: "",
+      errorMessage: "",
       page: 0,
       rowsPerPage: 10,
       firstName: "",
@@ -50,8 +53,8 @@ class StaffPage extends Component {
         format: (value) => value.toLocaleString("en-US"),
       },
       {
-        id: "density",
-        label: "",
+        id: "status",
+        label: "Status",
         minWidth: 170,
         align: "right",
         format: (value) => value.toFixed(2),
@@ -67,6 +70,7 @@ class StaffPage extends Component {
     this.handleSearch = this.handleSearch.bind(this);
     this.handleAddStaff = this.handleAddStaff.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.addStaff = this.addStaff.bind(this);
   }
 
   componentDidMount() {
@@ -86,12 +90,12 @@ class StaffPage extends Component {
       if (error?.response.data.code === "LOGIN_FIRST") {
         window.location.href = "/signin";
       }
-      this.setState({ errorResponse: error.message });
+      this.setState({ errorMessage: error.message });
       return error;
     }
   }
   async getStaffList() {
-    const data = JSON.parse(localStorage.getItem("session"));
+    const data = this.state.session;
     try {
       const req = await this.#axios.get(`/staff`, data.session);
       this.setState({ rows: req.data });
@@ -106,23 +110,28 @@ class StaffPage extends Component {
   }
   async addStaff() {
     try {
-      const { departmentID, firstNamemiddleName, lastName, email, mobile } =
+      const { departmentID, firstName, middleName, lastName, email, mobile } =
         this.state;
       const req = await this.#axios.post(`/staff`, {
         roleID: 3,
         departmentID,
-        firstNamemiddleName,
-        lastName,
+        fName: firstName,
+        mName: middleName,
+        lName: lastName,
         email,
         mobile,
       });
-      this.setState({ rows: req.data });
+      this.setState({ openForm: false });
+      await this.getStaffList();
+
       return req;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
         window.location.href = "/signin";
       }
-      this.setState({ errorResponse: error.message });
+      const response = errorResponse(error.response);
+
+      this.setState({ errorMessage: response });
       return error;
     }
   }
@@ -176,7 +185,7 @@ class StaffPage extends Component {
           }}
         >
           Staffs
-        </Typography>{" "}
+        </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12} lg={12}>
             <Paper
@@ -235,12 +244,17 @@ class StaffPage extends Component {
                               tabIndex={-1}
                               key={row.id}
                             >
-                              <TableCell>{row.id}</TableCell>
-                              <TableCell>{`${row?.firstName} ${row?.lastName}`}</TableCell>
-                              <TableCell>
+                              <TableCell align="center">{`000-${row.id}`}</TableCell>
+                              <TableCell align="center">{`${row?.firstName.toUpperCase()} ${row?.lastName.toUpperCase()}`}</TableCell>
+                              <TableCell align="center">
                                 {row?.Department ? row?.Department.name : ""}
                               </TableCell>
-                              <TableCell></TableCell>
+                              <TableCell align="center">
+                                <Chip
+                                  label={row.isActive ? "Active" : "Not Active"}
+                                  color={row.isActive ? "success" : "error"}
+                                />
+                              </TableCell>
                             </TableRow>
                           );
                         })}
@@ -248,10 +262,10 @@ class StaffPage extends Component {
                   ) : (
                     <TableBody>
                       <TableRow hover>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
-                        <TableCell></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
+                        <TableCell align="center"></TableCell>
                       </TableRow>
                     </TableBody>
                   )
@@ -261,17 +275,30 @@ class StaffPage extends Component {
           </Grid>
         </Grid>
         {this.state.openForm ? (
-          <AddStaffForm
+          <RemoveApproverForm
             openForm={this.state.openForm}
             handleClose={this.handleClose}
             formInput={this.state}
+            title="Department"
+            btnFunction={this.addStaff}
+            serviceName="staff"
             departmentComponent={
               <>
+                {this.state.errorMessage ? (
+                  <Alert
+                    severity="error"
+                    style={{ textTransform: "capitalize", mb: 10 }}
+                  >
+                    {this.state.errorMessage}
+                  </Alert>
+                ) : null}
                 <TextField
                   select // tell TextField to render select
+                  required
                   name="departmentID"
                   label="Department"
                   fullWidth
+                  defaultValue=""
                   onChange={(e) => {
                     this.setState({ departmentID: e.target.value });
                   }}
@@ -282,6 +309,69 @@ class StaffPage extends Component {
                     </MenuItem>
                   ))}
                 </TextField>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  required
+                  id="name"
+                  label="First Name"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ firstName: e.target.value });
+                  }}
+                />
+
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="mName"
+                  label="Middle Name"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ middleName: e.target.value });
+                  }}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  required
+                  id="lName"
+                  label="Last Name"
+                  type="text"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ lastName: e.target.value });
+                  }}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="email"
+                  label="Email Address"
+                  type="email"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ email: e.target.value });
+                  }}
+                />
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="mobile"
+                  label="Mobile Number"
+                  type="number"
+                  fullWidth
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ mobile: e.target.value });
+                  }}
+                />
               </>
             }
           />

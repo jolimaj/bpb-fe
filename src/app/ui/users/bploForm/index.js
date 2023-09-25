@@ -73,7 +73,7 @@ class LandingPage extends Component {
                   height={500}
                   alt="Gilas Sariaya"
                 />
-              </Grid>{" "}
+              </Grid>
             </Grid>
           </Grid>
 

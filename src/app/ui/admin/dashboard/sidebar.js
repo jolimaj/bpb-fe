@@ -6,20 +6,27 @@ import {
   House as HouseIcon,
   Business as BusinessIcon,
   Group as EmployeeIcon,
+  WorkspacePremium as BusinessPermitIcon,
 } from "@mui/icons-material";
 import {
   ADMIN_PAGE_NAME,
   USER_PAGE_NAME,
+  STAFF_PAGE_NAME,
 } from "../../common/constant/admin.js";
 import {
   ADMIN_ENDPOINTS,
   USERS_ENDPOINTS,
+  STAFF_ENDPOINTS,
 } from "../../common/constant/endpoints/admin.js";
 
 class Sidebar extends Component {
+  #adminSide;
+  #userSide;
+  #staffSide;
+
   constructor(props) {
     super(props);
-    this.userSide = [
+    this.#userSide = [
       {
         name: USER_PAGE_NAME.DASHBOARD,
         path: USERS_ENDPOINTS.USERS_DASHBOARD,
@@ -45,7 +52,7 @@ class Sidebar extends Component {
         ),
       },
     ];
-    this.adminSide = [
+    this.#adminSide = [
       {
         name: ADMIN_PAGE_NAME.DASHBOARD,
         path: ADMIN_ENDPOINTS.ADMIN_DASHBOARD,
@@ -84,9 +91,39 @@ class Sidebar extends Component {
         ),
       },
     ];
+    this.#staffSide = [
+      {
+        name: STAFF_PAGE_NAME.DASHBOARD,
+        path: STAFF_ENDPOINTS.USERS_DASHBOARD,
+        icon: (
+          <HouseIcon
+            color={
+              props.pathName === STAFF_ENDPOINTS.USERS_DASHBOARD
+                ? "primary"
+                : "fourth"
+            }
+          />
+        ),
+      },
+      {
+        name: STAFF_PAGE_NAME.BUSINESS_PERMIT,
+        path: STAFF_ENDPOINTS.BUSINESS_PERMIT,
+        icon: (
+          <BusinessPermitIcon
+            color={
+              props.pathName === STAFF_ENDPOINTS.BUSINESS_PERMIT
+                ? "primary"
+                : "fourth"
+            }
+          />
+        ),
+      },
+    ];
     this.sideBars = props.pathName.includes(ADMIN_ENDPOINTS.ADMIN_DASHBOARD)
-      ? this.adminSide
-      : this.userSide;
+      ? this.#adminSide
+      : props.pathName.includes(STAFF_ENDPOINTS.USERS_DASHBOARD)
+      ? this.#staffSide
+      : this.#userSide;
     this.state = {
       selected: 0,
     };

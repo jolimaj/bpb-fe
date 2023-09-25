@@ -16,15 +16,18 @@
     "@mui/base": "^5.0.0-alpha.126",
     "@mui/icons-material": "^5.11.16",
     "@mui/joy": "^5.0.0-beta.2",
+    "@mui/lab": "^5.0.0-alpha.143",
     "@mui/material": "^5.14.5",
     "@mui/styled-engine-sc": "^5.12.0",
     "@mui/system": "^5.12.1",
     "@mui/x-date-pickers": "^6.11.2",
     "@remix-run/router": "^1.8.0",
     "axios": "^1.4.0",
+    "chart": "^0.1.2",
     "chart.js": "^4.4.0",
     "cookie": "^0.5.0",
     "dayjs": "^1.11.9",
+    "faker": "^6.6.6",
     "find-config": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "next": "^13.4.16",
@@ -33,11 +36,14 @@
     "react-cookie": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-grid-carousel": "^1.0.1",
+    "react-image-viewer-dv": "^1.0.2",
+    "react-modal-image": "^2.6.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "^5.0.1",
     "styled-components": "^6.0.7"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "dotenv": "^16.3.1"
   }
 }
