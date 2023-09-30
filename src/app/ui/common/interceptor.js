@@ -8,13 +8,17 @@ class AxiosInterceptor {
 
   #configure(config) {
     config.baseURL = this.clientConfig.baseURL;
-
+    config.withCredentials = true;
     this.clientConfig.headers?.forEach((e) => {
       Object.entries(e).forEach((obj) => {
         const [key, value] = obj;
         config.headers[key] = value;
       });
     });
+    console.log(
+      "🚀 ~ file: interceptor.js:11 ~ AxiosInterceptor ~ #configure ~ config:",
+      config
+    );
 
     return config;
   }
@@ -33,7 +37,6 @@ class AxiosInterceptor {
       },
       (error) => this.#error(error)
     );
-
     return instance;
   }
 
