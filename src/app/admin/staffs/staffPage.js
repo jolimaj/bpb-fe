@@ -79,9 +79,9 @@ class StaffPage extends Component {
   }
   async getDepartmentList() {
     const data = this.state.session;
-    if (!data) {
-      window.location.href = "/signin";
-    }
+    // if (!data) {
+    //   window.location.href = "/signin";
+    // }
     try {
       const req = await this.#axios.get(`/departments`, {
         withCredentials: true,
@@ -90,9 +90,9 @@ class StaffPage extends Component {
       this.setState({ departmentList: req.data });
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      // if (error?.response.data.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorMessage: error.message });
       return error;
     }
@@ -107,9 +107,9 @@ class StaffPage extends Component {
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      // if (error?.response.data.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
