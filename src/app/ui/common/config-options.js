@@ -1,7 +1,6 @@
-const https = require("https");
 const secrets = {
-  BPB_API_URL: "http://localhost:3001/",
-  // BPB_API_URL: "https://defiant-colt-shoulder-pads.cyclic.app/",
+  // BPB_API_URL: "http://localhost:3001/",
+  BPB_API_URL: "https://defiant-colt-shoulder-pads.cyclic.app/",
 };
 import { SERVICES } from "./constant/services-constant";
 
