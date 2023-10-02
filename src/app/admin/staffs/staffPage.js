@@ -97,7 +97,7 @@ class StaffPage extends Component {
   async getStaffList() {
     const data = this.state.session;
     try {
-      const req = await this.#axios.get(`/staff`, data);
+      const req = await this.#axios.get(`/staff`, { credentials: "include" });
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
