@@ -99,6 +99,10 @@ class StaffPage extends Component {
   }
   async getStaffList() {
     const data = this.state.session;
+    console.log(
+      "🚀 ~ file: staffPage.js:102 ~ StaffPage ~ getStaffList ~ data:",
+      data
+    );
     try {
       const req = await this.#axios.get(`/staff`, {
         withCredentials: true,
@@ -146,7 +150,10 @@ class StaffPage extends Component {
     try {
       const req = await this.#axios.get(
         `/staff?firstName=${this.state.firstName}`,
-        data.session
+        {
+          withCredentials: true,
+          credentials: "include",
+        }
       );
       this.setState({ rows: req.data });
       return req;
