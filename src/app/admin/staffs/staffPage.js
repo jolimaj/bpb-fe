@@ -101,9 +101,13 @@ class StaffPage extends Component {
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      console.log(
+        "🚀 ~ file: staffPage.js:104 ~ StaffPage ~ getStaffList ~ error:",
+        error
+      );
+      // if (error?.response.data.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
