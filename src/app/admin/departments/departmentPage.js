@@ -83,26 +83,29 @@ class DepartmentPage extends Component {
       this.setState({ openForm: false });
       await this.getDepartmentList();
     } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      // if (error?.response?.data?.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
   }
   async getDepartmentList() {
     const data = this.state.session;
-    if (!data) {
-      window.location.href = "/signin";
-    }
+    // if (!data) {
+    //   window.location.href = "/signin";
+    // }
     try {
-      const req = await this.#axios.get(`/departments`, data);
+      const req = await this.#axios.get(`/departments`, {
+        withCredentials: true,
+        credentials: "include",
+      });
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      // if (error?.response.data.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
