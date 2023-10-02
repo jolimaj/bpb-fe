@@ -26,6 +26,7 @@ import { AxiosInterceptor } from "../common/interceptor";
 import ServiceConfig from "../common/service-config";
 import { errorResponse } from "../common/erroResponse";
 import { SERVICES } from "../common/constant/services-constant";
+import { textTransform } from "@mui/system";
 
 const cookies = new Cookies();
 
@@ -68,7 +69,7 @@ class SignIn extends Component {
     ).axios;
   }
   componentDidMount() {
-    this.handleActivate();
+    // this.handleActivate();
   }
   handleClickShowPassword() {
     this.setState({ showPassword: !this.state.showPassword });
@@ -124,10 +125,14 @@ class SignIn extends Component {
   async handleSignIn() {
     try {
       const { password, email } = this.state;
+      const session = cookies.set(
+        "session",
+        JSON.stringify({ password, email })
+      );
+
       const res = await this.#axios.post(`/sign-in`, { password, email });
-      cookies.set("session", JSON.stringify(res.data.session));
-      this.setState({ session: JSON.stringify(res.data.session) });
-      this.handlePageRedirect(res.data.data.roleID);
+      this.setState({ session });
+      this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
       this.setState({ errorMessage: response });
@@ -353,6 +358,7 @@ class SignIn extends Component {
                               : "/signin"
                           }
                           variant="body2"
+                          underline="none"
                         >
                           {this.#pathName === INITIAL_ACCOUNT.SIGNIN
                             ? "Forgot password?"
@@ -362,7 +368,7 @@ class SignIn extends Component {
                     </Grid>
                     <Grid item>
                       {this.#pathName === INITIAL_ACCOUNT.SIGNIN ? (
-                        <Link href="/signup" variant="body2">
+                        <Link href="/signup" variant="body2" underline="none">
                           {"Don't have an account? Sign Up"}
                         </Link>
                       ) : null}

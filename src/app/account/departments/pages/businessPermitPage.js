@@ -380,21 +380,15 @@ export default class BusinessPermitPage extends Component {
                         id="outlined-basic"
                         variant="outlined"
                         size="small"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              Search Name
-                            </InputAdornment>
-                          ),
+                        placeholder="Search No. or Last Name"
+                        onChange={(e) => {
+                          this.setState({ name: e.target.value });
                         }}
-                        // onChange={(e) => {
-                        //   this.setState({ code: e.target.value });
-                        // }}
                       />
                       <IconButton
                         aria-label="search"
                         sx={{ flexGrow: 1 }}
-                        // onClick={this.handleSearch}
+                        onClick={this.handleSearch}
                       >
                         <SearchIcon color="primary" />
                       </IconButton>
