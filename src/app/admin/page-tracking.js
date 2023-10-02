@@ -119,13 +119,9 @@ class DashBoardPage extends Component {
       });
       return req;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      console.log(
-        "🚀 ~ file: page-tracking.js:123 ~ DashBoardPage ~ getDashBoardData ~ error:",
-        error
-      );
-      //   window.location.href = "/signin";
-      // }
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
