@@ -87,9 +87,9 @@ class StaffPage extends Component {
       this.setState({ departmentList: req.data });
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
+      // if (error?.response.data.code === "LOGIN_FIRST") {
+      //   window.location.href = "/signin";
+      // }
       this.setState({ errorMessage: error.message });
       return error;
     }
