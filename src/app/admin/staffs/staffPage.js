@@ -83,10 +83,7 @@ class StaffPage extends Component {
     //   window.location.href = "/signin";
     // }
     try {
-      const req = await this.#axios.get(`/departments`, {
-        withCredentials: true,
-        credentials: "include",
-      });
+      const req = await this.#axios.get(`/departments`);
       this.setState({ departmentList: req.data });
       return req;
     } catch (error) {
@@ -99,15 +96,8 @@ class StaffPage extends Component {
   }
   async getStaffList() {
     const data = this.state.session;
-    console.log(
-      "🚀 ~ file: staffPage.js:102 ~ StaffPage ~ getStaffList ~ data:",
-      data
-    );
     try {
-      const req = await this.#axios.get(`/staff`, {
-        withCredentials: true,
-        credentials: "include",
-      });
+      const req = await this.#axios.get(`/staff`);
       this.setState({ rows: req.data });
       return req;
     } catch (error) {

@@ -70,10 +70,7 @@ class DashBoardPage extends Component {
       window.location.href = "/signin";
     }
     try {
-      const req = await this.#axios.get(`/dashboard`, {
-        withCredentials: true,
-        credentials: "include",
-      });
+      const req = await this.#axios.get(`/dashboard`);
 
       const renewData = this.month.map((value, index) => {
         return req.data.monthlyReNew.map((item) => {
