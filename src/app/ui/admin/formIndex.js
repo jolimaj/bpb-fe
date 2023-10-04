@@ -26,7 +26,6 @@ import { AxiosInterceptor } from "../common/interceptor";
 import ServiceConfig from "../common/service-config";
 import { errorResponse } from "../common/erroResponse";
 import { SERVICES } from "../common/constant/services-constant";
-import { textTransform } from "@mui/system";
 
 const cookies = new Cookies();
 
@@ -132,7 +131,7 @@ class SignIn extends Component {
 
       const res = await this.#axios.post(`/sign-in`, { password, email });
       this.setState({ session });
-      this.handlePageRedirect(res.data.roleID);
+      await this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
       this.setState({ errorMessage: response });

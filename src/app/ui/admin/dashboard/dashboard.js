@@ -21,10 +21,21 @@ import {
 } from "@mui/icons-material";
 
 import Sidebar from "./sidebar";
+import {
+  ADMIN_ENDPOINTS,
+  STAFF_ENDPOINTS,
+  USERS_ENDPOINTS,
+} from "../../common/constant/endpoints/admin";
 
+import { AxiosInterceptor } from "../../common/interceptor";
+import ServiceConfig from "../../common/service-config";
+import { errorResponse } from "../../common/erroResponse";
+import { SERVICES } from "../../common/constant/services-constant";
 class DashboardPage extends Component {
   #drawerWidth = 240;
   #componentName;
+  #axios;
+  #serviceConfig;
   constructor(props) {
     super(props);
     this.state = {
@@ -47,6 +58,11 @@ class DashboardPage extends Component {
       { id: 2, name: "Logout" },
     ];
     this.cookies = new Cookies();
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
   }
 
   toggleDrawer() {
@@ -95,13 +111,28 @@ class DashboardPage extends Component {
   handleOpenUserMenu() {
     this.setState({ anchorElUser: "open" });
   }
-  handleClick(event) {
+
+  async handleLogout() {
+    return await this.#axios.post("/sign-out");
+  }
+
+  async handleClick(event) {
     switch (event) {
       case 1:
+        window.location.href = this.pathName.includes(
+          ADMIN_ENDPOINTS.ADMIN_DASHBOARD
+        )
+          ? ADMIN_ENDPOINTS.PROFILE
+          : this.pathName.includes(USERS_ENDPOINTS.ADMIN_DASHBOARD)
+          ? USERS_ENDPOINTS.PROFILE
+          : STAFF_ENDPOINTS.PROFILE;
         break;
       case 2:
-        this.cookies.remove("session");
-        window.location.href = "/signin";
+        const logoutData = await this.handleLogout();
+        if (logoutData) {
+          this.cookies.remove("session");
+          window.location.href = ADMIN_ENDPOINTS.SIGN_IN;
+        }
         break;
       default:
         break;

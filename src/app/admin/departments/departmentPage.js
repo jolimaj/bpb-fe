@@ -78,7 +78,10 @@ class DepartmentPage extends Component {
   async updateApprover() {
     const data = this.state.session;
     try {
-      await this.#axios.put(`/departments/${this.state.departmentID}`);
+      await this.#axios.put(
+        `/departments/${this.state.departmentID}`,
+        this.state
+      );
       const departmentData = await this.getDepartmentList();
       this.setState({ rows: departmentData });
       this.setState({ openForm: false });

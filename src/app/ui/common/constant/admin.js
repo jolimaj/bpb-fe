@@ -1,4 +1,5 @@
 const ADMIN_PAGE_NAME = {
+  PROFILE: "My Profile",
   DASHBOARD: "Dashboard",
   USERS: "Users",
   STAFF: "Staffs",
@@ -6,11 +7,13 @@ const ADMIN_PAGE_NAME = {
 };
 
 const USER_PAGE_NAME = {
+  PROFILE: "My Profile",
   DASHBOARD: "Dashboard",
   SERVICES: "Services",
 };
 
 const STAFF_PAGE_NAME = {
+  PROFILE: "My Profile",
   DASHBOARD: "Dashboard",
   BUSINESS_PERMIT: "Business Permit",
 };
