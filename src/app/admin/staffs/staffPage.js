@@ -73,23 +73,29 @@ class StaffPage extends Component {
     this.addStaff = this.addStaff.bind(this);
   }
 
-  componentDidMount() {
-    this.getStaffList();
-    this.getDepartmentList();
+  async componentDidMount() {
+    const staffData = await this.getStaffList();
+    if (staffData) this.setState({ rows: staffData });
+
+    const departmentData = await this.getDepartmentList();
+    if (departmentData) this.setState({ departmentList: departmentData });
   }
+
   async getDepartmentList() {
     const data = this.state.session;
-    // if (!data) {
-    //   window.location.href = "/signin";
-    // }
+    if (!data) {
+      window.location.href = "/signin";
+    }
     try {
-      const req = await this.#axios.get(`/departments`);
+      const req = await this.#axios.get(`/departments`, {
+        withCredentials: true,
+      });
       this.setState({ departmentList: req.data });
-      return req;
+      return req.data;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorMessage: error.message });
       return error;
     }
@@ -97,13 +103,14 @@ class StaffPage extends Component {
   async getStaffList() {
     const data = this.state.session;
     try {
-      const req = await this.#axios.get(`/staff`);
-      this.setState({ rows: req.data });
-      return req;
+      const req = await this.#axios.get(`/staff`, {
+        withCredentials: true,
+      });
+      return req.data;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorResponse: error.message });
       return error;
     }

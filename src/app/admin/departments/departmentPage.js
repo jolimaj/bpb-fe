@@ -67,70 +67,62 @@ class DepartmentPage extends Component {
     this.updateApprover = this.updateApprover.bind(this);
   }
 
-  componentDidMount() {
-    this.getDepartmentList();
-    this.getStaffList();
+  async componentDidMount() {
+    const staffData = await this.getStaffList();
+    if (staffData) this.setState({ approverList: staffData });
+
+    const departmentData = await this.getDepartmentList();
+    if (departmentData) this.setState({ rows: departmentData });
   }
 
   async updateApprover() {
     const data = this.state.session;
     try {
-      await this.#axios.put(
-        `/departments/${this.state.departmentID}`,
-        this.state,
-        data
-      );
+      await this.#axios.put(`/departments/${this.state.departmentID}`);
+      const departmentData = await this.getDepartmentList();
+      this.setState({ rows: departmentData });
       this.setState({ openForm: false });
-      await this.getDepartmentList();
     } catch (error) {
-      // if (error?.response?.data?.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
   }
   async getDepartmentList() {
-    const data = this.state.session;
+    // const data = this.state.session;
     // if (!data) {
     //   window.location.href = "/signin";
     // }
     try {
       const req = await this.#axios.get(`/departments`, {
         withCredentials: true,
-        credentials: "include",
       });
-      this.setState({ rows: req.data });
-      return req;
+      return req.data;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
       this.setState({ errorResponse: error.message });
       return error;
     }
   }
   async getStaffList() {
-    const data = this.state.session;
     try {
-      const req = await this.#axios.get(`/staff`, data);
-      this.setState({ approverList: req.data });
-
-      return req;
+      const req = await this.#axios.get(`/staff`, {
+        withCredentials: true,
+      });
+      return req.data;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorResponse: error.message });
       return error;
     }
   }
   async searchCode() {
-    const data = this.state.session;
     try {
       const req = await this.#axios.get(
         `/departments?code=${this.state.code.toUpperCase()}`,
-        data
+        {
+          withCredentials: true,
+        }
       );
       this.setState({ rows: req.data });
       return req;
