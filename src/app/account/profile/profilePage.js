@@ -8,9 +8,9 @@ import {
   Button,
 } from "@mui/material";
 
-import { AxiosInterceptor } from "../ui/common/interceptor";
-import ServiceConfig from "../ui/common/service-config";
-import { SERVICES } from "../ui/common/constant/services-constant";
+import { AxiosInterceptor } from "../../ui/common/interceptor";
+import ServiceConfig from "../../ui/common/service-config";
+import { SERVICES } from "../../ui/common/constant/services-constant";
 
 class ProfilePage extends Component {
   #axios;
