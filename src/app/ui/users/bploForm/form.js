@@ -14,6 +14,7 @@ import BasicInformation from "./forms/basic";
 import OtherInformation from "./forms/otherInfo";
 import BusinessActivityInformation from "./forms/businessActivity";
 import RequirementsList from "./forms/requirements";
+import BFPForms from "./forms/bfpForms";
 
 class ServiceForm extends Component {
   #steps;
@@ -26,6 +27,7 @@ class ServiceForm extends Component {
       "Basic Information",
       "Other Information",
       "Business Activity",
+      "Municipality Fire Station Section",
       "Requirements",
     ];
     this.getStepContent = this.getStepContent.bind(this);
@@ -41,6 +43,8 @@ class ServiceForm extends Component {
       case 2:
         return <BusinessActivityInformation />;
       case 3:
+        return <BFPForms />;
+      case 4:
         return <RequirementsList />;
       default:
         return <BasicInformation />;
@@ -168,7 +172,7 @@ class ServiceForm extends Component {
                     onClick={this.handleNext}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {this.state.activeStep === this.#steps.length - 1
+                    {this.state.activeStep > this.#steps.length
                       ? "Submit"
                       : "Next"}
                   </Button>

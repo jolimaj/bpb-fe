@@ -34,11 +34,6 @@ export default class BasicInfoForm extends Component {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="subtitle1" fontWeight="bold">
-              {`Date of Application: ${new Date().toISOString().split("T")[0]}`}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 fullwidth
@@ -53,7 +48,6 @@ export default class BasicInfoForm extends Component {
               />
             </LocalizationProvider>
           </Grid>
-
           <Grid item xs={12} sm={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker

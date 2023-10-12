@@ -4,12 +4,16 @@ const ADMIN_PAGE_NAME = {
   USERS: "Users",
   STAFF: "Staffs",
   DEPARTMENT: "Departments",
+  USER: "Users",
 };
 
 const USER_PAGE_NAME = {
   PROFILE: "My Profile",
   DASHBOARD: "Dashboard",
   SERVICES: "Services",
+  NEW: "New Permit",
+  RENEW: "Renewal Permit",
+  BUSINESS_PERMIT: "Business Permit",
 };
 
 const STAFF_PAGE_NAME = {

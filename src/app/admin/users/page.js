@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import Copyright from "../../ui/common/component/copyright";
 import Dashboard from "../../ui/admin/dashboard/dashboard.js";
-import StaffPage from "./staffPage";
+import UserPages from "./userPage";
 import theme from "../../ui/config/theme";
 import { usePathname, useSearchParams } from "next/navigation";
 
-export default function UsersPage() {
+export default function AccountPage() {
   const pathName = usePathname();
   const cookies = new Cookies();
   const [session, setSession] = useState(cookies.get("session"));
@@ -17,7 +17,7 @@ export default function UsersPage() {
       <Dashboard
         route={pathName}
         isUser={false}
-        pageName={<StaffPage session={session} />}
+        pageName={<UserPages session={session} />}
       />
       <Copyright />
     </ThemeProvider>

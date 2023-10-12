@@ -13,17 +13,17 @@ import {
   Alert,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import Modal from "../../../../common/component/dialog";
+import Modal from "../../../ui/common/component/dialog";
 
-import { INITIAL_ACCOUNT } from "../../../../common/constant/endpoints/users";
-import { Helpers } from "../../../../common/helpers";
+import { INITIAL_ACCOUNT } from "../../../ui/common/constant/endpoints/users";
+import { Helpers } from "../../../ui/common/helpers";
 
-import { AxiosInterceptor } from "../../../../common/interceptor";
-import ServiceConfig from "../../../../common/service-config";
-import { SERVICES } from "../../../../common/constant/services-constant";
-import { errorResponse } from "../../../../common/erroResponse";
+import { AxiosInterceptor } from "../../../ui/common/interceptor";
+import ServiceConfig from "../../../ui/common/service-config";
+import { SERVICES } from "../../../ui/common/constant/services-constant";
+import { errorResponse } from "../../../ui/common/erroResponse";
 
-class PasswordService extends Component {
+class ActivatePage extends Component {
   #pathName;
   #params;
   #serviceConfig;
@@ -32,10 +32,7 @@ class PasswordService extends Component {
   constructor(props) {
     super(props);
     this.#pathName = props.route;
-    this.#params =
-      props?.params?.id ??
-      props?.params.forgotPasswordId ??
-      props?.params.signinId;
+    this.#params = props.params.forgotPasswordId;
     this.state = {
       confirmPassword: "",
       password: "",
@@ -53,7 +50,7 @@ class PasswordService extends Component {
           : this.#pathName ===
             `${INITIAL_ACCOUNT.SIGNIN}/${this.#params}/${
               this.props.params.uuid
-            }/activate`
+            }`
           ? "Your account has been successfully activated!"
           : "Your password has been successfully updated. For security reasons, please remember your new password and do not share it with anyone. If you have any questions or concerns, please contact our support team. Thank you for choosing our services!",
     };
@@ -74,30 +71,16 @@ class PasswordService extends Component {
   }
 
   async componentDidMount() {
-    if (!this.#pathName === INITIAL_ACCOUNT.FORGOT) {
-      await this.handleCheckExpiry();
-    }
-    if (
-      this.#pathName ===
-      `${INITIAL_ACCOUNT.SIGNIN}/${this.#params}/${
-        this.props.params.uuid
-      }/activate`
-    ) {
-      await this.#axios.put(`/sign-in/activate/${this.#params}`);
-      this.setState({ modal: true });
-    }
+    await this.handleCheckExpiry();
     setTimeout(() => {
       if (this.state.timePassed) window.location.href = "/signin";
     }, 1000);
   }
   async handleCheckExpiry() {
-    const { id, uuid } = this.props.params;
-    this.setState({ uuid, params: id });
     try {
-      await Promise.all([
-        this.#axios.get(`/notifParams/${uuid}`),
-        this.#axios.put(`/sign-in/activate/${this.#params}`),
-      ]);
+      const uuid = this.#pathName.split(`${this.#params}/`)[1];
+      this.setState({ uuid: `${this.#params}/${uuid}` });
+      await this.#axios.put(`/sign-in/${this.#params}/${uuid}`);
     } catch (error) {
       const response = errorResponse(error.response);
       this.setState({ modal: true, expired: response });
@@ -128,9 +111,18 @@ class PasswordService extends Component {
     try {
       const erroResponse = this.helpers.compareField(this.state);
       if (erroResponse) this.setState({ erroResponse });
-      await this.#axios.patch(`/sign-in/forgotPassword/${this.#params}`, {
-        password: this.state.password,
-      });
+      await this.#axios.put(
+        `/account/${
+          this.#pathName.split(
+            this.#pathName.includes(INITIAL_ACCOUNT.PASSWORD_CREATION)
+              ? "/account/passwordCreation/"
+              : "/signin/forgotPassword/"
+          )[1]
+        }`,
+        {
+          password: this.state.password,
+        }
+      );
       window.location.href = "/signin";
     } catch (error) {
       const response = errorResponse(error.response);
@@ -205,9 +197,7 @@ class PasswordService extends Component {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={12} md={12}>
                     {this.state.errorResponse ? (
-                      <Alert severity="error">
-                        {this.state?.errorResponse || "Invalid URL"}
-                      </Alert>
+                      <Alert severity="error">{this.state.errorResponse}</Alert>
                     ) : null}
                   </Grid>
                   <Grid item xs={12} sm={12} md={12}>
@@ -346,4 +336,4 @@ class PasswordService extends Component {
     );
   }
 }
-export default PasswordService;
+export default ActivatePage;

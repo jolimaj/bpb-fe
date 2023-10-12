@@ -123,7 +123,7 @@ class DashboardPage extends Component {
           ADMIN_ENDPOINTS.ADMIN_DASHBOARD
         )
           ? ADMIN_ENDPOINTS.PROFILE
-          : this.pathName.includes(USERS_ENDPOINTS.ADMIN_DASHBOARD)
+          : this.pathName.includes(USERS_ENDPOINTS.USERS_DASHBOARD)
           ? USERS_ENDPOINTS.PROFILE
           : STAFF_ENDPOINTS.PROFILE;
         break;

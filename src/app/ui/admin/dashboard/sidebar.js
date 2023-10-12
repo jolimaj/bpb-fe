@@ -1,12 +1,23 @@
 import React, { Component } from "react";
 
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  List,
+} from "@mui/material";
 import {
   Work as ServiceIcon,
   House as HouseIcon,
   Business as BusinessIcon,
-  Group as EmployeeIcon,
+  Diversity3 as EmployeeIcon,
+  Group as UserIcon,
   WorkspacePremium as BusinessPermitIcon,
+  NewReleases as NewReleasesIcon,
+  ExpandMore,
+  ExpandLess,
+  Autorenew,
 } from "@mui/icons-material";
 import {
   ADMIN_PAGE_NAME,
@@ -50,7 +61,46 @@ class Sidebar extends Component {
             }
           />
         ),
+        list: [
+          {
+            name: USER_PAGE_NAME.NEW,
+            path: USERS_ENDPOINTS.NEW,
+            icon: (
+              <NewReleasesIcon
+                color={
+                  props.pathName === USERS_ENDPOINTS.NEW ? "primary" : "fourth"
+                }
+              />
+            ),
+          },
+          {
+            name: USER_PAGE_NAME.RENEW,
+            path: USERS_ENDPOINTS.RENEW,
+            icon: (
+              <Autorenew
+                color={
+                  props.pathName === USERS_ENDPOINTS.RENEW
+                    ? "primary"
+                    : "fourth"
+                }
+              />
+            ),
+          },
+        ],
       },
+      // {
+      //   name: USER_PAGE_NAME.BUSINESS_PERMIT,
+      //   path: USERS_ENDPOINTS.BUSINESS_PERMIT,
+      //   icon: (
+      //     <BusinessPermitIcon
+      //       color={
+      //         props.pathName === USERS_ENDPOINTS.BUSINESS_PERMIT
+      //           ? "primary"
+      //           : "fourth"
+      //       }
+      //     />
+      //   ),
+      // },
     ];
     this.#adminSide = [
       {
@@ -86,6 +136,17 @@ class Sidebar extends Component {
           <EmployeeIcon
             color={
               props.pathName === ADMIN_ENDPOINTS.STAFF ? "primary" : "fourth"
+            }
+          />
+        ),
+      },
+      {
+        name: ADMIN_PAGE_NAME.USER,
+        path: ADMIN_ENDPOINTS.USER,
+        icon: (
+          <UserIcon
+            color={
+              props.pathName === ADMIN_ENDPOINTS.USER ? "primary" : "fourth"
             }
           />
         ),
@@ -126,35 +187,86 @@ class Sidebar extends Component {
       : this.#userSide;
     this.state = {
       selected: 0,
+      open: false,
     };
     this.pathName = props.pathName;
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick() {
+    this.setState({ open: !this.state.open });
+  }
   render() {
     return (
       <main>
         {this.sideBars.map((value, index) => (
-          <ListItemButton
-            key={index}
-            selected={this.pathName === value.path}
-            sx={{
-              background: this.pathName === value.path ? "primary" : "fourth",
-            }}
-            onClick={(event) => {
-              this.props.selectPage(event, index);
-              this.setState({ selected: index });
-              window.location.href = value.path;
-            }}
-          >
-            <ListItemIcon>{value.icon}</ListItemIcon>
-            <ListItemText
-              primary={value.name}
-              primaryTypographyProps={{
-                color: this.pathName === value.path ? "primary" : "fourth",
-                fontWeight: this.pathName === value.path ? "bold" : "none",
+          <>
+            <ListItemButton
+              key={index}
+              selected={this.pathName === value.path}
+              sx={{
+                background: this.pathName === value.path ? "primary" : "fourth",
               }}
-            />
-          </ListItemButton>
+              onClick={
+                value.name === USER_PAGE_NAME.SERVICES
+                  ? this.handleClick
+                  : (event) => {
+                      this.props.selectPage(event, index);
+                      this.setState({ selected: index });
+                      window.location.href = value.path;
+                    }
+              }
+            >
+              <ListItemIcon>{value.icon}</ListItemIcon>
+              <ListItemText
+                primary={value.name}
+                primaryTypographyProps={{
+                  color: this.pathName === value.path ? "primary" : "fourth",
+                  fontWeight: this.pathName === value.path ? "bold" : "none",
+                }}
+              />
+              {value.name === USER_PAGE_NAME.SERVICES ? (
+                this.state.open ? (
+                  <ExpandLess color="primary" fontWeight="bold" />
+                ) : (
+                  <ExpandMore color="primary" fontWeight="bold" />
+                )
+              ) : null}
+            </ListItemButton>
+            {value.name === USER_PAGE_NAME.SERVICES ? (
+              <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                {value.list.map((vals, index) => (
+                  <List component="div" disablePadding>
+                    <ListItemButton
+                      key={index}
+                      selected={this.pathName === vals.path}
+                      sx={{
+                        pl: 4,
+                        background:
+                          this.pathName === vals.path ? "primary" : "fourth",
+                      }}
+                      onClick={(event) => {
+                        this.props.selectPage(event, index);
+                        this.setState({ selected: index });
+                        window.location.href = vals.path;
+                      }}
+                    >
+                      <ListItemIcon>{vals.icon}</ListItemIcon>
+                      <ListItemText
+                        primary={vals.name}
+                        primaryTypographyProps={{
+                          color:
+                            this.pathName === vals.path ? "primary" : "fourth",
+                          fontWeight:
+                            this.pathName === vals.path ? "bold" : "none",
+                        }}
+                      />
+                    </ListItemButton>
+                  </List>
+                ))}
+              </Collapse>
+            ) : null}
+          </>
         ))}
       </main>
     );

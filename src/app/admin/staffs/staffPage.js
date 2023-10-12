@@ -13,6 +13,7 @@ import {
   MenuItem,
   Alert,
   Chip,
+  Button,
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
 import RemoveApproverForm from "../formDialog";
@@ -22,6 +23,7 @@ import { errorResponse } from "../../ui/common/erroResponse";
 import { AxiosInterceptor } from "../../ui/common/interceptor";
 import ServiceConfig from "../../ui/common/service-config";
 import { SERVICES } from "../../ui/common/constant/services-constant";
+
 class StaffPage extends Component {
   #serviceConfig;
   #axios;
@@ -50,14 +52,17 @@ class StaffPage extends Component {
         id: "department",
         label: "Department",
         minWidth: 170,
-        format: (value) => value.toLocaleString("en-US"),
       },
       {
         id: "status",
         label: "Status",
         minWidth: 170,
+      },
+      {
+        id: "action",
+        label: "",
+        minWidth: 170,
         align: "right",
-        format: (value) => value.toFixed(2),
       },
     ];
     //api
@@ -130,6 +135,7 @@ class StaffPage extends Component {
       });
       this.setState({ openForm: false });
       await this.getStaffList();
+      window.location.reload();
 
       return req;
     } catch (error) {
@@ -142,6 +148,26 @@ class StaffPage extends Component {
       return error;
     }
   }
+
+  async handleReinvite(id) {
+    try {
+      const req = await this.#axios.post(
+        `/staff/reinvite`,
+        {
+          id,
+        },
+        {
+          withCredentials: true,
+          credentials: "include",
+        }
+      );
+      window.location.reload();
+      return req;
+    } catch (error) {
+      return error;
+    }
+  }
+
   async searchName() {
     const data = JSON.parse(localStorage.getItem("session"));
     try {
@@ -265,6 +291,16 @@ class StaffPage extends Component {
                                   color={row.isActive ? "success" : "error"}
                                 />
                               </TableCell>
+                              <TableCell align="center">
+                                <Button
+                                  key={row.id}
+                                  disabled={row.isActive}
+                                  variant="contained"
+                                  onClick={() => this.handleReinvite(row.id)}
+                                >
+                                  Reinvite
+                                </Button>
+                              </TableCell>
                             </TableRow>
                           );
                         })}
@@ -272,6 +308,7 @@ class StaffPage extends Component {
                   ) : (
                     <TableBody>
                       <TableRow hover>
+                        <TableCell align="center"></TableCell>
                         <TableCell align="center"></TableCell>
                         <TableCell align="center"></TableCell>
                         <TableCell align="center"></TableCell>

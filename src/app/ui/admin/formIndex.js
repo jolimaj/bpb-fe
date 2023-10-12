@@ -152,7 +152,7 @@ class SignIn extends Component {
       <>
         {this.#pathName === INITIAL_ACCOUNT.SIGNIN ||
         this.#pathName === INITIAL_ACCOUNT.SIGNUP ? (
-          <Grid container component="main" sx={{ height: "100vh" }}>
+          <Grid container component="main" sx={{ height: "110vh" }}>
             <CssBaseline />
             {this.state.signUpSucess && (
               <Modal
