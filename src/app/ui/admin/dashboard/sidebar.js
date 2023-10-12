@@ -233,7 +233,7 @@ class Sidebar extends Component {
                 )
               ) : null}
             </ListItemButton>
-            {value.name === USER_PAGE_NAME.SERVICES ? (
+            {/* {value.name === USER_PAGE_NAME.SERVICES ? (
               <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                 {value.list.map((vals, index) => (
                   <List component="div" disablePadding>
@@ -265,7 +265,7 @@ class Sidebar extends Component {
                   </List>
                 ))}
               </Collapse>
-            ) : null}
+            ) : null} */}
           </>
         ))}
       </main>
