@@ -51,55 +51,42 @@ class Sidebar extends Component {
           />
         ),
       },
-      {
-        name: USER_PAGE_NAME.SERVICES,
-        path: USERS_ENDPOINTS.SERVICES,
-        icon: (
-          <ServiceIcon
-            color={
-              props.pathName === USERS_ENDPOINTS.SERVICES ? "primary" : "fourth"
-            }
-          />
-        ),
-        list: [
-          {
-            name: USER_PAGE_NAME.NEW,
-            path: USERS_ENDPOINTS.NEW,
-            icon: (
-              <NewReleasesIcon
-                color={
-                  props.pathName === USERS_ENDPOINTS.NEW ? "primary" : "fourth"
-                }
-              />
-            ),
-          },
-          {
-            name: USER_PAGE_NAME.RENEW,
-            path: USERS_ENDPOINTS.RENEW,
-            icon: (
-              <Autorenew
-                color={
-                  props.pathName === USERS_ENDPOINTS.RENEW
-                    ? "primary"
-                    : "fourth"
-                }
-              />
-            ),
-          },
-        ],
-      },
       // {
-      //   name: USER_PAGE_NAME.BUSINESS_PERMIT,
-      //   path: USERS_ENDPOINTS.BUSINESS_PERMIT,
+      //   name: USER_PAGE_NAME.SERVICES,
+      //   path: USERS_ENDPOINTS.SERVICES,
       //   icon: (
-      //     <BusinessPermitIcon
+      //     <ServiceIcon
       //       color={
-      //         props.pathName === USERS_ENDPOINTS.BUSINESS_PERMIT
-      //           ? "primary"
-      //           : "fourth"
+      //         props.pathName === USERS_ENDPOINTS.SERVICES ? "primary" : "fourth"
       //       }
       //     />
       //   ),
+      //   list: [
+      //     {
+      //       name: USER_PAGE_NAME.NEW,
+      //       path: USERS_ENDPOINTS.NEW,
+      //       icon: (
+      //         <NewReleasesIcon
+      //           color={
+      //             props.pathName === USERS_ENDPOINTS.NEW ? "primary" : "fourth"
+      //           }
+      //         />
+      //       ),
+      //     },
+      //     {
+      //       name: USER_PAGE_NAME.RENEW,
+      //       path: USERS_ENDPOINTS.RENEW,
+      //       icon: (
+      //         <Autorenew
+      //           color={
+      //             props.pathName === USERS_ENDPOINTS.RENEW
+      //               ? "primary"
+      //               : "fourth"
+      //           }
+      //         />
+      //       ),
+      //     },
+      //   ],
       // },
     ];
     this.#adminSide = [
