@@ -4,7 +4,6 @@ import {
   Typography,
   TextField,
   FormControlLabel,
-  Checkbox,
   Box,
   MenuItem,
   FormLabel,
@@ -16,9 +15,69 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 
+import { AxiosInterceptor } from "../../../common/interceptor";
+import ServiceConfig from "../../../common/service-config";
+import { SERVICES } from "../../../common/constant/services-constant";
+
 export default class BasicInfoForm extends Component {
+  #serviceConfig;
+  #axios;
   constructor(props) {
     super(props);
+    this.state = {
+      dateOfApplication: "",
+      dtiRegNo: "",
+      dtiRegDate: "",
+      tinNo: "",
+      businessTypeID: "",
+      enjoyTaxIncentive: false,
+      notEnjoyTaxIncentive: "",
+      taxPayerName: "",
+      businessName: "",
+      tradeFranchiseName: "",
+      amendementFrom: "",
+      amendementTo: "",
+      paymentTypeID: "",
+      businessTypeList: [],
+      paymentTypeList: [],
+      fName: "",
+      lName: "",
+      mName: "",
+    };
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
+
+    this.getBusinessType = this.getBusinessType.bind(this);
+  }
+
+  componentDidMount() {
+    this.getBusinessType();
+    this.getPaymentType();
+  }
+
+  async getBusinessType() {
+    try {
+      const req = await this.#axios.get(`/generic/businessType`, {
+        withCredentials: true,
+      });
+      this.setState({ businessTypeList: req.data });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async getPaymentType() {
+    try {
+      const req = await this.#axios.get(`/generic/paymentType`, {
+        withCredentials: true,
+      });
+      this.setState({ paymentTypeList: req.data });
+    } catch (error) {
+      return error;
+    }
   }
 
   render() {
@@ -34,6 +93,23 @@ export default class BasicInfoForm extends Component {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={4}>
+            <TextField
+              select // tell TextField to render select
+              name="paymentTypeID"
+              label="Mode of Payment"
+              fullWidth
+              onChange={(e) => {
+                this.setState({ paymentTypeID: e.target.value });
+              }}
+            >
+              {this.state.paymentTypeList.map((page) => (
+                <MenuItem value={page.id} key={page.id}>
+                  {page.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 fullwidth
@@ -45,6 +121,9 @@ export default class BasicInfoForm extends Component {
                 defaultValue={dayjs(new Date())}
                 disabled
                 renderInput={(params) => <TextField {...params} fullWidth />}
+                onChange={(e) => {
+                  this.setState({ dateOfApplication: e.target.value });
+                }}
               />
             </LocalizationProvider>
           </Grid>
@@ -59,6 +138,9 @@ export default class BasicInfoForm extends Component {
                 inputFormat="MM/dd/yyyy"
                 defaultValue={dayjs(new Date())}
                 renderInput={(params) => <TextField {...params} fullWidth />}
+                onChange={(e) => {
+                  this.setState({ dtiRegDate: e.target.value });
+                }}
               />
             </LocalizationProvider>
           </Grid>
@@ -72,6 +154,9 @@ export default class BasicInfoForm extends Component {
               required
               autoComplete="shipping address-line2"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ dtiRegNo: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -84,32 +169,43 @@ export default class BasicInfoForm extends Component {
               type="number"
               autoComplete="tin no."
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ tinNo: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               select // tell TextField to render select
-              value={10}
-              name="typeOfBusiness"
+              name="businessTypeID"
               label="Type of Business"
               fullWidth
+              onChange={(e) => {
+                this.setState({ businessTypeID: e.target.value });
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {this.state.businessTypeList.map((page) => (
+                <MenuItem value={page.id} key={page.id}>
+                  {page.name}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
               select // tell TextField to render select
-              value={10}
               name="amendmentFrom"
               label="Amendment From"
               fullWidth
+              onChange={(e) => {
+                this.setState({ amendementFrom: e.target.value });
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {this.state.businessTypeList.map((page) => (
+                <MenuItem value={page.id} key={page.id}>
+                  {page.name}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -119,10 +215,15 @@ export default class BasicInfoForm extends Component {
               name="amendmentTo"
               label="Amendment To"
               fullWidth
+              onChange={(e) => {
+                this.setState({ amendementTo: e.target.value });
+              }}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {this.state.businessTypeList.map((page) => (
+                <MenuItem value={page.id} key={page.id}>
+                  {page.name}
+                </MenuItem>
+              ))}
             </TextField>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -135,9 +236,12 @@ export default class BasicInfoForm extends Component {
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              onChange={(e) => {
+                this.setState({ enjoyTaxIncentive: e.target.value });
+              }}
             >
-              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-              <FormControlLabel value="no" control={<Radio />} label="No" />
+              <FormControlLabel value={true} control={<Radio />} label="Yes" />
+              <FormControlLabel value={false} control={<Radio />} label="No" />
             </RadioGroup>
           </Grid>
 
@@ -150,6 +254,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="specify-entity"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ notEnjoyTaxIncentive: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -175,6 +282,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="lName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -186,6 +296,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="fName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ fName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -196,6 +309,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="mName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ mName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -207,6 +323,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="businessName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -218,6 +337,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="tradeName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ tradeFranchiseName: e.target.value });
+              }}
             />
           </Grid>
         </Grid>

@@ -5,13 +5,35 @@ import {
   TextField,
   Box,
   Button,
-  Card,
-  CardMedia,
+  LinearProgress,
 } from "@mui/material";
 
+import {
+  CloudUpload as CloudUploadIcon,
+  FilePresentRounded as FilePresentRoundedIcon,
+} from "@mui/icons-material";
+
 export default class BusinessActivity extends Component {
+  #formData;
   constructor(props) {
     super(props);
+    this.#formData = new FormData();
+    this.state = {
+      selectedFile: "",
+      fileName: "",
+      progress: 10,
+    };
+  }
+  componentDidMount() {
+    if (this.state.selectedFile) {
+      console.log(
+        "🚀 ~ file: businessActivity.js:29 ~ BusinessActivity ~ componentDidMount ~ this.state.selectedFile:",
+        this.state.selectedFile
+      );
+      this.setState({
+        fileName: this.state.selectedFile?.name,
+      });
+    }
   }
 
   render() {
@@ -175,22 +197,37 @@ export default class BusinessActivity extends Component {
               other defiiencies within 30 days from release f business permit.
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
-            <Button variant="contained" component="label">
+          <Grid item xs={12} sm={12}>
+            <Button
+              variant="contained"
+              component="label"
+              startIcon={<CloudUploadIcon />}
+            >
               UPLOAD SIGNATURE OF APPLICANT/ TAXPAYER OVER PRINTED NAME
-              <input type="file" hidden />
+              <input
+                type="file"
+                hidden
+                onChange={(e) => {
+                  this.setState({ selectedFile: e.target.files[0] });
+                }}
+              />
             </Button>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 70 }}
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="green iguana"
-              />
-            </Card>
+          <Grid item xs={12} sm={8}>
+            {this.state.selectedFile && (
+              <Grid container>
+                <Grid item xs={1} sm={1}>
+                  <FilePresentRoundedIcon color="primary" fontSize="small" />
+                </Grid>
+                <Grid item xs={1} sm={5}>
+                  <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+                    {this.state.selectedFile.name}
+                  </Typography>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
-          <Grid item xs={12} sm={8}></Grid>
+
           <Grid item xs={12} sm={4}>
             <TextField
               id="position"

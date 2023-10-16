@@ -26,11 +26,12 @@ import {
   STAFF_ENDPOINTS,
   USERS_ENDPOINTS,
 } from "../../common/constant/endpoints/admin";
+import Modal from "./logoutModal";
 
 import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
-import { errorResponse } from "../../common/erroResponse";
 import { SERVICES } from "../../common/constant/services-constant";
+
 class DashboardPage extends Component {
   #drawerWidth = 240;
   #componentName;
@@ -44,9 +45,12 @@ class DashboardPage extends Component {
       mobileMoreAnchorEl: null,
       anchorEl: null,
       anchorElUser: null,
+      open: false,
     };
+    this.handleConfirmLogout = this.handleConfirmLogout.bind(this);
     this.toggleDrawer = this.toggleDrawer.bind(this);
     this.handleCloseUserMenu = this.handleCloseUserMenu.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleOpenUserMenu = this.handleOpenUserMenu.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.selectPage = this.selectPage.bind(this);
@@ -112,10 +116,13 @@ class DashboardPage extends Component {
     this.setState({ anchorElUser: "open" });
   }
 
-  async handleLogout() {
-    return await this.#axios.post("/sign-out");
+  async handleConfirmLogout() {
+    const logoutData = await this.#axios.post("/sign-out");
+    if (logoutData) {
+      this.cookies.remove("session");
+      window.location.href = ADMIN_ENDPOINTS.SIGN_IN;
+    }
   }
-
   async handleClick(event) {
     switch (event) {
       case 1:
@@ -128,15 +135,15 @@ class DashboardPage extends Component {
           : STAFF_ENDPOINTS.PROFILE;
         break;
       case 2:
-        const logoutData = await this.handleLogout();
-        if (logoutData) {
-          this.cookies.remove("session");
-          window.location.href = ADMIN_ENDPOINTS.SIGN_IN;
-        }
+        this.setState({ open: !this.state.open });
         break;
       default:
         break;
     }
+  }
+
+  handleClose() {
+    this.setState({ open: false });
   }
   render() {
     const AppBar = styled(MuiAppBar, {
@@ -184,6 +191,11 @@ class DashboardPage extends Component {
     return (
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
+        <Modal
+          open={this.state.open}
+          handleConfirmLogout={this.handleConfirmLogout}
+          handleClose={this.handleClose}
+        />
         <AppBar position="absolute" open={this.state.isOpen}>
           <Toolbar
             sx={{

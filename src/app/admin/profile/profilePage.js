@@ -50,6 +50,9 @@ class ProfilePage extends Component {
       });
       return req.data;
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorResponse: error.message });
       return error;
     }
@@ -60,6 +63,9 @@ class ProfilePage extends Component {
       await this.#axios.put(`/profile`, this.state);
       window.location.reload(true);
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorResponse: error.message });
       return error;
     }

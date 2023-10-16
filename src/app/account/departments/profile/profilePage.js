@@ -50,6 +50,9 @@ class ProfilePage extends Component {
       });
       return req.data;
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       this.setState({ errorResponse: error.message });
       return error;
     }
@@ -61,6 +64,9 @@ class ProfilePage extends Component {
       window.location.reload(true);
     } catch (error) {
       this.setState({ errorResponse: error.message });
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }

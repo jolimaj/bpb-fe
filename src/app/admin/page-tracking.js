@@ -122,6 +122,9 @@ class DashBoardPage extends Component {
       });
       return req;
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }

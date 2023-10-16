@@ -139,9 +139,9 @@ class StaffPage extends Component {
 
       return req;
     } catch (error) {
-      // if (error?.response.data.code === "LOGIN_FIRST") {
-      //   window.location.href = "/signin";
-      // }
+      if (error?.response.data.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       const response = errorResponse(error.response);
 
       this.setState({ errorMessage: response });
@@ -164,6 +164,9 @@ class StaffPage extends Component {
       window.location.reload();
       return req;
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
@@ -181,6 +184,9 @@ class StaffPage extends Component {
       this.setState({ rows: req.data });
       return req;
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
