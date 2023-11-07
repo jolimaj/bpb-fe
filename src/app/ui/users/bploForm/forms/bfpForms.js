@@ -1,15 +1,68 @@
 import React, { Component } from "react";
 import dayjs from "dayjs";
-import { Grid, Typography, TextField, Box } from "@mui/material";
+import { Grid, Typography, TextField, Box, Alert } from "@mui/material";
+
+import { AxiosInterceptor } from "../../../common/interceptor";
+import ServiceConfig from "../../../common/service-config";
+import { SERVICES } from "../../../common/constant/services-constant";
+import { errorResponse } from "@/app/ui/common/erroResponse";
 
 export default class BFP extends Component {
+  #serviceConfig;
+  #axios;
+  #basic;
+  #axiosPermit;
   constructor(props) {
     super(props);
+    this.#basic = props.basicFormData;
+
+    this.state = {
+      businessPermitID: "",
+      ownersName: this.#basic.taxPayerName,
+      businessName: this.#basic.businessName,
+      totalFloorArea: "",
+      errorMessage: "",
+      response: "",
+      bfpFormData: {},
+    };
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
+    this.#axiosPermit = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.USER)
+    ).axios;
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  async handleSubmit() {
+    try {
+      const { ownersName, businessName, totalFloorArea } = this.state;
+      const response = await this.#axiosPermit.post(
+        "/services/businessPermit/validateBFPForm",
+        {
+          ownersName,
+          businessName,
+          totalFloorArea,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        response: response.data,
+        bfpFormData: { ownersName, businessName, totalFloorArea },
+      });
+    } catch (error) {
+      let response;
+      response = errorResponse(error.response);
+      this.setState({ errorMessage: response });
+    }
   }
 
   render() {
     return (
-      <Box p={2}>
+      <Box component="form" p={2} onSubmit={this.handleSubmit}>
         <Typography
           variant="h5"
           gutterBottom
@@ -19,6 +72,13 @@ export default class BFP extends Component {
           III. CITY / MUNICIPALITY FIRE STATION SECTION
         </Typography>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={12}>
+            {this.state.errorMessage && (
+              <Alert severity="error" style={{ textTransform: "capitalize" }}>
+                {this.state.errorMessage}
+              </Alert>
+            )}
+          </Grid>
           <Grid item xs={12} sm={12}>
             <Typography
               variant="subtitle1"
@@ -53,6 +113,11 @@ export default class BFP extends Component {
               fullWidth
               autoComplete="applicantName"
               variant="outlined"
+              disabled
+              value={this.state.ownersName}
+              onChange={(e) => {
+                this.setState({ ownersName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -63,9 +128,14 @@ export default class BFP extends Component {
               fullWidth
               autoComplete="nameOfBusiness"
               variant="outlined"
+              disabled
+              value={this.state.businessName}
+              onChange={(e) => {
+                this.setState({ businessName: e.target.value });
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               id="floorArea"
               name="floorArea"
@@ -74,9 +144,12 @@ export default class BFP extends Component {
               required
               autoComplete="floor-area"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ totalFloorArea: e.target.value });
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <TextField
               id="contactNumber"
               name="contactNumber"
@@ -86,6 +159,7 @@ export default class BFP extends Component {
               autoComplete="contact-no"
               variant="outlined"
               type="number"
+              disabled
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -96,8 +170,9 @@ export default class BFP extends Component {
               fullWidth
               autoComplete="address"
               variant="outlined"
+              disabled
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     );

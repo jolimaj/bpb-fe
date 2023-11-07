@@ -83,7 +83,10 @@ export default class BusinessPermitPage extends Component {
     const data = this.state.session;
     try {
       const req = await this.#axios.get("businessPermit/new", data);
-      this.setState({ rows: req.data.results, departmentData: req.data });
+      this.setState({
+        rows: req.data.results,
+        departmentData: req.data.departmentData,
+      });
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
@@ -102,7 +105,10 @@ export default class BusinessPermitPage extends Component {
         data
       );
 
-      this.setState({ rows: req.data.results, departmentData: req.data });
+      this.setState({
+        rows: req.data.results,
+        departmentData: req.data.departmentData,
+      });
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
@@ -118,7 +124,7 @@ export default class BusinessPermitPage extends Component {
       const req = await this.#axios.get("businessPermit/renew", data);
       this.setState({
         renewApplicationList: req.data.results,
-        departmentData: req.data,
+        departmentData: req.data.departmentData,
       });
       return req;
     } catch (error) {
@@ -136,7 +142,10 @@ export default class BusinessPermitPage extends Component {
         `businessPermit/new?searchQuery=${query}`,
         data
       );
-      this.setState({ rows: req.data.results, departmentData: req.data });
+      this.setState({
+        rows: req.data.results,
+        departmentData: req.data.departmentData,
+      });
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
@@ -219,6 +228,8 @@ export default class BusinessPermitPage extends Component {
     this.setState({ review: false });
   }
   render() {
+    const da = this.state.departmentData;
+    console.log(da[0]?.code);
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         {this.state.review && (
@@ -240,7 +251,7 @@ export default class BusinessPermitPage extends Component {
             textAlign: "center",
           }}
         >
-          {`Business Permit - ${this.state.departmentData?.departmentData?.code}`}
+          {`Business Permit - ${da[0]?.code}`}
         </Typography>
         <Paper
           sx={{

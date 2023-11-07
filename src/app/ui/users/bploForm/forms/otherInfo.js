@@ -1,14 +1,160 @@
 import React, { Component } from "react";
-import { Grid, Typography, TextField, Box } from "@mui/material";
+import { Grid, Typography, TextField, Box, Alert } from "@mui/material";
 
+import { AxiosInterceptor } from "../../../common/interceptor";
+import ServiceConfig from "../../../common/service-config";
+import { SERVICES } from "../../../common/constant/services-constant";
+import { errorResponse } from "@/app/ui/common/erroResponse";
 export default class OtherInformation extends Component {
+  #serviceConfig;
+  #axios;
+  #axiosPermit;
+  #basic;
+
   constructor(props) {
     super(props);
+    this.#basic = props.basicFormData;
+
+    this.state = {
+      businessPermitID: "",
+      businessAddress: "",
+      businessPostalCode: "",
+      businessTelephone: "",
+      businessMobile: "",
+      businessEmail: "", // optional
+      ownersAddress: "",
+      ownersPostalCode: "",
+      ownersTelephone: "",
+      ownersMobile: this.#basic?.userData?.mobile,
+      ownersEmail: this.#basic?.userData?.email, // optional
+      emergencyPerson: "",
+      emergencyAddress: "",
+      emergencyMobile: "",
+      businessArea: 0,
+      femaleEmployee: 0,
+      maleEmployee: 0,
+      lguEmployee: 0,
+      lessorName: "", //null when not rented
+      lessorAddress: "",
+      lessorMobile: "",
+      lessorEmail: "",
+      buildingName: "",
+      buildingAddress: "",
+      monthlyRental: "",
+      errorMessage: "",
+      response: "",
+      otherInfoData: {},
+    };
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
+    this.#axiosPermit = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.USER)
+    ).axios;
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit() {
+    try {
+      const {
+        businessAddress,
+        businessPostalCode,
+        businessTelephone,
+        businessMobile,
+        businessEmail, // optional
+        ownersAddress,
+        ownersPostalCode,
+        ownersTelephone,
+        ownersMobile,
+        ownersEmail, // optional
+        emergencyPerson,
+        emergencyAddress,
+        emergencyMobile,
+        businessArea,
+        femaleEmployee,
+        maleEmployee,
+        lguEmployee,
+        lessorName,
+        lessorAddress,
+        lessorMobile,
+        lessorEmail,
+        buildingName,
+        buildingAddress,
+        monthlyRental,
+      } = this.state;
+      const response = await this.#axiosPermit.post(
+        "/services/businessPermit/validateOtherInfo",
+        {
+          businessAddress,
+          businessPostalCode,
+          businessTelephone,
+          businessMobile,
+          businessEmail, // optional
+          ownersAddress,
+          ownersPostalCode,
+          ownersTelephone,
+          ownersMobile,
+          ownersEmail, // optional
+          emergencyPerson,
+          emergencyAddress,
+          emergencyMobile,
+          businessArea,
+          femaleEmployee,
+          maleEmployee,
+          lguEmployee,
+          lessorName,
+          lessorAddress,
+          lessorMobile,
+          lessorEmail,
+          buildingName,
+          buildingAddress,
+          monthlyRental,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        response: response.data,
+        otherInfoData: {
+          businessAddress,
+          businessPostalCode,
+          businessTelephone,
+          businessMobile,
+          businessEmail, // optional
+          ownersAddress,
+          ownersPostalCode,
+          ownersTelephone,
+          ownersMobile,
+          ownersEmail, // optional
+          emergencyPerson,
+          emergencyAddress,
+          emergencyMobile,
+          businessArea,
+          femaleEmployee,
+          maleEmployee,
+          lguEmployee,
+          lessorName,
+          lessorAddress,
+          lessorMobile,
+          lessorEmail,
+          buildingName,
+          buildingAddress,
+          monthlyRental,
+        },
+      });
+    } catch (error) {
+      let response;
+      response = errorResponse(error.response);
+      this.setState({ errorMessage: response });
+    }
   }
 
   render() {
     return (
-      <Box p={2}>
+      <Box component="form" p={2} onSubmit={this.handleSubmit}>
         <Typography
           variant="h5"
           gutterBottom
@@ -19,6 +165,13 @@ export default class OtherInformation extends Component {
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
+            {this.state.errorMessage && (
+              <Alert severity="error" style={{ textTransform: "capitalize" }}>
+                {this.state.errorMessage}
+              </Alert>
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <TextField
               id="businessAddress"
               name="businessAddress"
@@ -27,6 +180,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="business-address"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessAddress: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -39,6 +195,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="postal-code"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessPostalCode: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -50,6 +209,9 @@ export default class OtherInformation extends Component {
               type="email"
               autoComplete="email-address"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessEmail: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -62,6 +224,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="telephone-number"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessTelephone: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -74,6 +239,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="mobile-number"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessMobile: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -85,6 +253,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="ownersAddress"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ ownersAddress: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -97,6 +268,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="postal-code"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ ownersPostalCode: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -108,6 +282,11 @@ export default class OtherInformation extends Component {
               type="email"
               autoComplete="email-address1"
               variant="outlined"
+              disabled
+              value={this.state.ownersEmail}
+              onChange={(e) => {
+                this.setState({ ownersEmail: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -120,6 +299,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="telephone-number1"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ ownersTelephone: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -132,17 +314,25 @@ export default class OtherInformation extends Component {
               required
               autoComplete="mobile-number1"
               variant="outlined"
+              disabled
+              value={this.state.ownersMobile}
+              onChange={(e) => {
+                this.setState({ ownersMobile: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
             <TextField
               id="guardian"
               name="guardian"
-              label="In case of emergency, povide name of contact person"
+              label="In case of emergency, provide name of contact person"
               fullWidth
               required
               autoComplete="guardian"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ emergencyPerson: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -154,6 +344,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="guardian-number"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ emergencyMobile: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -162,8 +355,12 @@ export default class OtherInformation extends Component {
               name="guardianAddress"
               label="Address"
               fullWidth
+              required
               autoComplete="guardian-address"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ emergencyAddress: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -175,6 +372,9 @@ export default class OtherInformation extends Component {
               required
               autoComplete="business-area"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ businessArea: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={3}>
@@ -191,6 +391,9 @@ export default class OtherInformation extends Component {
               type="number"
               autoComplete="female-no"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ femaleEmployee: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={2}>
@@ -202,6 +405,9 @@ export default class OtherInformation extends Component {
               type="number"
               autoComplete="male-no"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ maleEmployee: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={2}>
@@ -213,6 +419,9 @@ export default class OtherInformation extends Component {
               type="number"
               autoComplete="male-no"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lguEmployee: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -237,6 +446,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="lessorName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lessorName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -247,6 +459,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="lessorAddress"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lessorAddress: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -257,6 +472,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="lessorContact"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lessorMobile: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -268,6 +486,9 @@ export default class OtherInformation extends Component {
               type="number"
               autoComplete="lessorRent"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ lessorAddress: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -278,6 +499,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="buildingName"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ buildingName: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -288,6 +512,9 @@ export default class OtherInformation extends Component {
               fullWidth
               autoComplete="buildingAddress"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ buildingAddress: e.target.value });
+              }}
             />
           </Grid>
         </Grid>

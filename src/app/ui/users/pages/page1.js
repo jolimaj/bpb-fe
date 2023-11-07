@@ -21,7 +21,7 @@ class Page1 extends Component {
                 height: "auto",
               }}
             >
-              <TrackingContent />
+              <TrackingContent route={this.props.route} />
             </Paper>
           </Grid>
         </Grid>

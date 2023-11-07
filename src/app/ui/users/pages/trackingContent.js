@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { styled } from "@mui/material/styles";
-import { Typography, Button, Grid } from "@mui/material";
+import { Typography, Button, Grid, Box } from "@mui/material";
 import ImageSrc from "../../vendor/common/images-constant";
+import RequirementsForm from "./requirements";
 
 import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
@@ -12,13 +13,21 @@ export default class TrackingContent extends Component {
   #serviceConfig;
   #axiosGeneric;
   #axiosUser;
+  #route;
+  #params;
+  #query;
 
   constructor(props) {
     super(props);
     this.state = {
       departmentList: [],
       permitList: [],
+      openRequirements: false,
+      deptId: null,
     };
+    this.#params = new URLSearchParams(window.location.search);
+    this.#query = this.#params.get("requirements");
+    this.#route = props.route;
     this.#imageSrc = ImageSrc();
     //api
     this.#serviceConfig = new ServiceConfig();
@@ -56,6 +65,10 @@ export default class TrackingContent extends Component {
     }
   }
 
+  handleOpen(code) {
+    window.location.href = `account?requirements=${code}`;
+  }
+
   render() {
     const ButtonItem = styled(Button)(({ theme }) => ({
       padding: 5,
@@ -83,26 +96,57 @@ export default class TrackingContent extends Component {
     }));
     return (
       <Grid container spacing={3} padding={5}>
-        {this.state.departmentList.map((item) => (
-          <Grid item xs={12} sm={12} md={3} key={item.id}>
-            <ButtonItem
-              onClick={this.handleOpen}
-              disabled={this.state.permitList.length === 0}
-            >
+        {this.#query ? (
+          <Grid item xs={12} sm={12} md={12}>
+            <Grid item xs={12} sm={12} md={12}>
               <Typography
-                variant="subtitle1"
-                color="secondary.main"
+                component="h1"
+                variant="h3"
+                color="primary"
+                noWrap
                 sx={{
-                  fontWeight: "bold",
+                  flexGrow: 1,
                   textTransform: "uppercase",
+                  fontWeight: "bold",
                   textAlign: "center",
+                  marginBottom: 5,
                 }}
               >
-                {item.code}
+                {`${this.#query} Requirements`}
               </Typography>
-            </ButtonItem>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              <RequirementsForm
+                code={this.#query}
+                permitList={this.state.permitList}
+              />
+            </Grid>
           </Grid>
-        ))}
+        ) : (
+          this.state.departmentList.map((item) => (
+            <Grid item xs={12} sm={12} md={3} key={item.id}>
+              <ButtonItem
+                onClick={(e) => {
+                  this.setState({ openRequirements: true, deptId: item.code });
+                  this.handleOpen(item.code);
+                }}
+                disabled={this.state.permitList.length === 0}
+              >
+                <Typography
+                  variant="subtitle1"
+                  color="secondary.main"
+                  sx={{
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                    textAlign: "center",
+                  }}
+                >
+                  {item.code}
+                </Typography>
+              </ButtonItem>
+            </Grid>
+          ))
+        )}
       </Grid>
     );
   }

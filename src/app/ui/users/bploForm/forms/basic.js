@@ -9,6 +9,7 @@ import {
   FormLabel,
   Radio,
   RadioGroup,
+  Alert,
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -18,44 +19,78 @@ import dayjs from "dayjs";
 import { AxiosInterceptor } from "../../../common/interceptor";
 import ServiceConfig from "../../../common/service-config";
 import { SERVICES } from "../../../common/constant/services-constant";
+import { errorResponse } from "@/app/ui/common/erroResponse";
 
 export default class BasicInfoForm extends Component {
   #serviceConfig;
+  #axiosAdmin;
   #axios;
+  #axiosPermit;
   constructor(props) {
     super(props);
     this.state = {
-      dateOfApplication: "",
+      dateOfApplication: new Date(),
       dtiRegNo: "",
-      dtiRegDate: "",
+      dtiRegDate: new Date(),
       tinNo: "",
-      businessTypeID: "",
-      enjoyTaxIncentive: false,
+      businessTypeID: 1,
+      enjoyTaxIncentive: "true",
       notEnjoyTaxIncentive: "",
-      taxPayerName: "",
-      businessName: "",
-      tradeFranchiseName: "",
-      amendementFrom: "",
-      amendementTo: "",
-      paymentTypeID: "",
-      businessTypeList: [],
-      paymentTypeList: [],
       fName: "",
       lName: "",
       mName: "",
+      taxPayerName: "",
+      businessName: "",
+      tradeFranchiseName: "",
+      amendementFrom: 1,
+      amendementTo: 2,
+      paymentTypeID: 1,
+      businessTypeList: [],
+      paymentTypeList: [],
+      userData: {},
+
+      errorMessage: "",
+      response: "",
+      basicFormData: {},
     };
     //api
     this.#serviceConfig = new ServiceConfig();
     this.#axios = new AxiosInterceptor(
       this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
     ).axios;
-
+    this.#axiosAdmin = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.ADMIN)
+    ).axios;
+    this.#axiosPermit = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.USER)
+    ).axios;
     this.getBusinessType = this.getBusinessType.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     this.getBusinessType();
     this.getPaymentType();
+    this.getUserData();
+  }
+
+  async getUserData() {
+    try {
+      const { data } = await this.#axiosAdmin.get(`/profile`, {
+        withCredentials: true,
+      });
+      this.setState({
+        fName: data.firstName,
+        lName: data.lastName,
+        mName: data.middleName,
+        userData: data,
+      });
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
+      return error;
+    }
   }
 
   async getBusinessType() {
@@ -80,9 +115,79 @@ export default class BasicInfoForm extends Component {
     }
   }
 
+  async handleSubmit() {
+    try {
+      const {
+        dateOfApplication,
+        dtiRegNo,
+        dtiRegDate,
+        tinNo,
+        businessTypeID,
+        enjoyTaxIncentive,
+        notEnjoyTaxIncentive,
+        businessName,
+        tradeFranchiseName,
+        amendementFrom,
+        amendementTo,
+        paymentTypeID,
+      } = this.state;
+      const response = await this.#axiosPermit.post(
+        "/services/businessPermit/validateBasicInfo",
+        {
+          dateOfApplication,
+          dtiRegNo,
+          dtiRegDate,
+          tinNo,
+          businessTypeID,
+          enjoyTaxIncentive: enjoyTaxIncentive === "true" ? true : false,
+          notEnjoyTaxIncentive,
+          taxPayerName: `${this.state.fName} ${this.state.mName} ${this.state.lName}`,
+          businessName,
+          tradeFranchiseName,
+          amendementFrom,
+          amendementTo,
+          paymentTypeID,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        response: response.data,
+        basicFormData: {
+          userData: this.state.userData,
+          dateOfApplication,
+          dtiRegNo,
+          dtiRegDate,
+          tinNo,
+          businessTypeID,
+          enjoyTaxIncentive: enjoyTaxIncentive === "true" ? true : false,
+          notEnjoyTaxIncentive,
+          taxPayerName: `${this.state.fName} ${this.state.mName} ${this.state.lName}`,
+          businessName,
+          tradeFranchiseName,
+          amendementFrom,
+          amendementTo,
+          paymentTypeID,
+        },
+      });
+    } catch (error) {
+      let response;
+      if (this.state.fName === "") {
+        response = errorResponse("Tax Payer First Name is Required");
+      }
+
+      if (this.state.lName === "") {
+        response = errorResponse("Tax Payer Last Name is Required");
+      }
+      response = errorResponse(error.response);
+      this.setState({ errorMessage: response });
+    }
+  }
+
   render() {
     return (
-      <Box p={2}>
+      <Box component="form" p={2} onSubmit={this.handleSubmit}>
         <Typography
           variant="h5"
           gutterBottom
@@ -92,12 +197,21 @@ export default class BasicInfoForm extends Component {
           BASIC INFORMATION:
         </Typography>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={12}>
+            {this.state.errorMessage && (
+              <Alert severity="error" style={{ textTransform: "capitalize" }}>
+                {this.state.errorMessage}
+              </Alert>
+            )}
+          </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               select // tell TextField to render select
               name="paymentTypeID"
               label="Mode of Payment"
+              required
               fullWidth
+              value={this.state.paymentTypeID}
               onChange={(e) => {
                 this.setState({ paymentTypeID: e.target.value });
               }}
@@ -114,6 +228,7 @@ export default class BasicInfoForm extends Component {
               <DatePicker
                 fullwidth
                 id="date"
+                required
                 name="date"
                 label="Date of Application"
                 variant="standard"
@@ -139,7 +254,7 @@ export default class BasicInfoForm extends Component {
                 defaultValue={dayjs(new Date())}
                 renderInput={(params) => <TextField {...params} fullWidth />}
                 onChange={(e) => {
-                  this.setState({ dtiRegDate: e.target.value });
+                  this.setState({ dtiRegDate: e });
                 }}
               />
             </LocalizationProvider>
@@ -176,10 +291,12 @@ export default class BasicInfoForm extends Component {
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
+              required
               select // tell TextField to render select
               name="businessTypeID"
               label="Type of Business"
               fullWidth
+              value={this.state.businessTypeID}
               onChange={(e) => {
                 this.setState({ businessTypeID: e.target.value });
               }}
@@ -193,10 +310,12 @@ export default class BasicInfoForm extends Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              required
               select // tell TextField to render select
               name="amendmentFrom"
               label="Amendment From"
               fullWidth
+              value={this.state.amendementFrom}
               onChange={(e) => {
                 this.setState({ amendementFrom: e.target.value });
               }}
@@ -211,10 +330,11 @@ export default class BasicInfoForm extends Component {
           <Grid item xs={12} sm={6}>
             <TextField
               select // tell TextField to render select
-              value={10}
               name="amendmentTo"
               label="Amendment To"
               fullWidth
+              required
+              value={this.state.amendementTo}
               onChange={(e) => {
                 this.setState({ amendementTo: e.target.value });
               }}
@@ -236,6 +356,7 @@ export default class BasicInfoForm extends Component {
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              value={this.state.enjoyTaxIncentive}
               onChange={(e) => {
                 this.setState({ enjoyTaxIncentive: e.target.value });
               }}
@@ -254,6 +375,7 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="specify-entity"
               variant="outlined"
+              disabled={this.state.enjoyTaxIncentive === "true" ? true : false}
               onChange={(e) => {
                 this.setState({ notEnjoyTaxIncentive: e.target.value });
               }}
@@ -282,6 +404,8 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="lName"
               variant="outlined"
+              disabled
+              value={this.state.lName}
               onChange={(e) => {
                 this.setState({ lName: e.target.value });
               }}
@@ -296,6 +420,8 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="fName"
               variant="outlined"
+              value={this.state.fName}
+              disabled
               onChange={(e) => {
                 this.setState({ fName: e.target.value });
               }}
@@ -309,6 +435,8 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="mName"
               variant="outlined"
+              disabled
+              value={this.state.mName}
               onChange={(e) => {
                 this.setState({ mName: e.target.value });
               }}

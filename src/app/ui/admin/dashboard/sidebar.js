@@ -44,50 +44,51 @@ class Sidebar extends Component {
         icon: (
           <HouseIcon
             color={
-              props.pathName === USERS_ENDPOINTS.USERS_DASHBOARD
+              props.pathName === USERS_ENDPOINTS.USERS_DASHBOARD ||
+              props.pathName.includes("requirements")
                 ? "primary"
                 : "fourth"
             }
           />
         ),
       },
-      // {
-      //   name: USER_PAGE_NAME.SERVICES,
-      //   path: USERS_ENDPOINTS.SERVICES,
-      //   icon: (
-      //     <ServiceIcon
-      //       color={
-      //         props.pathName === USERS_ENDPOINTS.SERVICES ? "primary" : "fourth"
-      //       }
-      //     />
-      //   ),
-      //   list: [
-      //     {
-      //       name: USER_PAGE_NAME.NEW,
-      //       path: USERS_ENDPOINTS.NEW,
-      //       icon: (
-      //         <NewReleasesIcon
-      //           color={
-      //             props.pathName === USERS_ENDPOINTS.NEW ? "primary" : "fourth"
-      //           }
-      //         />
-      //       ),
-      //     },
-      //     {
-      //       name: USER_PAGE_NAME.RENEW,
-      //       path: USERS_ENDPOINTS.RENEW,
-      //       icon: (
-      //         <Autorenew
-      //           color={
-      //             props.pathName === USERS_ENDPOINTS.RENEW
-      //               ? "primary"
-      //               : "fourth"
-      //           }
-      //         />
-      //       ),
-      //     },
-      //   ],
-      // },
+      {
+        name: USER_PAGE_NAME.SERVICES,
+        path: USERS_ENDPOINTS.SERVICES,
+        icon: (
+          <ServiceIcon
+            color={
+              props.pathName === USERS_ENDPOINTS.SERVICES ? "primary" : "fourth"
+            }
+          />
+        ),
+        list: [
+          {
+            name: USER_PAGE_NAME.NEW,
+            path: USERS_ENDPOINTS.NEW,
+            icon: (
+              <NewReleasesIcon
+                color={
+                  props.pathName === USERS_ENDPOINTS.NEW ? "primary" : "fourth"
+                }
+              />
+            ),
+          },
+          {
+            name: USER_PAGE_NAME.RENEW,
+            path: USERS_ENDPOINTS.RENEW,
+            icon: (
+              <Autorenew
+                color={
+                  props.pathName === USERS_ENDPOINTS.RENEW
+                    ? "primary"
+                    : "fourth"
+                }
+              />
+            ),
+          },
+        ],
+      },
     ];
     this.#adminSide = [
       {
@@ -192,7 +193,11 @@ class Sidebar extends Component {
               key={index}
               selected={this.pathName === value.path}
               sx={{
-                background: this.pathName === value.path ? "primary" : "fourth",
+                background:
+                  this.pathName === value.path ||
+                  this.pathName.includes("requirements")
+                    ? "primary"
+                    : "fourth",
               }}
               onClick={
                 value.name === USER_PAGE_NAME.SERVICES

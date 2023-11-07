@@ -282,8 +282,10 @@ class SignIn extends Component {
                         id="email"
                         label="Email Address"
                         name="email"
-                        autoComplete="email"
                         autoFocus
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
                         onChange={(e) => {
                           this.setState({ email: e.target.value });
                         }}
@@ -298,9 +300,11 @@ class SignIn extends Component {
                         label="Password"
                         type={this.state.showPassword ? "text" : "password"}
                         id="password"
-                        autoComplete="current-password"
                         onChange={(e) => {
                           this.setState({ password: e.target.value });
+                        }}
+                        InputLabelProps={{
+                          shrink: true,
                         }}
                         InputProps={{
                           endAdornment: (

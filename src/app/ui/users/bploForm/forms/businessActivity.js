@@ -5,16 +5,25 @@ import {
   TextField,
   Box,
   Button,
-  LinearProgress,
+  IconButton,
+  Alert,
 } from "@mui/material";
 
 import {
   CloudUpload as CloudUploadIcon,
   FilePresentRounded as FilePresentRoundedIcon,
+  Close as CloseIcon,
 } from "@mui/icons-material";
 
+import { AxiosInterceptor } from "../../../common/interceptor";
+import ServiceConfig from "../../../common/service-config";
+import { SERVICES } from "../../../common/constant/services-constant";
+import { errorResponse } from "@/app/ui/common/erroResponse";
 export default class BusinessActivity extends Component {
   #formData;
+  #serviceConfig;
+  #axios;
+  #axiosPermit;
   constructor(props) {
     super(props);
     this.#formData = new FormData();
@@ -22,23 +31,123 @@ export default class BusinessActivity extends Component {
       selectedFile: "",
       fileName: "",
       progress: 10,
+      businessPermitID: "",
+      // lineOfBusiness: 0,
+      line1: "",
+      line2: "",
+      line3: "",
+      // noOfUnits: 0,
+      units1: null,
+      units2: null,
+      units3: null,
+      // capitalization: null,
+      capital1: null,
+      capital2: null,
+      capital3: null,
+      applicantSignature: "",
+      applicantPosition: "",
+      errorMessage: "",
+      response: "",
+      businessActivityData: {},
     };
+    this.handleClear = this.handleClear.bind(this);
+
+    //api
+    this.#serviceConfig = new ServiceConfig();
+    this.#axios = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
+    ).axios;
+    this.#axiosPermit = new AxiosInterceptor(
+      this.#serviceConfig.getServicesConfig(SERVICES.USER)
+    ).axios;
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit() {
+    try {
+      const {
+        // lineOfBusiness,
+        line1,
+        line2,
+        line3,
+        // noOfUnits,
+        units1,
+        units2,
+        units3,
+        // capitalization,
+        capital1,
+        capital2,
+        capital3,
+        essentialGross,
+        nonEssentialGross,
+        applicantSignature,
+        applicantPosition,
+      } = this.state;
+      const response = await this.#axiosPermit.post(
+        "/services/businessPermit/validateBusinessActivity",
+        {
+          // lineOfBusiness,
+          line1,
+          line2,
+          line3,
+          type: "1",
+          // noOfUnits,
+          units1,
+          units2,
+          units3,
+          // capitalization,
+          capital1,
+          capital2,
+          capital3,
+          // applicantSignature,
+          //applicantPosition,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        response: response.data,
+        businessActivityData: {
+          // lineOfBusiness,
+          line1,
+          line2,
+          line3,
+          type: "1",
+          // noOfUnits,
+          units1,
+          units2,
+          units3,
+          // capitalization,
+          capital1,
+          capital2,
+          capital3,
+          // applicantSignature,
+          //applicantPosition,
+        },
+      });
+    } catch (error) {
+      let response;
+      response = errorResponse(error.response);
+      this.setState({ errorMessage: response });
+    }
   }
   componentDidMount() {
     if (this.state.selectedFile) {
-      console.log(
-        "🚀 ~ file: businessActivity.js:29 ~ BusinessActivity ~ componentDidMount ~ this.state.selectedFile:",
-        this.state.selectedFile
-      );
       this.setState({
         fileName: this.state.selectedFile?.name,
       });
     }
   }
-
+  handleClear() {
+    this.setState({
+      fileName: "",
+      selectedFile: "",
+    });
+  }
   render() {
     return (
-      <Box p={2}>
+      <Box component="form" p={2} onSubmit={this.handleSubmit}>
         <Typography
           variant="h5"
           gutterBottom
@@ -49,6 +158,13 @@ export default class BusinessActivity extends Component {
         </Typography>
 
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={12}>
+            {this.state.errorMessage && (
+              <Alert severity="error" style={{ textTransform: "capitalize" }}>
+                {this.state.errorMessage}
+              </Alert>
+            )}
+          </Grid>
           <Grid item xs={12} sm={12}>
             <Typography
               variant="subtitle1"
@@ -71,6 +187,9 @@ export default class BusinessActivity extends Component {
               required
               autoComplete="line1"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ line1: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -81,6 +200,9 @@ export default class BusinessActivity extends Component {
               fullWidth
               autoComplete="line2"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ line2: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -91,6 +213,9 @@ export default class BusinessActivity extends Component {
               fullWidth
               autoComplete="line3"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ line3: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -112,9 +237,12 @@ export default class BusinessActivity extends Component {
               name="units1"
               label="1"
               fullWidth
-              required
+              type="number"
               autoComplete="units1"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ units1: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -122,19 +250,27 @@ export default class BusinessActivity extends Component {
               id="units2"
               name="units2"
               label="2"
+              type="number"
               fullWidth
               autoComplete="units2"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ units2: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               id="units3"
               name="units3"
+              type="number"
               label="3"
               fullWidth
               autoComplete="units3"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ units3: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -157,18 +293,26 @@ export default class BusinessActivity extends Component {
               label="1"
               fullWidth
               required
+              type="number"
               autoComplete="capital1"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ capital1: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
             <TextField
               id="capital2"
               name="capital2"
+              type="number"
               label="2"
               fullWidth
               autoComplete="capital2"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ capital2: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -177,65 +321,12 @@ export default class BusinessActivity extends Component {
               name="capital3"
               label="3"
               fullWidth
+              type="number"
               autoComplete="units3"
               variant="outlined"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Typography
-              variant="subtitle1"
-              fontWeight="bold"
-              sx={{
-                fontWeight: "bold",
-                mb: 2,
-                textAlign: "center",
+              onChange={(e) => {
+                this.setState({ capital3: e.target.value });
               }}
-            >
-              I DECLARE UNDER PENALTY OF PERJURY that the foregoing information
-              are true based on my personal knowledge and authentic records.
-              Further, I agree to comply with the regulatory requirement And
-              other defiiencies within 30 days from release f business permit.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Button
-              variant="contained"
-              component="label"
-              startIcon={<CloudUploadIcon />}
-            >
-              UPLOAD SIGNATURE OF APPLICANT/ TAXPAYER OVER PRINTED NAME
-              <input
-                type="file"
-                hidden
-                onChange={(e) => {
-                  this.setState({ selectedFile: e.target.files[0] });
-                }}
-              />
-            </Button>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            {this.state.selectedFile && (
-              <Grid container>
-                <Grid item xs={1} sm={1}>
-                  <FilePresentRoundedIcon color="primary" fontSize="small" />
-                </Grid>
-                <Grid item xs={1} sm={5}>
-                  <Typography variant="body1" sx={{ fontStyle: "italic" }}>
-                    {this.state.selectedFile.name}
-                  </Typography>
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="position"
-              name="position"
-              label="POSITION/TITLE"
-              fullWidth
-              autoComplete="position"
-              variant="outlined"
             />
           </Grid>
         </Grid>

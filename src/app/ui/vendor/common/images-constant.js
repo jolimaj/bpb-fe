@@ -6,5 +6,6 @@ export default () => {
     completeBGHover: require("../images/1.png").default,
     incompleteBG: require("../images/4.png").default,
     incompleteBGHover: require("../images/3.png").default,
+    empty: require("../images/placeholder-800x423.gif").default,
   };
 };
