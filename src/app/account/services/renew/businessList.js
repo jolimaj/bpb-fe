@@ -37,6 +37,7 @@ export default class BusinessList extends Component {
       { id: "businessName", label: "Business Name", width: 100 },
       { id: "businessType", label: "Business Type" },
       { id: "status", label: "Status" },
+      { id: "date", label: "Date" },
       { id: "actions", label: "" },
     ];
 
@@ -51,7 +52,7 @@ export default class BusinessList extends Component {
     //api
     this.#serviceConfig = new ServiceConfig();
     this.#axios = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.STAFF)
+      this.#serviceConfig.getServicesConfig(SERVICES.USER)
     ).axios;
   }
 
@@ -61,10 +62,10 @@ export default class BusinessList extends Component {
 
   async getList() {
     try {
-      const req = await this.#axios.get("businessPermit", {
+      const req = await this.#axios.get("/services/businessPermit", {
         withCredentials: true,
       });
-      this.setState({ rows: req.data.results, departmentData: req.data });
+      this.setState({ rows: req.data, departmentData: req.data });
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
@@ -159,7 +160,7 @@ export default class BusinessList extends Component {
                       .map((row) => {
                         return (
                           <TableRow key={row.id}>
-                            <TableCell align="center">{row.id}</TableCell>
+                            <TableCell align="center">{`BPB-${row.id}`}</TableCell>
                             <TableCell align="center">
                               {row?.BasicInfos[0]?.businessName}
                             </TableCell>
@@ -192,7 +193,7 @@ export default class BusinessList extends Component {
                               <Button
                                 disabled={
                                   new Date().getFullYear() -
-                                    new Date(row.createdAt).getFullYear() >
+                                    new Date(row.createdAt).getFullYear() ===
                                   1
                                 }
                                 key={row.id}
