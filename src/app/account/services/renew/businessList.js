@@ -192,8 +192,8 @@ export default class BusinessList extends Component {
                             <TableCell>
                               <Button
                                 disabled={
-                                  new Date().getFullYear() -
-                                    new Date(row.createdAt).getFullYear() ===
+                                  new Date().getFullYear() +
+                                    new Date(row.createdAt).getFullYear() >=
                                   1
                                 }
                                 key={row.id}
