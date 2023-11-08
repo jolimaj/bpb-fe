@@ -33,7 +33,7 @@ export default class TrackingContent extends Component {
       width: 200,
       height: 200,
       backgroundImage: `url(${
-        this.state.permitList.length > 0
+        this.props.permitList.length > 0
           ? this.#imageSrc.completeBG.src
           : this.#imageSrc.incompleteBG.src
       })`,
@@ -41,7 +41,7 @@ export default class TrackingContent extends Component {
         color: "primary.main",
         cursor: "pointer",
         backgroundImage: `url(${
-          this.state.permitList.length > 0
+          this.props.permitList.length > 0
             ? this.#imageSrc.completeBGHover.src
             : this.#imageSrc.incompleteBGHover.src
         })`,
@@ -76,7 +76,7 @@ export default class TrackingContent extends Component {
             <Grid item xs={12} sm={12} md={12}>
               <RequirementsForm
                 code={this.#query}
-                permitList={this.state.permitList}
+                permitList={this.props.permitList}
               />
             </Grid>
           </Grid>

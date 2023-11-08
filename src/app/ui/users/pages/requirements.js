@@ -29,6 +29,10 @@ export default class TrackingContent extends Component {
 
   constructor(props) {
     super(props);
+    console.log(
+      "🚀 ~ file: requirements.js:32 ~ TrackingContent ~ constructor ~ props:",
+      props
+    );
     this.state = {};
     this.#imageSrc = ImageSrc();
     //api
