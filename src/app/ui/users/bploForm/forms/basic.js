@@ -93,7 +93,7 @@ export default class BasicInfoForm extends Component {
         error
       );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        //window.location.href = "/signin";
+        window.location.href = "/signin";
       }
       return error;
     }
