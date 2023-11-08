@@ -3,16 +3,8 @@ import { styled } from "@mui/material/styles";
 import { Typography, Button, Grid, Box } from "@mui/material";
 import ImageSrc from "../../vendor/common/images-constant";
 import RequirementsForm from "./requirements";
-
-import { AxiosInterceptor } from "../../common/interceptor";
-import ServiceConfig from "../../common/service-config";
-import { SERVICES } from "../../common/constant/services-constant";
-
 export default class TrackingContent extends Component {
   #imageSrc;
-  #serviceConfig;
-  #axiosGeneric;
-  #axiosUser;
   #route;
   #params;
   #query;
@@ -29,48 +21,6 @@ export default class TrackingContent extends Component {
     this.#query = this.#params.get("requirements");
     this.#route = props.route;
     this.#imageSrc = ImageSrc();
-    //api
-    this.#serviceConfig = new ServiceConfig();
-    this.#axiosGeneric = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
-    ).axios;
-    this.#axiosUser = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.USER)
-    ).axios;
-    this.getDepartmentList = this.getDepartmentList.bind(this);
-  }
-
-  async componentDidMount() {
-    await this.getDepartmentList();
-    await this.getMyPermit();
-  }
-
-  async getDepartmentList() {
-    try {
-      const req = await this.#axiosGeneric.get(`/generic/departmentCodes`, {
-        withCredentials: true,
-      });
-      this.setState({ departmentList: req.data });
-    } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
-      return error;
-    }
-  }
-
-  async getMyPermit() {
-    try {
-      const req = await this.#axiosUser.get("/services/businessPermit", {
-        withCredentials: true,
-      });
-      this.setState({ permitList: req.data });
-    } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
-      }
-      return error;
-    }
   }
 
   handleOpen(code) {
@@ -131,14 +81,14 @@ export default class TrackingContent extends Component {
             </Grid>
           </Grid>
         ) : (
-          this.state.departmentList.map((item) => (
+          this.props.departmentList.map((item) => (
             <Grid item xs={12} sm={12} md={3} key={item.id}>
               <ButtonItem
                 onClick={(e) => {
                   this.setState({ openRequirements: true, deptId: item.code });
                   this.handleOpen(item.code);
                 }}
-                disabled={this.state.permitList.length === 0}
+                disabled={this.props.permitList.length === 0}
               >
                 <Typography
                   variant="subtitle1"
