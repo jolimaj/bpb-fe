@@ -106,17 +106,23 @@ class ServiceForm extends Component {
 
   async handleSubmit() {
     try {
+      const formData = new FormData();
       const { applicantSignature, applicantPosition } = this.state;
+      formData.append("applicantPosition", applicantPosition);
+      formData.append(
+        Object.keys(this.state.requirement),
+        Object.values(this.state.requirement)
+      );
       const response = await this.#axios.post(
         "/services/businessPermit",
         {
           ...this.state.basicInfo,
           ...this.state.otherInfo,
           ...this.state.businessActivity,
-          ...this.state.requirement,
           ...this.state.signatures,
-          applicantSignature,
+          ...formData,
           applicantPosition,
+          type: 1,
         },
         {
           withCredentials: true,

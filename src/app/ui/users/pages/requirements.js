@@ -27,43 +27,59 @@ import {
 export default class TrackingContent extends Component {
   #imageSrc;
   #serviceConfig;
-  #axiosGeneric;
   #axiosUser;
 
   constructor(props) {
     super(props);
+    console.log(
+      "🚀 ~ file: requirements.js:35 ~ TrackingContent ~ constructor ~ props:",
+      props
+    );
     this.state = {
-      brgyBusinessClearance: "",
-      dtiReg: "",
-      locationalClearance: "",
-      leaseContract: "", //optional
-      picture: "",
-      certOfCompliance: "",
-      nationalAgencyAccredetation: "", //optional
-      marketClearance: "", //optional
-      homeOwnersClearance: "", //optional
-      cedula: "",
-      buidingpermit: "",
-      sanityPermit: "",
-      menroCert: "",
-      fireSafetyCert: "",
-      water: "",
-      mtoAssestmentRecord: "",
+      brgyBusinessClearance: null,
+      dtiReg: null,
+      locationalClearance: null,
+      leaseContract: null, //optional
+      picture: null,
+      certOfCompliance: null,
+      nationalAgencyAccredetation: null, //optional
+      marketClearance: null, //optional
+      homeOwnersClearance: null, //optional
+      cedula: null,
+      buidingpermit: null,
+      sanityPermit: null,
+      menroCert: null,
+      fireSafetyCert: null,
+      water: null,
+      mtoAssestmentRecord: null,
+      permitList: [],
     };
     this.#imageSrc = ImageSrc();
     //api
     this.#serviceConfig = new ServiceConfig();
-    this.#axiosGeneric = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
-    ).axios;
     this.#axiosUser = new AxiosInterceptor(
       this.#serviceConfig.getServicesConfig(SERVICES.USER)
     ).axios;
     this.requirementsChecklist = this.requirementsChecklist.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+  }
+  componentDidMount() {
+    this.getMyPermit();
   }
 
-  componentDidMount() {}
-
+  async getMyPermit() {
+    try {
+      const { data } = await this.#axiosUser.get("/services/businessPermit", {
+        withCredentials: true,
+      });
+      this.setState({ permitList: data });
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
+      return error;
+    }
+  }
   requirementsChecklist(code, req, type) {
     let val;
     switch (code) {
@@ -97,64 +113,94 @@ export default class TrackingContent extends Component {
       {
         name: "Barangay Business Clearance",
         file: req[0]?.brgyBusinessClearance,
+        record: this.state.permitList,
+        key: "brgyBusinessClearance",
       },
       {
         name: "DTI/SEC/CDA Registration",
         file: req[0]?.dtiReg,
+        record: this.state.permitList,
+        key: "dtiReg",
       },
       {
         name: "Lease Contract (if applicable)",
         file: req[0]?.leaseContract,
+        record: this.state.permitList,
+        key: "leaseContract",
       },
       {
         name: "Picture 2x2",
         file: req[0]?.picture,
+        record: this.state.permitList,
+        key: "picture",
       },
       {
         name: "SSS Cert, of Compliance",
         file: req[0]?.certOfCompliance,
+        record: this.state.permitList,
+        key: "certOfCompliance",
       },
       {
         name: "National Agency Accreditation (if applicable)",
         file: req[0]?.nationalAgencyAccredetation,
+        record: this.state.permitList,
+        key: "nationalAgencyAccredetation",
       },
       {
         name: "Market Clearance (for market vendors, if applicable)",
         file: req[0]?.marketClearance,
+        record: this.state.permitList,
+        key: "marketClearance",
       },
       {
         name: "Home Owner Clearance (if applicable)",
         file: req[0]?.homeOwnersClearance,
+        record: this.state.permitList,
+        key: "homeOwnersClearance",
       },
     ];
     const two = [
       {
         name: "Barangay Business Clearance",
         file: req[0]?.brgyBusinessClearance,
+        record: this.state.permitList,
+        key: "brgyBusinessClearance",
       },
       {
         name: "DTI/SEC/CDA Registration",
         file: req[0]?.dtiReg,
+        record: this.state.permitList,
+        key: "dtiReg",
       },
       {
         name: "Market Clearance (for market vendors)",
         file: req[0]?.marketClearance,
+        record: this.state.permitList,
+        key: "marketClearance",
       },
       {
         name: "SSS Cert, of Compliance",
         file: req[0]?.certOfCompliance,
+        record: this.state.permitList,
+        key: "certOfCompliance",
       },
       {
         name: "National Agency Accreditation - For Verifications (if applicable)",
         file: req[0]?.nationalAgencyAccredetation,
+        record: this.state.permitList,
+        key: "nationalAgencyAccredetation",
       },
       {
         name: "Lease Contract (if applicable) - For Verifications (if applicable)",
         file: req[0]?.leaseContract,
+        record: this.state.permitList,
+        key: "leaseContract",
       },
       {
         name: "Home Owner Clearance - For Verifications (if applicable)",
         file: req[0]?.homeOwnersClearance,
+        record: this.state.permitList,
+        key: "homeOwnersClearance",
       },
     ];
     return type === 1 ? one : two;
@@ -166,27 +212,38 @@ export default class TrackingContent extends Component {
         file: req[0]?.locationalClearance,
         disabled: type !== 1,
         key: "locationalClearance",
+        record: this.state.permitList,
       },
     ];
   }
 
   mtoList(req, type) {
+    console.log(
+      "🚀 ~ file: requirements.js:221 ~ TrackingContent ~ mtoList ~ req:",
+      req
+    );
     return [
       {
         name:
           type === 1 ? "Cedula - For Verification(If applicable)" : "Cedula",
         file: req[0]?.cedula,
         disabled: false,
+        record: this.state.permitList,
+        key: "cedula",
       },
       {
         name: "Water",
         file: req[0]?.water,
         disabled: type !== 1,
+        record: this.state.permitList,
+        key: "water",
       },
       {
         name: "MTO Accessment Record",
         file: req[0]?.mtoAssestmentRecord,
         disabled: type !== 1,
+        record: this.state.permitList,
+        key: "mtoAssestmentRecord",
       },
     ];
   }
@@ -196,6 +253,8 @@ export default class TrackingContent extends Component {
       {
         name: "Fire Safety Inspection Certificate Application Form",
         file: req[0]?.fireSafetyCert,
+        record: this.state.permitList,
+        key: "fireSafetyCert",
       },
     ];
   }
@@ -205,6 +264,8 @@ export default class TrackingContent extends Component {
       {
         name: "Sanitary Permit",
         file: req[0]?.sanityPermit,
+        record: this.state.permitList,
+        key: "sanityPermit",
       },
     ];
   }
@@ -215,6 +276,8 @@ export default class TrackingContent extends Component {
         name: "Municipal Environmental Certificate",
         file: req[0]?.menroCert,
         disabled: type !== 1,
+        record: this.state.permitList,
+        key: "menroCert",
       },
     ];
   }
@@ -227,12 +290,28 @@ export default class TrackingContent extends Component {
             ? "Renovation / Building Permit - For Verification(If applicable)"
             : "Renovation / Building Permit",
         file: req[0]?.buidingpermit,
+        record: this.state.permitList,
+        key: "buidingpermit",
       },
     ];
   }
 
-  async handleSave(name) {
+  handleOpen(code) {
+    window.location.href = `account?requirements=${code}`;
+  }
+
+  async handleSave(name, files, keyValue) {
+    const formData = new FormData();
+    formData.append(`${name}`, files[0]);
     try {
+      await this.#axiosUser.put(
+        `/services/requirements/${keyValue[0]?.id}`,
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
+      window.location.reload(true);
     } catch (error) {
       return error;
     }
@@ -272,7 +351,7 @@ export default class TrackingContent extends Component {
                       <CardMedia
                         component="img"
                         height="500"
-                        image="/static/images/cards/paella.jpg"
+                        image={values.file}
                         alt={values.name}
                       />
                     ) : (
@@ -333,7 +412,11 @@ export default class TrackingContent extends Component {
                         variant="contained"
                         startIcon={<SaveIcon color="secondary" />}
                         onClick={(e) => {
-                          this.handleSave(values.key);
+                          this.handleSave(
+                            values.key,
+                            this.state[values.key],
+                            item.BasicInfos
+                          );
                         }}
                       >
                         Save

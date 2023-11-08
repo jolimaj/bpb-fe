@@ -5,21 +5,17 @@ import ImageSrc from "../../vendor/common/images-constant";
 import RequirementsForm from "./requirements";
 export default class TrackingContent extends Component {
   #imageSrc;
-  #route;
   #params;
   #query;
 
   constructor(props) {
     super(props);
     this.state = {
-      departmentList: [],
-      permitList: [],
       openRequirements: false,
       deptId: null,
     };
     this.#params = new URLSearchParams(window.location.search);
     this.#query = this.#params.get("requirements");
-    this.#route = props.route;
     this.#imageSrc = ImageSrc();
   }
 
