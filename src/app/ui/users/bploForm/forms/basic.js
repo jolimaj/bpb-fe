@@ -69,10 +69,10 @@ export default class BasicInfoForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidMount() {
-    this.getBusinessType();
-    this.getPaymentType();
-    this.getUserData();
+  async componentDidMount() {
+    await this.getBusinessType();
+    await this.getPaymentType();
+    await this.getUserData();
   }
 
   async getUserData() {
@@ -93,7 +93,7 @@ export default class BasicInfoForm extends Component {
         error
       );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        // //window.location.href = "/signin";
+        window.location.href = "/signin";
       }
       return error;
     }
@@ -107,7 +107,7 @@ export default class BasicInfoForm extends Component {
       this.setState({ businessTypeList: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        //window.location.href = "/signin";
+        window.location.href = "/signin";
       }
       return error;
     }
@@ -121,7 +121,7 @@ export default class BasicInfoForm extends Component {
       this.setState({ paymentTypeList: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        //window.location.href = "/signin";
+        window.location.href = "/signin";
       }
       return error;
     }

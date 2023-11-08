@@ -57,7 +57,7 @@ export default class OtherInformation extends Component {
   }
   componentDidMount() {
     if (this.#basic.responseCode === "LOGIN_FIRST") {
-      //window.location.href = "/signin";
+      window.location.href = "/signin";
     }
   }
   async handleSubmit() {

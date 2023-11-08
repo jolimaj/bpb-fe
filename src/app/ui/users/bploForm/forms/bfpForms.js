@@ -41,7 +41,7 @@ export default class BFP extends Component {
         "🚀 ~ file: bfpForms.js:40 ~ BFP ~ componentDidMount ~ this.#basic.responseCode:",
         this.#basic.responseCode
       );
-      //window.location.href = "/signin";
+      window.location.href = "/signin";
     }
   }
   async handleSubmit() {
