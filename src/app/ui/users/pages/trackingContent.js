@@ -47,7 +47,9 @@ export default class TrackingContent extends Component {
 
   async getDepartmentList() {
     try {
-      const req = await this.#axiosGeneric.get(`/generic/departmentCodes`);
+      const req = await this.#axiosGeneric.get(`/generic/departmentCodes`, {
+        withCredentials: true,
+      });
       this.setState({ departmentList: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
