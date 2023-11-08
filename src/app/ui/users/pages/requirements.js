@@ -16,6 +16,10 @@ import ImageSrc from "../../vendor/common/images-constant";
 import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
 import { SERVICES } from "../../common/constant/services-constant";
+import {
+  CloudUpload as CloudUploadIcon,
+  Preview as PreviewIcon,
+} from "@mui/icons-material";
 
 export default class TrackingContent extends Component {
   #imageSrc;
@@ -267,15 +271,20 @@ export default class TrackingContent extends Component {
                     <CardActions>
                       <Button
                         size="large"
-                        color="tertiary"
+                        component="label"
+                        variant="contained"
                         disabled={values.disabled}
+                        startIcon={<CloudUploadIcon color="secondary" />}
+                        sx={{ marginRight: 2 }}
                       >
                         {values.file ? "Reupload" : "Upload"}
                       </Button>
                       <Button
                         size="large"
                         disabled={!values.file || values.disabled}
-                        color="tertiary"
+                        component="label"
+                        variant="contained"
+                        startIcon={<PreviewIcon color="secondary" />}
                       >
                         View
                       </Button>
