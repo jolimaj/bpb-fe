@@ -56,10 +56,25 @@ class ServiceForm extends Component {
     //api
     this.#serviceConfig = new ServiceConfig();
     this.#axios = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.USER)
+      this.#serviceConfig.getServicesConfig(SERVICES.ADMIN)
     ).axios;
   }
 
+  componentDidMount() {
+    this.getUserData();
+  }
+  async getUserData() {
+    try {
+      await this.#axios.get(`/profile`, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
+      return error;
+    }
+  }
   getStepContent(step) {
     switch (step) {
       case 0:
