@@ -14,11 +14,17 @@ export default class BFP extends Component {
   #axiosPermit;
   constructor(props) {
     super(props);
+    console.log(
+      "🚀 ~ file: bfpForms.js:17 ~ BFP ~ constructor ~ props:",
+      props
+    );
     this.#basic = props.basicFormData;
 
     this.state = {
       businessPermitID: "",
-      ownersName: this.#basic.taxPayerName,
+      ownersName: `${this.#basic?.fName} ${this.#basic?.mName} ${
+        this.#basic?.lName
+      }`,
       businessName: this.#basic.businessName,
       totalFloorArea: "",
       errorMessage: "",

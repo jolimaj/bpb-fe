@@ -14,7 +14,6 @@ export default class OtherInformation extends Component {
   constructor(props) {
     super(props);
     this.#basic = props.basicFormData;
-
     this.state = {
       businessPermitID: "",
       businessAddress: "",

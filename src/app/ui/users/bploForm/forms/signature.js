@@ -73,17 +73,17 @@ export default class SignatureForm extends Component {
       this.setState({
         errorMessage: "Applicant Signature and Applicant Position is Required",
       });
-    }
-
-    const { applicantSignature, applicantPosition } = this.state;
-    this.setState({
-      response: "valid",
-      signatureData: {
-        applicantSignature,
-        applicantPosition,
+    } else {
+      const { applicantSignature, applicantPosition } = this.state;
+      this.setState({
         response: "valid",
-      },
-    });
+        signatureData: {
+          applicantSignature,
+          applicantPosition,
+          response: "valid",
+        },
+      });
+    }
   }
   render() {
     return (
