@@ -87,10 +87,10 @@ class StaffPage extends Component {
   }
 
   async getDepartmentList() {
-    const data = this.state.session;
-    if (!data) {
-      window.location.href = "/signin";
-    }
+    // const data = this.state.session;
+    // if (!data) {
+    //   window.location.href = "/signin";
+    // }
     try {
       const req = await this.#axios.get(`/departments`, {
         withCredentials: true,
