@@ -75,9 +75,9 @@ export default class BasicInfoForm extends Component {
     const { data, code } = await this.getUserData();
     this.setState({
       responseCode: code,
-      fName: data.firstName,
-      lName: data.lastName,
-      mName: data.middleName,
+      fName: data?.firstName,
+      lName: data?.lastName,
+      mName: data?.middleName,
       userData: data,
     });
   }
@@ -88,6 +88,10 @@ export default class BasicInfoForm extends Component {
         withCredentials: true,
       });
     } catch (error) {
+      console.log(
+        "🚀 ~ file: basic.js:91 ~ BasicInfoForm ~ getUserData ~ error:",
+        error
+      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         //window.location.href = "/signin";
       }

@@ -40,9 +40,9 @@ export default class TrackingContent extends Component {
     this.getDepartmentList = this.getDepartmentList.bind(this);
   }
 
-  componentDidMount() {
-    this.getDepartmentList();
-    this.getMyPermit();
+  async componentDidMount() {
+    await this.getDepartmentList();
+    await this.getMyPermit();
   }
 
   async getDepartmentList() {
