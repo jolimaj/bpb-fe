@@ -225,6 +225,9 @@ class SignIn extends Component {
                             name="fName"
                             autoComplete="fName"
                             autoFocus
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
                             onChange={(e) => {
                               this.setState({ fName: e.target.value });
                             }}
@@ -239,6 +242,9 @@ class SignIn extends Component {
                             name="mName"
                             autoComplete="mName"
                             autoFocus
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
                             onChange={(e) => {
                               this.setState({ mName: e.target.value });
                             }}
@@ -253,6 +259,9 @@ class SignIn extends Component {
                             name="lName"
                             autoComplete="lName"
                             autoFocus
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
                             onChange={(e) => {
                               this.setState({ lName: e.target.value });
                             }}
@@ -266,6 +275,9 @@ class SignIn extends Component {
                             label="Mobile Number"
                             type="number"
                             fullWidth
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
                             variant="outlined"
                             onChange={(e) => {
                               this.setState({ mobile: e.target.value });
