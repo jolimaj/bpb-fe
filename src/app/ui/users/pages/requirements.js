@@ -80,7 +80,11 @@ export default class TrackingContent extends Component {
       return error;
     }
   }
-  requirementsChecklist(code, req, type) {
+  requirementsChecklist(id, code, req, type) {
+    console.log(
+      "🚀 ~ file: requirements.js:84 ~ TrackingContent ~ requirementsChecklist ~ id:",
+      id
+    );
     let val;
     switch (code) {
       case "MPDC":
@@ -220,7 +224,7 @@ export default class TrackingContent extends Component {
   mtoList(req, type) {
     console.log(
       "🚀 ~ file: requirements.js:221 ~ TrackingContent ~ mtoList ~ req:",
-      req
+      req[0]?.cedula
     );
     return [
       {
@@ -300,17 +304,13 @@ export default class TrackingContent extends Component {
     window.location.href = `account?requirements=${code}`;
   }
 
-  async handleSave(name, files, keyValue) {
+  async handleSave(name, files, id) {
     const formData = new FormData();
     formData.append(`${name}`, files[0]);
     try {
-      await this.#axiosUser.put(
-        `/services/requirements/${keyValue[0]?.id}`,
-        formData,
-        {
-          withCredentials: true,
-        }
-      );
+      await this.#axiosUser.put(`/services/requirements/${id}`, formData, {
+        withCredentials: true,
+      });
       window.location.reload(true);
     } catch (error) {
       return error;
@@ -321,7 +321,7 @@ export default class TrackingContent extends Component {
     return (
       <Grid item xs={12} sm={12} md={12}>
         {this.props.permitList.map((item) => (
-          <Grid item xs={12} sm={12} md={12}>
+          <Grid item xs={12} sm={12} md={12} key={item.id}>
             <Typography
               component="h1"
               variant="h4"
@@ -341,6 +341,7 @@ export default class TrackingContent extends Component {
             </Typography>
             <Grid item xs={12} sm={12} md={12}>
               {this.requirementsChecklist(
+                item.id,
                 this.props.code,
                 item.Requirements,
                 item.type
@@ -402,7 +403,17 @@ export default class TrackingContent extends Component {
                         variant="contained"
                         startIcon={<PreviewIcon color="secondary" />}
                       >
-                        View
+                        <a
+                          href={item.Requirements.map((re) =>
+                            re.businessPermitID === item.id
+                              ? re[values.key]
+                              : null
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          View
+                        </a>
                       </Button>
                       <Button
                         size="large"
@@ -415,7 +426,7 @@ export default class TrackingContent extends Component {
                           this.handleSave(
                             values.key,
                             this.state[values.key],
-                            item.BasicInfos
+                            item.id
                           );
                         }}
                       >
