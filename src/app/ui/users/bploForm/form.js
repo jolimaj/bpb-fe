@@ -155,7 +155,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.basicFormData
       ) {
         this.setState({
-          basicInfo: this.payload.current.state?.basicFormData,
+          basicInfo: this.payload.current.state,
         });
         this.handleNext();
       }
@@ -165,7 +165,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.otherInfoData
       ) {
         this.setState({
-          otherInfo: this.payload.current.state?.otherInfoData,
+          otherInfo: this.payload.current.state,
         });
         this.handleNext();
       }
@@ -174,7 +174,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.businessActivityData
       ) {
         this.setState({
-          businessActivity: this.payload.current.state?.businessActivityData,
+          businessActivity: this.payload.current.state,
         });
         this.handleNext();
       }
@@ -183,7 +183,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.bfpFormData
       ) {
         this.setState({
-          bfpFormData: this.payload.current.state?.bfpFormData,
+          bfpFormData: this.payload.current.state,
         });
         this.handleNext();
       }
@@ -201,7 +201,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.signatureData
       ) {
         this.setState({
-          signatures: this.payload.current.state?.signatureData,
+          signatures: this.payload.current.state,
         });
         this.handleNext();
       }
