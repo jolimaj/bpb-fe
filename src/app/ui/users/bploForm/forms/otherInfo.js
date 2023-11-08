@@ -121,8 +121,9 @@ export default class OtherInformation extends Component {
         }
       );
       this.setState({
-        response: response.data,
+        response,
         otherInfoData: {
+          response: "valid",
           businessAddress,
           businessPostalCode,
           businessTelephone,

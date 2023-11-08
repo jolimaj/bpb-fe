@@ -55,10 +55,34 @@ export default class SignatureForm extends Component {
     }
   }
   async handleSubmit() {
+    if (this.state.applicantSignature === "") {
+      this.setState({
+        errorMessage: "Applicant Signature is Required",
+      });
+    }
+    if (this.state.applicantPosition === "") {
+      this.setState({
+        errorMessage: "Applicant Position is Required",
+      });
+    }
+
+    if (
+      this.state.applicantPosition === "" &&
+      this.state.applicantSignature === ""
+    ) {
+      this.setState({
+        errorMessage: "Applicant Signature and Applicant Position is Required",
+      });
+    }
+
     const { applicantSignature, applicantPosition } = this.state;
     this.setState({
       response: "valid",
-      signatureData: { applicantSignature, applicantPosition },
+      signatureData: {
+        applicantSignature,
+        applicantPosition,
+        response: "valid",
+      },
     });
   }
   render() {

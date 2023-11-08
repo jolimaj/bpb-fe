@@ -144,10 +144,14 @@ class ServiceForm extends Component {
 
   async handleValidate() {
     await this.payload.current.handleSubmit();
+    console.log(
+      "🚀 ~ file: form.js:147 ~ ServiceForm ~ handleValidate ~ this.payload.current:",
+      this.payload.current
+    );
 
     setTimeout(() => {
       if (
-        this.payload.current.state.response === "valid" &&
+        this.payload.current.state?.response?.data === "valid" &&
         this.payload.current.state?.basicFormData
       ) {
         this.setState({
@@ -157,7 +161,7 @@ class ServiceForm extends Component {
       }
 
       if (
-        this.payload.current.state.response.data === "valid" &&
+        this.payload.current.state?.response?.data === "valid" &&
         this.payload.current.state?.otherInfoData
       ) {
         this.setState({
@@ -166,7 +170,7 @@ class ServiceForm extends Component {
         this.handleNext();
       }
       if (
-        this.payload.current.state.response.data === "valid" &&
+        this.payload.current.state?.response?.data === "valid" &&
         this.payload.current.state?.businessActivityData
       ) {
         this.setState({
@@ -175,7 +179,7 @@ class ServiceForm extends Component {
         this.handleNext();
       }
       if (
-        this.payload.current.state.response.data === "valid" &&
+        this.payload.current.state?.response?.data === "valid" &&
         this.payload.current.state?.bfpFormData
       ) {
         this.setState({
@@ -184,7 +188,7 @@ class ServiceForm extends Component {
         this.handleNext();
       }
       if (
-        this.payload.current.state.response.data === "valid" &&
+        this.payload.current.state?.response === "valid" &&
         this.payload.current.state?.requirementData
       ) {
         this.setState({
@@ -193,7 +197,7 @@ class ServiceForm extends Component {
         this.handleNext();
       }
       if (
-        this.payload.current.state.response.data === "valid" &&
+        this.payload.current.state?.response === "valid" &&
         this.payload.current.state?.signatureData
       ) {
         this.setState({

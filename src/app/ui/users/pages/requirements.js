@@ -6,7 +6,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
+  IconButton,
   CardMedia,
   Box,
   Grid,
@@ -19,6 +19,9 @@ import { SERVICES } from "../../common/constant/services-constant";
 import {
   CloudUpload as CloudUploadIcon,
   Preview as PreviewIcon,
+  FilePresentRounded as FilePresentRoundedIcon,
+  Close as CloseIcon,
+  Save as SaveIcon,
 } from "@mui/icons-material";
 
 export default class TrackingContent extends Component {
@@ -29,11 +32,24 @@ export default class TrackingContent extends Component {
 
   constructor(props) {
     super(props);
-    console.log(
-      "🚀 ~ file: requirements.js:32 ~ TrackingContent ~ constructor ~ props:",
-      props
-    );
-    this.state = {};
+    this.state = {
+      brgyBusinessClearance: "",
+      dtiReg: "",
+      locationalClearance: "",
+      leaseContract: "", //optional
+      picture: "",
+      certOfCompliance: "",
+      nationalAgencyAccredetation: "", //optional
+      marketClearance: "", //optional
+      homeOwnersClearance: "", //optional
+      cedula: "",
+      buidingpermit: "",
+      sanityPermit: "",
+      menroCert: "",
+      fireSafetyCert: "",
+      water: "",
+      mtoAssestmentRecord: "",
+    };
     this.#imageSrc = ImageSrc();
     //api
     this.#serviceConfig = new ServiceConfig();
@@ -149,6 +165,7 @@ export default class TrackingContent extends Component {
         name: "Locational Clearance",
         file: req[0]?.locationalClearance,
         disabled: type !== 1,
+        key: "locationalClearance",
       },
     ];
   }
@@ -212,6 +229,13 @@ export default class TrackingContent extends Component {
         file: req[0]?.buidingpermit,
       },
     ];
+  }
+
+  async handleSave(name) {
+    try {
+    } catch (error) {
+      return error;
+    }
   }
 
   render() {
@@ -279,8 +303,17 @@ export default class TrackingContent extends Component {
                         variant="contained"
                         disabled={values.disabled}
                         startIcon={<CloudUploadIcon color="secondary" />}
-                        sx={{ marginRight: 2 }}
                       >
+                        <input
+                          type="file"
+                          accept=".jpg, .png, .jpeg, .pdf"
+                          hidden
+                          onChange={(e) => {
+                            this.setState({
+                              [values.key]: e.target.files,
+                            });
+                          }}
+                        />
                         {values.file ? "Reupload" : "Upload"}
                       </Button>
                       <Button
@@ -292,8 +325,57 @@ export default class TrackingContent extends Component {
                       >
                         View
                       </Button>
+                      <Button
+                        size="large"
+                        disabled={!this.state[values.key]}
+                        component="label"
+                        color="success"
+                        variant="contained"
+                        startIcon={<SaveIcon color="secondary" />}
+                        onClick={(e) => {
+                          this.handleSave(values.key);
+                        }}
+                      >
+                        Save
+                      </Button>
                     </CardActions>
                   </Card>
+                  {this.state[values.key] && (
+                    <Box
+                      sx={{
+                        p: 2,
+                        alignContent: "center",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <FilePresentRoundedIcon
+                        color="primary"
+                        fontSize="medium"
+                        mr={2}
+                      />
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          fontStyle: "italic",
+                          marginRight: 2,
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                        }}
+                      >
+                        {this.state[values.key][0].name}
+                      </Typography>
+                      <IconButton
+                        color="error"
+                        onClick={(e) => {
+                          this.setState({ [values.key]: "" });
+                        }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  )}
                 </Box>
               ))}
             </Grid>

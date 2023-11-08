@@ -58,9 +58,15 @@ export default class BFP extends Component {
           withCredentials: true,
         }
       );
+
       this.setState({
-        response: response.data,
-        bfpFormData: { ownersName, businessName, totalFloorArea },
+        response,
+        bfpFormData: {
+          response: "valid",
+          ownersName,
+          businessName,
+          totalFloorArea,
+        },
       });
     } catch (error) {
       let response;

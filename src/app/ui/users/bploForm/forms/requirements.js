@@ -59,6 +59,7 @@ export default class RequiremenstInfo extends Component {
     this.setState({
       response: "valid",
       requirementData: {
+        response: "valid",
         brgyBusinessClearance,
         dtiReg,
         locationalClearance,

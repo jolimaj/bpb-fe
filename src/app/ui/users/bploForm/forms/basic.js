@@ -80,6 +80,10 @@ export default class BasicInfoForm extends Component {
       mName: data?.middleName,
       userData: data,
     });
+    console.log(
+      "🚀 ~ file: basic.js:83 ~ BasicInfoForm ~ componentDidMount ~ }:",
+      this.state.response
+    );
   }
 
   async getUserData() {
@@ -88,10 +92,6 @@ export default class BasicInfoForm extends Component {
         withCredentials: true,
       });
     } catch (error) {
-      console.log(
-        "🚀 ~ file: basic.js:91 ~ BasicInfoForm ~ getUserData ~ error:",
-        error
-      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         window.location.href = "/signin";
       }
@@ -158,26 +158,30 @@ export default class BasicInfoForm extends Component {
           withCredentials: true,
         }
       );
-      this.setState({
-        response: response.data,
-        basicFormData: {
-          responseCode,
-          userData: this.state.userData,
-          dateOfApplication,
-          dtiRegNo,
-          dtiRegDate,
-          tinNo,
-          businessTypeID,
-          enjoyTaxIncentive: enjoyTaxIncentive === "true" ? true : false,
-          notEnjoyTaxIncentive,
-          taxPayerName: `${this.state.fName} ${this.state.mName} ${this.state.lName}`,
-          businessName,
-          tradeFranchiseName,
-          amendementFrom,
-          amendementTo,
-          paymentTypeID,
-        },
-      });
+      this.setState({ response });
+
+      if (response) {
+        this.setState({
+          basicFormData: {
+            response: "valid",
+            responseCode,
+            userData: this.state.userData,
+            dateOfApplication,
+            dtiRegNo,
+            dtiRegDate,
+            tinNo,
+            businessTypeID,
+            enjoyTaxIncentive: enjoyTaxIncentive === "true" ? true : false,
+            notEnjoyTaxIncentive,
+            taxPayerName: `${this.state.fName} ${this.state.mName} ${this.state.lName}`,
+            businessName,
+            tradeFranchiseName,
+            amendementFrom,
+            amendementTo,
+            paymentTypeID,
+          },
+        });
+      }
     } catch (error) {
       let response;
       if (this.state.fName === "") {

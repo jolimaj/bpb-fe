@@ -107,9 +107,9 @@ export default class BusinessActivity extends Component {
         }
       );
       this.setState({
-        response: response.data,
+        response,
         businessActivityData: {
-          // lineOfBusiness,
+          response: "valid",
           line1,
           line2,
           line3,
