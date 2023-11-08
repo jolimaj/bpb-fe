@@ -73,10 +73,10 @@ class UserPage extends Component {
   }
 
   async getUserList() {
-    const data = this.state.session;
-    if (!data) {
-      window.location.href = "/signin";
-    }
+    // const data = this.state.session;
+    // if (!data) {
+    //   window.location.href = "/signin";
+    // }
     try {
       const req = await this.#axios.get(`/users`, {
         withCredentials: true,

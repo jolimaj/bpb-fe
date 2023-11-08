@@ -82,7 +82,9 @@ export default class BusinessPermitPage extends Component {
   async #newApplication() {
     const data = this.state.session;
     try {
-      const req = await this.#axios.get("businessPermit/new", data);
+      const req = await this.#axios.get("businessPermit/new", {
+        withCredentials: true,
+      });
       this.setState({
         rows: req.data.results,
         departmentData: req.data.departmentData,
@@ -102,7 +104,9 @@ export default class BusinessPermitPage extends Component {
       const query = this.state.name;
       const req = await this.#axios.get(
         `businessPermit/new?searhQuery=${query}`,
-        data
+        {
+          withCredentials: true,
+        }
       );
 
       this.setState({
@@ -121,7 +125,9 @@ export default class BusinessPermitPage extends Component {
     const data = this.state.session;
 
     try {
-      const req = await this.#axios.get("businessPermit/renew", data);
+      const req = await this.#axios.get("businessPermit/renew", {
+        withCredentials: true,
+      });
       this.setState({
         renewApplicationList: req.data.results,
         departmentData: req.data.departmentData,
@@ -140,7 +146,9 @@ export default class BusinessPermitPage extends Component {
       const query = this.state.name;
       const req = await this.#axios.get(
         `businessPermit/new?searchQuery=${query}`,
-        data
+        {
+          withCredentials: true,
+        }
       );
       this.setState({
         rows: req.data.results,
