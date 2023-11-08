@@ -88,6 +88,10 @@ export default class BasicInfoForm extends Component {
         userData: data,
       });
     } catch (error) {
+      console.log(
+        "🚀 ~ file: basic.js:91 ~ BasicInfoForm ~ getUserData ~ error:",
+        error
+      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         window.location.href = "/signin";
       }
@@ -102,6 +106,9 @@ export default class BasicInfoForm extends Component {
       });
       this.setState({ businessTypeList: req.data });
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
@@ -113,6 +120,9 @@ export default class BasicInfoForm extends Component {
       });
       this.setState({ paymentTypeList: req.data });
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
