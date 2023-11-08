@@ -66,9 +66,9 @@ class DashBoardPage extends Component {
     this.getDashBoardData();
   }
   async getDashBoardData() {
-    if (!this.state.session) {
-      window.location.href = "/signin";
-    }
+    // if (!this.state.session) {
+    //   window.location.href = "/signin";
+    // }
     try {
       const req = await this.#axios.get(`/dashboard`, {
         withCredentials: true,
