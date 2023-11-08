@@ -72,28 +72,24 @@ export default class BasicInfoForm extends Component {
   async componentDidMount() {
     await this.getBusinessType();
     await this.getPaymentType();
-    await this.getUserData();
+    const { data, code } = await this.getUserData();
+    this.setState({
+      responseCode: code,
+      fName: data.firstName,
+      lName: data.lastName,
+      mName: data.middleName,
+      userData: data,
+    });
   }
 
   async getUserData() {
     try {
-      const { data, code } = await this.#axiosAdmin.get(`/profile`, {
+      return await this.#axiosAdmin.get(`/profile`, {
         withCredentials: true,
       });
-      this.setState({
-        responseCode: code,
-        fName: data.firstName,
-        lName: data.lastName,
-        mName: data.middleName,
-        userData: data,
-      });
     } catch (error) {
-      console.log(
-        "🚀 ~ file: basic.js:91 ~ BasicInfoForm ~ getUserData ~ error:",
-        error
-      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        //window.location.href = "/signin";
       }
       return error;
     }
@@ -107,7 +103,7 @@ export default class BasicInfoForm extends Component {
       this.setState({ businessTypeList: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        //window.location.href = "/signin";
       }
       return error;
     }
@@ -121,7 +117,7 @@ export default class BasicInfoForm extends Component {
       this.setState({ paymentTypeList: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        //window.location.href = "/signin";
       }
       return error;
     }

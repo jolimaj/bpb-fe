@@ -60,8 +60,8 @@ class ServiceForm extends Component {
     ).axios;
   }
 
-  componentDidMount() {
-    this.getUserData();
+  async componentDidMount() {
+    await this.getUserData();
   }
   async getUserData() {
     try {
@@ -70,7 +70,7 @@ class ServiceForm extends Component {
       });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        // window.location.href = "/signin";
       }
       return error;
     }
