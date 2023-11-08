@@ -55,7 +55,11 @@ export default class OtherInformation extends Component {
     ).axios;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  componentDidMount() {
+    if (this.#basic.responseCode === "LOGIN_FIRST") {
+      window.location.href = "/signin";
+    }
+  }
   async handleSubmit() {
     try {
       const {

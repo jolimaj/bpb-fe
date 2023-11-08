@@ -31,6 +31,12 @@ export default class RequiremenstInfo extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.basicFormData.responseCode === "LOGIN_FIRST") {
+      window.location.href = "/signin";
+    }
+  }
+
   async handleSubmit() {
     const {
       brgyBusinessClearance,

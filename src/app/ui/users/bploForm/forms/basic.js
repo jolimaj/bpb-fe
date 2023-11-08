@@ -48,6 +48,7 @@ export default class BasicInfoForm extends Component {
       businessTypeList: [],
       paymentTypeList: [],
       userData: {},
+      responseCode: "",
 
       errorMessage: "",
       response: "",
@@ -76,10 +77,11 @@ export default class BasicInfoForm extends Component {
 
   async getUserData() {
     try {
-      const { data } = await this.#axiosAdmin.get(`/profile`, {
+      const { data, code } = await this.#axiosAdmin.get(`/profile`, {
         withCredentials: true,
       });
       this.setState({
+        responseCode: code,
         fName: data.firstName,
         lName: data.lastName,
         mName: data.middleName,
@@ -155,6 +157,7 @@ export default class BasicInfoForm extends Component {
       this.setState({
         response: response.data,
         basicFormData: {
+          responseCode,
           userData: this.state.userData,
           dateOfApplication,
           dtiRegNo,

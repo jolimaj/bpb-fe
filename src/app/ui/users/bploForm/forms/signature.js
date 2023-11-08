@@ -49,7 +49,11 @@ export default class SignatureForm extends Component {
     ).axios;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  componentDidMount() {
+    if (this.props.basicFormData.responseCode === "LOGIN_FIRST") {
+      window.location.href = "/signin";
+    }
+  }
   async handleSubmit() {
     const { applicantSignature, applicantPosition } = this.state;
     this.setState({

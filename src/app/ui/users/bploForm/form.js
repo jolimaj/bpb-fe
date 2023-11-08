@@ -72,15 +72,30 @@ class ServiceForm extends Component {
           />
         );
       case 2:
-        return <BusinessActivityInformation ref={this.payload} />;
+        return (
+          <BusinessActivityInformation
+            ref={this.payload}
+            basicFormData={this.state.basicInfo}
+          />
+        );
       case 3:
         return (
           <BFPForms ref={this.payload} basicFormData={this.state.basicInfo} />
         );
       case 4:
-        return <RequirementsList ref={this.payload} />;
+        return (
+          <RequirementsList
+            ref={this.payload}
+            basicFormData={this.state.basicInfo}
+          />
+        );
       case 5:
-        return <SignatureForm ref={this.payload} />;
+        return (
+          <SignatureForm
+            ref={this.payload}
+            basicFormData={this.state.basicInfo}
+          />
+        );
       default:
         return <BasicInformation ref={this.payload} />;
     }

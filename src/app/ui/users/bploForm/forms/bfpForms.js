@@ -35,6 +35,11 @@ export default class BFP extends Component {
     ).axios;
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  componentDidMount() {
+    if (this.#basic.responseCode === "LOGIN_FIRST") {
+      window.location.href = "/signin";
+    }
+  }
   async handleSubmit() {
     try {
       const { ownersName, businessName, totalFloorArea } = this.state;

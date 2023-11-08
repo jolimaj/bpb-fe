@@ -50,6 +50,9 @@ export default class TrackingContent extends Component {
       const req = await this.#axiosGeneric.get(`/generic/departmentCodes`);
       this.setState({ departmentList: req.data });
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
@@ -61,6 +64,9 @@ export default class TrackingContent extends Component {
       });
       this.setState({ permitList: req.data });
     } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        window.location.href = "/signin";
+      }
       return error;
     }
   }
