@@ -293,9 +293,9 @@ class ServiceForm extends Component {
                   <Stepper
                     activeStep={this.state.activeStep}
                     sx={{ pt: 3, pb: 5, maxWidth: 10 }}
-                    orientation={
-                      window.innerWidth < 720 ? "vertical" : "horizontal"
-                    }
+                    // orientation={
+                    //   window.innerWidth < 720 ? "vertical" : "horizontal"
+                    // }
                   >
                     {this.#steps.map((label, index) => (
                       <Step key={label}>
