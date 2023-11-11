@@ -129,7 +129,13 @@ class SignIn extends Component {
         JSON.stringify({ password, email })
       );
 
-      const res = await this.#axios.post(`/sign-in`, { password, email });
+      const res = await this.#axios.post(
+        `/sign-in`,
+        { password, email },
+        {
+          withcredentials: true,
+        }
+      );
       this.setState({ session });
       await this.handlePageRedirect(res.data.roleID);
     } catch (error) {
