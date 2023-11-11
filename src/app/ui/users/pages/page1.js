@@ -38,9 +38,12 @@ class Page1 extends Component {
     this.getMyPermit = this.getMyPermit.bind(this);
   }
 
-  componentDidMount() {
-    this.getMyPermit();
-    this.getDepartmentList();
+  async componentDidMount() {
+    const data = await this.getMyPermit();
+    if (data) {
+      this.setState({ permitList: data });
+    }
+    await this.getDepartmentList();
   }
 
   async getMyPermit() {
@@ -48,10 +51,14 @@ class Page1 extends Component {
       const { data } = await this.#axiosUser.get("/services/businessPermit", {
         withCredentials: true,
       });
-      this.setState({ permitList: data });
+      return data;
     } catch (error) {
+      console.log(
+        "🚀 ~ file: page1.js:53 ~ Page1 ~ getMyPermit ~ error:",
+        error
+      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        //window.location.href = "/signin";
       }
       return error;
     }

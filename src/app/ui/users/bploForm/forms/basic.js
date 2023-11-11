@@ -70,30 +70,32 @@ export default class BasicInfoForm extends Component {
   }
 
   async componentDidMount() {
+    const rw = await this.getUserData();
+    if (rw?.data) {
+      this.setState({
+        responseCode: rw?.code,
+        fName: rw?.data?.firstName,
+        lName: rw?.data?.lastName,
+        mName: rw?.data?.middleName,
+        userData: rw?.data,
+      });
+      console.log(
+        "🚀 ~ file: basic.js:83 ~ BasicInfoForm ~ componentDidMount ~ }:",
+        this.state.response
+      );
+    }
     await this.getBusinessType();
     await this.getPaymentType();
-    const { data, code } = await this.getUserData();
-    this.setState({
-      responseCode: code,
-      fName: data?.firstName,
-      lName: data?.lastName,
-      mName: data?.middleName,
-      userData: data,
-    });
-    console.log(
-      "🚀 ~ file: basic.js:83 ~ BasicInfoForm ~ componentDidMount ~ }:",
-      this.state.response
-    );
   }
 
   async getUserData() {
     try {
-      return await this.#axiosAdmin.get(`/profile`, {
+      return await this.#axiosPermit.get(`/profile`, {
         withCredentials: true,
       });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        // window.location.href = "/signin";
       }
       return error;
     }
