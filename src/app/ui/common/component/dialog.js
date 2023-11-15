@@ -11,7 +11,6 @@ import {
 import { INITIAL_ACCOUNT } from "../constant/endpoints/users";
 
 export default function AlertDialog(props) {
-  console.log("🚀 ~ file: dialog.js:14 ~ AlertDialog ~ props:", props);
   const handleClose = () => {
     switch (props.pathName) {
       case INITIAL_ACCOUNT.FORGOT:

@@ -97,7 +97,7 @@ export default class BasicInfoForm extends Component {
         typeof window !== "undefined" &&
         error?.response?.data?.code === "LOGIN_FIRST"
       ) {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       return error;
     }

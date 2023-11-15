@@ -73,7 +73,8 @@ class ActivatePage extends Component {
   async componentDidMount() {
     await this.handleCheckExpiry();
     setTimeout(() => {
-      if (this.state.timePassed) window.location.href = "/signin";
+      if (this.state.timePassed)
+        if (typeof window !== "undefined") window.location.href = "/signin";
     }, 1000);
   }
   async handleCheckExpiry() {
@@ -123,7 +124,7 @@ class ActivatePage extends Component {
           password: this.state.password,
         }
       );
-      window.location.href = "/signin";
+      if (typeof window !== "undefined") window.location.href = "/signin";
     } catch (error) {
       const response = errorResponse(error.response);
 
@@ -140,7 +141,7 @@ class ActivatePage extends Component {
     this.setState({ showConfirmPassword: !this.state.showConfirmPassword });
   }
   handleCancel() {
-    window.location.href = "/signin";
+    if (typeof window !== "undefined") window.location.href = "/signin";
   }
   render() {
     return (

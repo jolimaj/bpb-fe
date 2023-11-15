@@ -208,7 +208,8 @@ class Sidebar extends Component {
                   : (event) => {
                       this.props.selectPage(event, index);
                       this.setState({ selected: index });
-                      window.location.href = value.path;
+                      if (typeof window !== "undefined")
+                        window.location.href = value.path;
                     }
               }
             >
@@ -243,7 +244,8 @@ class Sidebar extends Component {
                       onClick={(event) => {
                         this.props.selectPage(event, index);
                         this.setState({ selected: index });
-                        window.location.href = vals.path;
+                        if (typeof window !== "undefined")
+                          window.location.href = vals.path;
                       }}
                     >
                       <ListItemIcon>{vals.icon}</ListItemIcon>

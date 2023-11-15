@@ -99,7 +99,7 @@ class StaffPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       this.setState({ errorMessage: error.message });
       return error;
@@ -114,7 +114,7 @@ class StaffPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -135,12 +135,12 @@ class StaffPage extends Component {
       });
       this.setState({ openForm: false });
       await this.getStaffList();
-      window.location.reload();
+      if (typeof window !== "undefined") window.location.reload(true);
 
       return req;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       const response = errorResponse(error.response);
 
@@ -161,11 +161,11 @@ class StaffPage extends Component {
           credentials: "include",
         }
       );
-      window.location.reload();
+      if (typeof window !== "undefined") window.location.reload(true);
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       return error;
     }
@@ -185,7 +185,7 @@ class StaffPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       return error;
     }

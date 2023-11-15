@@ -14,7 +14,7 @@ import Slider from "../common/component/slider";
 import Header from "../common/component/appBar";
 class LandingPage extends Component {
   handleLogin() {
-    window.location.href = "/signin";
+    if (typeof window !== "undefined") window.location.href = "/signin";
   }
   render() {
     return (

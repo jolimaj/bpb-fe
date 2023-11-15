@@ -54,7 +54,7 @@ export default class SignatureForm extends Component {
       typeof window !== "undefined" &&
       this.props.basicFormData.responseCode === "LOGIN_FIRST"
     ) {
-      window.location.href = "/signin";
+      if (typeof window !== "undefined") window.location.href = "/signin";
     }
   }
   async handleSubmit() {

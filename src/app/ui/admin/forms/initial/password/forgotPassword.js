@@ -87,7 +87,8 @@ class PasswordService extends Component {
       this.setState({ modal: true });
     }
     setTimeout(() => {
-      if (this.state.timePassed) window.location.href = "/signin";
+      if (this.state.timePassed)
+        if (typeof window !== "undefined") window.location.href = "/signin";
     }, 1000);
   }
   async handleCheckExpiry() {
@@ -131,7 +132,7 @@ class PasswordService extends Component {
       await this.#axios.patch(`/sign-in/forgotPassword/${this.#params}`, {
         password: this.state.password,
       });
-      window.location.href = "/signin";
+      if (typeof window !== "undefined") window.location.href = "/signin";
     } catch (error) {
       const response = errorResponse(error.response);
 
@@ -148,7 +149,7 @@ class PasswordService extends Component {
     this.setState({ showConfirmPassword: !this.state.showConfirmPassword });
   }
   handleCancel() {
-    window.location.href = "/signin";
+    if (typeof window !== "undefined") window.location.href = "/signin";
   }
   render() {
     return (

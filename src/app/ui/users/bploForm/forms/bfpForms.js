@@ -46,7 +46,7 @@ export default class BFP extends Component {
       typeof window !== "undefined" &&
       this.#basic.responseCode === "LOGIN_FIRST"
     ) {
-      window.location.href = "/signin";
+      if (typeof window !== "undefined") window.location.href = "/signin";
     }
   }
   async handleSubmit() {

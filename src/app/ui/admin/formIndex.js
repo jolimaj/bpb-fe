@@ -84,7 +84,7 @@ class SignIn extends Component {
       this.setState({ modal: true, expired: response });
 
       if (response === "This link was already expired.")
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       return response;
     }
   }
@@ -109,17 +109,18 @@ class SignIn extends Component {
     }
   }
   async handlePageRedirect(roleID) {
-    switch (roleID) {
-      case 1:
-        window.location.href = "/admin";
-        break;
-      case 2:
-        window.location.href = "/account";
-        break;
-      case 3:
-        window.location.href = "/account/departments";
-        break;
-    }
+    if (typeof window !== "undefined")
+      switch (roleID) {
+        case 1:
+          window.location.href = "/admin";
+          break;
+        case 2:
+          window.location.href = "/account";
+          break;
+        case 3:
+          window.location.href = "/account/departments";
+          break;
+      }
   }
   async handleSignIn() {
     try {

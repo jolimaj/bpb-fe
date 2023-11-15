@@ -84,7 +84,7 @@ class UserPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -104,7 +104,7 @@ class UserPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       return error;
     }
