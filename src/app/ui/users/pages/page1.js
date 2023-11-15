@@ -1,19 +1,30 @@
 import React, { Component } from "react";
 import { styled } from "@mui/material/styles";
-import { Paper, Grid, Container, Typography, Button, Box } from "@mui/material";
+import {
+  Paper,
+  Grid,
+  Container,
+  Typography,
+  Button,
+  Breadcrumbs,
+  Link,
+} from "@mui/material";
 import ImageSrc from "../../vendor/common/images-constant";
 import RequirementsForm from "./requirements";
 
 import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
 import { SERVICES } from "../../common/constant/services-constant";
+
 class Page1 extends Component {
   #serviceConfig;
   #axiosGeneric;
   #axiosUser;
   #imageSrc;
-  #params;
-  #query;
+  #queryView;
+  #queryID;
+  #queryRequirements;
+  #url;
 
   constructor(props) {
     super(props);
@@ -23,8 +34,10 @@ class Page1 extends Component {
       openRequirements: false,
       deptId: null,
     };
-    this.#params = new URLSearchParams(window.location.search);
-    this.#query = this.#params.get("requirements");
+    this.#queryRequirements = props.searchParams.get("requirements");
+    this.#queryView = props.searchParams.get("view");
+    this.#queryID = props.searchParams.get("permitId");
+    this.#url = `${props?.route}?${props?.searchParams}`;
     this.#imageSrc = ImageSrc();
     //api
     this.#serviceConfig = new ServiceConfig();
@@ -53,12 +66,8 @@ class Page1 extends Component {
       });
       return data;
     } catch (error) {
-      console.log(
-        "🚀 ~ file: page1.js:53 ~ Page1 ~ getMyPermit ~ error:",
-        error
-      );
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        //window.location.href = "/signin";
+        // window.location.href = "/signin";
       }
       return error;
     }
@@ -75,8 +84,18 @@ class Page1 extends Component {
   handleOpen(code) {
     window.location.href = `account?requirements=${code}`;
   }
+  handleCrumbs() {
+    window.location.href = `account`;
+  }
 
+  handleCrumbs2(key) {
+    window.location.href = `account?requirements=${key}`;
+  }
   render() {
+    console.log(
+      "🚀 ~ file: page1.js:94 ~ Page1 ~ render ~ render:",
+      this.#url.includes("view")
+    );
     const ButtonItem = styled(Button)(({ theme }) => ({
       padding: 5,
       width: 200,
@@ -115,32 +134,101 @@ class Page1 extends Component {
               }}
             >
               <Grid container spacing={3} padding={5}>
-                {this.#query ? (
-                  <Grid item xs={12} sm={12} md={12}>
+                {this.#url.includes("requirements") ? (
+                  <>
+                    {this.#url.includes("view") ? (
+                      <>
+                        <Breadcrumbs aria-label="breadcrumb">
+                          <Link
+                            underline="hover"
+                            color="primary"
+                            sx={{
+                              fontWeight: "bold",
+                              "&:hover": {
+                                color: "tertiary.text",
+                                cursor: "pointer",
+                              },
+                            }}
+                            onClick={this.handleCrumbs}
+                          >
+                            REQUIRMENTS
+                          </Link>
+                          <Link
+                            underline="hover"
+                            color="inherit"
+                            sx={{
+                              fontWeight: "bold",
+                              "&:hover": {
+                                color: "tertiary.text",
+                                cursor: "pointer",
+                              },
+                            }}
+                            onClick={(e) => {
+                              this.handleCrumbs2(this.#queryRequirements);
+                            }}
+                          >
+                            {this.#queryRequirements}
+                          </Link>
+                          <Typography color="text.primary">
+                            {this.#queryView}
+                          </Typography>
+                        </Breadcrumbs>
+                      </>
+                    ) : (
+                      <>
+                        <Breadcrumbs aria-label="breadcrumb">
+                          <Link
+                            underline="hover"
+                            color="primary"
+                            sx={{
+                              fontWeight: "bold",
+                              "&:hover": {
+                                color: "tertiary.text",
+                                cursor: "pointer",
+                              },
+                            }}
+                            onClick={this.handleCrumbs}
+                          >
+                            REQUIRMENTS
+                          </Link>
+
+                          <Typography color="text.primary">
+                            {this.#queryRequirements}
+                          </Typography>
+                        </Breadcrumbs>
+                      </>
+                    )}
+
                     <Grid item xs={12} sm={12} md={12}>
-                      <Typography
-                        component="h1"
-                        variant="h3"
-                        color="primary"
-                        noWrap
-                        sx={{
-                          flexGrow: 1,
-                          textTransform: "uppercase",
-                          fontWeight: "bold",
-                          textAlign: "center",
-                          marginBottom: 5,
-                        }}
-                      >
-                        {`${this.#query} Requirements`}
-                      </Typography>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <Typography
+                          component="h1"
+                          variant="h3"
+                          color="primary"
+                          noWrap
+                          sx={{
+                            flexGrow: 1,
+                            textTransform: "uppercase",
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            marginBottom: 5,
+                          }}
+                        >
+                          {`${this.#queryRequirements} Requirements`}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} sm={12} md={12}>
+                        <RequirementsForm
+                          name={this.#queryView}
+                          code={this.#queryRequirements}
+                          queryID={this.#queryID}
+                          route={this.props.route}
+                          permitList={permitList}
+                          url={this.#url}
+                        />
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={12}>
-                      <RequirementsForm
-                        code={this.#query}
-                        permitList={permitList}
-                      />
-                    </Grid>
-                  </Grid>
+                  </>
                 ) : (
                   departmentList.map((item) => (
                     <Grid item xs={12} sm={12} md={3} key={item.id}>

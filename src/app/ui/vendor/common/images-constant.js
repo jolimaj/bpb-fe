@@ -7,5 +7,6 @@ export default () => {
     incompleteBG: require("../images/4.png").default,
     incompleteBGHover: require("../images/3.png").default,
     empty: require("../images/placeholder-800x423.gif").default,
+    bank: require("../images/epp-logo.jpg").default,
   };
 };

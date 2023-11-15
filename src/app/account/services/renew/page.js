@@ -11,7 +11,11 @@ export default function AccountPage() {
   const pathName = usePathname();
   return (
     <ThemeProvider theme={theme}>
-      <Dashboard route={pathName} isUser={true} pageName={<MyBusinessList />} />
+      <Dashboard
+        route={pathName}
+        isUser={true}
+        pageName={<MyBusinessList pathName={pathName} />}
+      />
       <Copyright />
     </ThemeProvider>
   );

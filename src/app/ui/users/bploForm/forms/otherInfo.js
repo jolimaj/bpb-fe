@@ -13,22 +13,23 @@ export default class OtherInformation extends Component {
 
   constructor(props) {
     super(props);
+    this.renewData = this.props.renewData?.OtherInfos[0];
     this.#basic = props.basicFormData;
     this.state = {
       businessPermitID: "",
       businessAddress: "",
       businessPostalCode: "",
-      businessTelephone: "",
-      businessMobile: "",
-      businessEmail: "", // optional
+      businessTelephone: this.renewData ? this.renewData.businessTelephone : "",
+      businessMobile: this.renewData ? this.renewData.businessMobile : "",
+      businessEmail: this.renewData ? this.renewData.businessEmail : "",
       ownersAddress: "",
       ownersPostalCode: "",
       ownersTelephone: "",
       ownersMobile: this.#basic?.userData?.mobile,
       ownersEmail: this.#basic?.userData?.email, // optional
-      emergencyPerson: "",
-      emergencyAddress: "",
-      emergencyMobile: "",
+      emergencyPerson: this.renewData ? this.renewData.emergencyPerson : "",
+      emergencyAddress: this.renewData ? this.renewData.emergencyAddress : "",
+      emergencyMobile: this.renewData ? this.renewData.emergencyMobile : "",
       businessArea: 0,
       femaleEmployee: 0,
       maleEmployee: 0,
@@ -213,6 +214,8 @@ export default class OtherInformation extends Component {
               type="email"
               autoComplete="email-address"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.businessEmail}
               onChange={(e) => {
                 this.setState({ businessEmail: e.target.value });
               }}
@@ -228,6 +231,8 @@ export default class OtherInformation extends Component {
               required
               autoComplete="telephone-number"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.businessTelephone}
               onChange={(e) => {
                 this.setState({ businessTelephone: e.target.value });
               }}
@@ -243,6 +248,8 @@ export default class OtherInformation extends Component {
               required
               autoComplete="mobile-number"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.businessMobile}
               onChange={(e) => {
                 this.setState({ businessMobile: e.target.value });
               }}
@@ -334,6 +341,8 @@ export default class OtherInformation extends Component {
               required
               autoComplete="guardian"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.emergencyPerson}
               onChange={(e) => {
                 this.setState({ emergencyPerson: e.target.value });
               }}
@@ -348,6 +357,8 @@ export default class OtherInformation extends Component {
               required
               autoComplete="guardian-number"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.emergencyMobile}
               onChange={(e) => {
                 this.setState({ emergencyMobile: e.target.value });
               }}
@@ -362,6 +373,8 @@ export default class OtherInformation extends Component {
               required
               autoComplete="guardian-address"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.emergencyAddress}
               onChange={(e) => {
                 this.setState({ emergencyAddress: e.target.value });
               }}

@@ -1,19 +1,5 @@
 import React, { Component } from "react";
-import {
-  Grid,
-  Typography,
-  TextField,
-  Box,
-  Button,
-  IconButton,
-  Alert,
-} from "@mui/material";
-
-import {
-  CloudUpload as CloudUploadIcon,
-  FilePresentRounded as FilePresentRoundedIcon,
-  Close as CloseIcon,
-} from "@mui/icons-material";
+import { Grid, Typography, TextField, Box, Alert } from "@mui/material";
 
 import { AxiosInterceptor } from "../../../common/interceptor";
 import ServiceConfig from "../../../common/service-config";
@@ -26,6 +12,7 @@ export default class BusinessActivity extends Component {
   #axiosPermit;
   constructor(props) {
     super(props);
+    this.renewData = this.props.renewData?.BusinessActivities[0];
     this.#formData = new FormData();
     this.state = {
       selectedFile: "",
@@ -44,6 +31,12 @@ export default class BusinessActivity extends Component {
       capital1: null,
       capital2: null,
       capital3: null,
+      grossEssential1: null,
+      grossEssential2: null,
+      grossEssential3: null,
+      grossNonEssential1: null,
+      grossNonEssential2: null,
+      grossNonEssential3: null,
       applicantSignature: "",
       applicantPosition: "",
       errorMessage: "",
@@ -78,33 +71,65 @@ export default class BusinessActivity extends Component {
         capital1,
         capital2,
         capital3,
-        essentialGross,
-        nonEssentialGross,
-        applicantSignature,
-        applicantPosition,
+        grossEssential1,
+        grossEssential2,
+        grossEssential3,
+
+        grossNonEssential1,
+        grossNonEssential2,
+        grossNonEssential3,
       } = this.state;
+      const payloads = this.renewData
+        ? {
+            // lineOfBusiness,
+            line1,
+            line2,
+            line3,
+            type: this.renewData ? "2" : "1",
+            // noOfUnits,
+            units1,
+            units2,
+            units3,
+            // capitalization,
+
+            grossEssential1,
+            grossEssential2,
+            grossEssential3,
+
+            grossNonEssential1,
+            grossNonEssential2,
+            grossNonEssential3,
+            // applicantSignature,
+            //applicantPosition,
+          }
+        : {
+            // lineOfBusiness,
+            line1,
+            line2,
+            line3,
+            type: this.renewData ? "2" : "1",
+            // noOfUnits,
+            units1,
+            units2,
+            units3,
+            // capitalization,
+            capital1,
+            capital2,
+            capital3,
+
+            // applicantSignature,
+            //applicantPosition,
+          };
       const response = await this.#axiosPermit.post(
         "/services/businessPermit/validateBusinessActivity",
-        {
-          // lineOfBusiness,
-          line1,
-          line2,
-          line3,
-          type: "1",
-          // noOfUnits,
-          units1,
-          units2,
-          units3,
-          // capitalization,
-          capital1,
-          capital2,
-          capital3,
-          // applicantSignature,
-          //applicantPosition,
-        },
+        payloads,
         {
           withCredentials: true,
         }
+      );
+      console.log(
+        "🚀 ~ file: businessActivity.js:124 ~ BusinessActivity ~ handleSubmit ~ response:",
+        response
       );
       this.setState({
         response,
@@ -277,62 +302,202 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Typography
-              variant="subtitle1"
-              fontWeight="bold"
-              sx={{
-                fontWeight: "bold",
-                textTransform: "uppercase",
-                mb: 2,
-              }}
-            >
-              Capitalization
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="capital1"
-              name="capital1"
-              label="1"
-              fullWidth
-              required
-              type="number"
-              autoComplete="capital1"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ capital1: e.target.value });
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="capital2"
-              name="capital2"
-              type="number"
-              label="2"
-              fullWidth
-              autoComplete="capital2"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ capital2: e.target.value });
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <TextField
-              id="capital3"
-              name="capital3"
-              label="3"
-              fullWidth
-              type="number"
-              autoComplete="units3"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ capital3: e.target.value });
-              }}
-            />
-          </Grid>
+          {!this.renewData ? (
+            <>
+              <Grid item xs={12} sm={12}>
+                <Typography
+                  variant="subtitle1"
+                  fontWeight="bold"
+                  sx={{
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                    mb: 2,
+                  }}
+                >
+                  Capitalization
+                </Typography>
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id="capital1"
+                  name="capital1"
+                  label="1"
+                  fullWidth
+                  required
+                  type="number"
+                  autoComplete="capital1"
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ capital1: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id="capital2"
+                  name="capital2"
+                  type="number"
+                  label="2"
+                  fullWidth
+                  autoComplete="capital2"
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ capital2: e.target.value });
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <TextField
+                  id="capital3"
+                  name="capital3"
+                  label="3"
+                  fullWidth
+                  type="number"
+                  autoComplete="units3"
+                  variant="outlined"
+                  onChange={(e) => {
+                    this.setState({ capital3: e.target.value });
+                  }}
+                />
+              </Grid>
+            </>
+          ) : (
+            <>
+              <Grid item xs={12} sm={12}>
+                <Grid item xs={12} sm={12}>
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="bold"
+                    color="tertiary.main"
+                    sx={{
+                      fontWeight: "bold",
+                      textTransform: "uppercase",
+                      my: 2,
+                      textAlign: "center",
+                    }}
+                  >
+                    Gross/Sales Receipts
+                  </Typography>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={12}>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={{
+                        fontWeight: "bold",
+                        textTransform: "uppercase",
+                        my: 2,
+                      }}
+                    >
+                      Esssential
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossEssential1"
+                      name="grossEssential1"
+                      label="1"
+                      fullWidth
+                      required
+                      type="number"
+                      autoComplete="grossEssential1"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossEssential1: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossEssential2"
+                      name="grossEssential2"
+                      type="number"
+                      label="2"
+                      fullWidth
+                      autoComplete="grossEssential2"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossEssential2: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossEssential4"
+                      name="grossEssential4"
+                      label="3"
+                      fullWidth
+                      type="number"
+                      autoComplete="units3"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossEssential4: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                  <Grid item xs={12} sm={12}>
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="bold"
+                      sx={{
+                        fontWeight: "bold",
+                        textTransform: "uppercase",
+                        my: 2,
+                      }}
+                    >
+                      Non-Esssential
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossNonEssential1"
+                      name="grossNonEssential1"
+                      label="1"
+                      fullWidth
+                      required
+                      type="number"
+                      autoComplete="grossNonEssential1"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossNonEssential1: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossNonEssential2"
+                      name="grossNonEssential2"
+                      type="number"
+                      label="2"
+                      fullWidth
+                      autoComplete="grossNonEssential2"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossNonEssential2: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <TextField
+                      id="grossNonEssential3"
+                      name="grossNonEssential3"
+                      label="3"
+                      fullWidth
+                      type="number"
+                      autoComplete="units3"
+                      variant="outlined"
+                      onChange={(e) => {
+                        this.setState({ grossNonEssential3: e.target.value });
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+            </>
+          )}
         </Grid>
       </Box>
     );

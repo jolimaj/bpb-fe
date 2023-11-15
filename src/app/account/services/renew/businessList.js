@@ -8,8 +8,11 @@ import {
   TableRow,
   Chip,
   Button,
+  Typography,
+  Breadcrumbs,
 } from "@mui/material";
 import Table from "../../../ui/common/component/table";
+import RenewalForm from "../../../ui/users/bploForm/form";
 
 import { AxiosInterceptor } from "../../../ui/common/interceptor";
 import ServiceConfig from "../../../ui/common/service-config";
@@ -31,6 +34,8 @@ export default class BusinessList extends Component {
       review: false,
       applicantDetails: "",
       departmentData: "",
+      renew: false,
+      renewData: {},
     };
     this.newApplicationColumn = [
       { id: "ID", label: "Business Permit Number", width: 20 },
@@ -133,94 +138,124 @@ export default class BusinessList extends Component {
   handleReviewClose() {
     this.setState({ review: false });
   }
+
+  handleRenewBusiness(rowe) {
+    this.setState({ renew: !this.state.renew, renewData: rowe });
+  }
+
   render() {
     return (
-      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Paper
-          sx={{
-            p: 2,
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <Box sx={{ width: "100%" }}>
-            <Table
-              rows={this.state.rows}
-              columns={this.newApplicationColumn}
-              pageLength={this.state?.rows?.length ?? 0}
-              tableBody={
-                this.state.rows.length > 0 ? (
-                  <TableBody>
-                    {this.state.rows
-                      .slice(
-                        this.state.page * this.state.rowsPerPage,
-                        this.state.page * this.state.rowsPerPage +
-                          this.state.rowsPerPage
-                      )
-                      .map((row) => {
-                        return (
-                          <TableRow key={row.id}>
-                            <TableCell align="center">{`BPB-${row.id}`}</TableCell>
-                            <TableCell align="center">
-                              {row?.BasicInfos[0]?.businessName}
-                            </TableCell>
-                            <TableCell align="center">
-                              {this.handleBusinessType(
-                                row?.BasicInfos[0]?.businessTypeID
-                              )}
-                            </TableCell>
+      <>
+        {this.state.renew ? (
+          <RenewalForm
+            pathName={this.props?.pathName}
+            renewData={this.state.renewData}
+          />
+        ) : (
+          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Paper
+              sx={{
+                p: 2,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Box sx={{ width: "100%" }}>
+                <Typography
+                  component="h1"
+                  variant="h4"
+                  align="center"
+                  color="primary"
+                  sx={{
+                    fontWeight: "bold",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  My Business Permits
+                </Typography>
 
-                            <TableCell align="center">
-                              <Chip
-                                label={
-                                  row.status === 0
-                                    ? "Processing"
-                                    : row.status > 1
-                                    ? "Accepted"
-                                    : "Rejected"
-                                }
-                                color={this.handleStatusColor(row.status)}
-                              />
-                            </TableCell>
-                            <TableCell align="center">
-                              {`${
-                                new Date(row.createdAt).getMonth() + 1
-                              }/${new Date(row.createdAt).getDate()}/${new Date(
-                                row.createdAt
-                              ).getFullYear()}`}
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                disabled={
-                                  new Date().getFullYear() +
-                                    new Date(row.createdAt).getFullYear() >=
-                                  1
-                                }
-                                key={row.id}
-                                // onClick={() => this.handleReview(row)}
-                              >
-                                Renew
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })}
-                  </TableBody>
-                ) : (
-                  <TableBody>
-                    <TableRow hover>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                      <TableCell align="center"></TableCell>
-                    </TableRow>
-                  </TableBody>
-                )
-              }
-            />
-          </Box>
-        </Paper>
-      </Container>
+                <Table
+                  rows={this.state.rows}
+                  columns={this.newApplicationColumn}
+                  pageLength={this.state?.rows?.length ?? 0}
+                  tableBody={
+                    this.state.rows.length > 0 ? (
+                      <TableBody>
+                        {this.state.rows
+                          .slice(
+                            this.state.page * this.state.rowsPerPage,
+                            this.state.page * this.state.rowsPerPage +
+                              this.state.rowsPerPage
+                          )
+                          .map((row) => {
+                            return (
+                              <TableRow key={row.id}>
+                                <TableCell align="center">{`BPB-${row.id}`}</TableCell>
+                                <TableCell align="center">
+                                  {row?.BasicInfos[0]?.businessName}
+                                </TableCell>
+                                <TableCell align="center">
+                                  {this.handleBusinessType(
+                                    row?.BasicInfos[0]?.businessTypeID
+                                  )}
+                                </TableCell>
+
+                                <TableCell align="center">
+                                  <Chip
+                                    label={
+                                      row.status === 0
+                                        ? "Processing"
+                                        : row.status > 1
+                                        ? "Accepted"
+                                        : "Rejected"
+                                    }
+                                    color={this.handleStatusColor(row.status)}
+                                  />
+                                </TableCell>
+                                <TableCell align="center">
+                                  {`${
+                                    new Date(row.createdAt).getMonth() + 1
+                                  }/${new Date(
+                                    row.createdAt
+                                  ).getDate()}/${new Date(
+                                    row.createdAt
+                                  ).getFullYear()}`}
+                                </TableCell>
+                                <TableCell>
+                                  <Button
+                                    disabled={
+                                      new Date(row.createdAt).getFullYear() ===
+                                      new Date().getFullYear()
+                                    }
+                                    key={row.id}
+                                    onClick={(e) =>
+                                      this.handleRenewBusiness(row)
+                                    }
+                                  >
+                                    Renew
+                                  </Button>
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                      </TableBody>
+                    ) : (
+                      <TableBody>
+                        <TableRow hover>
+                          <TableCell align="center"></TableCell>
+                          <TableCell align="center"></TableCell>
+                          <TableCell align="center"></TableCell>
+                          <TableCell align="center"></TableCell>
+                        </TableRow>
+                      </TableBody>
+                    )
+                  }
+                />
+              </Box>
+            </Paper>
+          </Container>
+        )}
+      </>
     );
   }
 }

@@ -12,6 +12,7 @@ import {
   Grid,
 } from "@mui/material";
 import ImageSrc from "../../vendor/common/images-constant";
+import Viewer from "./viewFile";
 
 import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
@@ -31,28 +32,26 @@ export default class TrackingContent extends Component {
 
   constructor(props) {
     super(props);
-    console.log(
-      "🚀 ~ file: requirements.js:35 ~ TrackingContent ~ constructor ~ props:",
-      props
-    );
     this.state = {
-      brgyBusinessClearance: null,
-      dtiReg: null,
-      locationalClearance: null,
-      leaseContract: null, //optional
-      picture: null,
-      certOfCompliance: null,
-      nationalAgencyAccredetation: null, //optional
-      marketClearance: null, //optional
-      homeOwnersClearance: null, //optional
-      cedula: null,
-      buidingpermit: null,
-      sanityPermit: null,
-      menroCert: null,
-      fireSafetyCert: null,
-      water: null,
-      mtoAssestmentRecord: null,
+      brgyBusinessClearance: "",
+      dtiReg: "",
+      locationalClearance: "",
+      leaseContract: "", //optional
+      picture: "",
+      certOfCompliance: "",
+      nationalAgencyAccredetation: "", //optional
+      marketClearance: "", //optional
+      homeOwnersClearance: "", //optional
+      cedula: "",
+      buidingpermit: "",
+      sanityPermit: "",
+      menroCert: "",
+      fireSafetyCert: "",
+      water: "",
+      mtoAssestmentRecord: "",
       permitList: [],
+      viewFile: false,
+      fileName: "",
     };
     this.#imageSrc = ImageSrc();
     //api
@@ -62,6 +61,7 @@ export default class TrackingContent extends Component {
     ).axios;
     this.requirementsChecklist = this.requirementsChecklist.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
   }
   componentDidMount() {
     this.getMyPermit();
@@ -75,16 +75,12 @@ export default class TrackingContent extends Component {
       this.setState({ permitList: data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        // window.location.href = "/signin";
       }
       return error;
     }
   }
   requirementsChecklist(id, code, req, type) {
-    console.log(
-      "🚀 ~ file: requirements.js:84 ~ TrackingContent ~ requirementsChecklist ~ id:",
-      id
-    );
     let val;
     switch (code) {
       case "MPDC":
@@ -304,6 +300,10 @@ export default class TrackingContent extends Component {
     window.location.href = `account?requirements=${code}`;
   }
 
+  handleViewFile(key, id) {
+    window.location.href = `${window.location.href}&permitId=${id}&view=${key}`;
+  }
+
   async handleSave(name, files, id) {
     const formData = new FormData();
     formData.append(`${name}`, files[0]);
@@ -317,93 +317,119 @@ export default class TrackingContent extends Component {
     }
   }
 
+  async handleAdd(name, files, id) {
+    const formData = new FormData();
+    formData.append(`${name}`, files[0]);
+    formData.append("id", id);
+    try {
+      await this.#axiosUser.post(`/services/requirements`, formData, {
+        withCredentials: true,
+      });
+      window.location.reload(true);
+    } catch (error) {
+      return error;
+    }
+  }
+
   render() {
     return (
       <Grid item xs={12} sm={12} md={12}>
-        {this.props.permitList.map((item) => (
-          <Grid item xs={12} sm={12} md={12} key={item.id}>
-            <Typography
-              component="h1"
-              variant="h4"
-              color="tertiary.main"
-              noWrap
-              sx={{
-                flexGrow: 1,
-                textTransform: "uppercase",
-                fontWeight: "bold",
-                textAlign: "left",
-                marginY: 5,
-              }}
-            >
-              {`${item.BasicInfos.map((vals) => vals.businessName)} (${
-                item.type === 1 ? "NEW" : "FOR RENEWAL"
-              })`}
-            </Typography>
-            <Grid item xs={12} sm={12} md={12}>
-              {this.requirementsChecklist(
-                item.id,
-                this.props.code,
-                item.Requirements,
-                item.type
-              ).map((values) => (
-                <Box sx={{ minWidth: 200, marginY: 5 }}>
-                  <Card variant="outlined">
-                    {values.file ? (
-                      <CardMedia
-                        component="img"
-                        height="500"
-                        image={values.file}
-                        alt={values.name}
-                      />
-                    ) : (
-                      <CardMedia
-                        component="img"
-                        height="500"
-                        image={this.#imageSrc.empty.src}
-                        alt={values.name}
-                      />
-                    )}
-                    <CardContent>
-                      <Typography
-                        sx={{
-                          fontWeight: "bold",
-                          textAlign: "center",
-                        }}
-                        color="primary"
-                        gutterBottom
-                        variant="h5"
-                      >
-                        {values.name}
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        size="large"
-                        component="label"
-                        variant="contained"
-                        disabled={values.disabled}
-                        startIcon={<CloudUploadIcon color="secondary" />}
-                      >
-                        <input
-                          type="file"
-                          accept=".jpg, .png, .jpeg, .pdf"
-                          hidden
-                          onChange={(e) => {
-                            this.setState({
-                              [values.key]: e.target.files,
-                            });
-                          }}
-                        />
-                        {values.file ? "Reupload" : "Upload"}
-                      </Button>
-                      <Button
-                        size="large"
-                        disabled={!values.file || values.disabled}
-                        component="label"
-                        variant="contained"
-                        startIcon={<PreviewIcon color="secondary" />}
-                      >
-                        <a
+        {this.props.url.includes("view") ? (
+          <Viewer
+            name={this.props.name}
+            fileName={this.fileName}
+            queryID={this.props.queryID}
+          />
+        ) : (
+          <>
+            {this.props.permitList.map((item) => (
+              <Grid item xs={12} sm={12} md={12} key={item.id}>
+                <Typography
+                  component="h1"
+                  variant="h4"
+                  color="tertiary.main"
+                  noWrap
+                  sx={{
+                    flexGrow: 1,
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                    textAlign: "left",
+                    marginY: 5,
+                  }}
+                >
+                  {`${item.BasicInfos.map((vals) => vals.businessName)} (${
+                    item.type === 1 ? "NEW" : "FOR RENEWAL"
+                  })`}
+                </Typography>
+                <Grid item xs={12} sm={12} md={12}>
+                  {this.requirementsChecklist(
+                    item.id,
+                    this.props.code,
+                    item.Requirements,
+                    item.type
+                  ).map((values) => (
+                    <Box sx={{ minWidth: 200, marginY: 5 }}>
+                      <Card variant="outlined">
+                        {values.file ? (
+                          <CardMedia
+                            component="img"
+                            height="500"
+                            image={values.file}
+                            alt={values.name}
+                          />
+                        ) : (
+                          <CardMedia
+                            component="img"
+                            height="500"
+                            image={this.#imageSrc.empty.src}
+                            alt={values.name}
+                          />
+                        )}
+                        <CardContent>
+                          <Typography
+                            sx={{
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                            color="primary"
+                            gutterBottom
+                            variant="h5"
+                          >
+                            {values.name}
+                          </Typography>
+                        </CardContent>
+                        <CardActions>
+                          <Button
+                            size="large"
+                            component="label"
+                            variant="contained"
+                            disabled={values.disabled}
+                            startIcon={<CloudUploadIcon color="secondary" />}
+                          >
+                            <input
+                              type="file"
+                              accept=".jpg, .png, .jpeg, .pdf"
+                              hidden
+                              onChange={(e) => {
+                                this.setState({
+                                  [values.key]: e.target.files,
+                                });
+                              }}
+                            />
+                            {values.file ? "Reupload" : "Upload"}
+                          </Button>
+                          <Button
+                            size="large"
+                            disabled={!values.file || values.disabled}
+                            component="label"
+                            variant="contained"
+                            startIcon={<PreviewIcon color="secondary" />}
+                            onClick={(e) => {
+                              this.handleViewFile(values.name, item.id);
+                            }}
+                          >
+                            View
+                            {/* <a
                           href={item.Requirements.map((re) =>
                             re.businessPermitID === item.id
                               ? re[values.key]
@@ -413,68 +439,78 @@ export default class TrackingContent extends Component {
                           rel="noreferrer"
                         >
                           View
-                        </a>
-                      </Button>
-                      <Button
-                        size="large"
-                        disabled={!this.state[values.key]}
-                        component="label"
-                        color="success"
-                        variant="contained"
-                        startIcon={<SaveIcon color="secondary" />}
-                        onClick={(e) => {
-                          this.handleSave(
-                            values.key,
-                            this.state[values.key],
-                            item.id
-                          );
-                        }}
-                      >
-                        Save
-                      </Button>
-                    </CardActions>
-                  </Card>
-                  {this.state[values.key] && (
-                    <Box
-                      sx={{
-                        p: 2,
-                        alignContent: "center",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FilePresentRoundedIcon
-                        color="primary"
-                        fontSize="medium"
-                        mr={2}
-                      />
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          fontStyle: "italic",
-                          marginRight: 2,
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                        }}
-                      >
-                        {this.state[values.key][0].name}
-                      </Typography>
-                      <IconButton
-                        color="error"
-                        onClick={(e) => {
-                          this.setState({ [values.key]: "" });
-                        }}
-                      >
-                        <CloseIcon />
-                      </IconButton>
+                        </a> */}
+                          </Button>
+                          <Button
+                            size="large"
+                            disabled={!this.state[values.key]}
+                            component="label"
+                            color="success"
+                            variant="contained"
+                            startIcon={<SaveIcon color="secondary" />}
+                            onClick={(e) => {
+                              {
+                                values.file
+                                  ? this.handleSave(
+                                      values.key,
+                                      this.state[values.key],
+                                      item.id
+                                    )
+                                  : this.handleAdd(
+                                      values.key,
+                                      this.state[values.key],
+                                      item.id
+                                    );
+                              }
+                            }}
+                          >
+                            Save
+                          </Button>
+                        </CardActions>
+                      </Card>
+                      {this.state[values.key] && (
+                        <Box
+                          sx={{
+                            p: 2,
+                            alignContent: "center",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <FilePresentRoundedIcon
+                            color="primary"
+                            fontSize="medium"
+                            mr={2}
+                          />
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              fontStyle: "italic",
+                              marginRight: 2,
+                              textOverflow: "ellipsis",
+                              overflow: "hidden",
+                            }}
+                          >
+                            {this.state[values.key][0].name}
+                          </Typography>
+                          <IconButton
+                            color="error"
+                            onClick={(e) => {
+                              this.setState({ [values.key]: "" });
+                            }}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                        </Box>
+                      )}
                     </Box>
-                  )}
-                </Box>
-              ))}
-            </Grid>
-          </Grid>
-        ))}
+                  ))}
+                </Grid>
+              </Grid>
+            ))}
+          </>
+        )}
       </Grid>
     );
   }

@@ -1,4 +1,5 @@
 import React, { Component, createRef } from "react";
+import useWindowSize from "@rooks/use-window-size";
 import {
   Box,
   Container,
@@ -22,6 +23,7 @@ import { AxiosInterceptor } from "../../common/interceptor";
 import ServiceConfig from "../../common/service-config";
 import { errorResponse } from "../../common/erroResponse";
 import { SERVICES } from "../../common/constant/services-constant";
+
 class ServiceForm extends Component {
   #steps;
   #axios;
@@ -64,12 +66,20 @@ class ServiceForm extends Component {
   getStepContent(step) {
     switch (step) {
       case 0:
-        return <BasicInformation ref={this.payload} />;
+        return (
+          <BasicInformation
+            ref={this.payload}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
+          />
+        );
       case 1:
         return (
           <OtherInformation
             ref={this.payload}
             basicFormData={this.state.basicInfo}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
           />
         );
       case 2:
@@ -77,17 +87,26 @@ class ServiceForm extends Component {
           <BusinessActivityInformation
             ref={this.payload}
             basicFormData={this.state.basicInfo}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
           />
         );
       case 3:
         return (
-          <BFPForms ref={this.payload} basicFormData={this.state.basicInfo} />
+          <BFPForms
+            ref={this.payload}
+            basicFormData={this.state.basicInfo}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
+          />
         );
       case 4:
         return (
           <RequirementsList
             ref={this.payload}
             basicFormData={this.state.basicInfo}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
           />
         );
       case 5:
@@ -95,10 +114,18 @@ class ServiceForm extends Component {
           <SignatureForm
             ref={this.payload}
             basicFormData={this.state.basicInfo}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
           />
         );
       default:
-        return <BasicInformation ref={this.payload} />;
+        return (
+          <BasicInformation
+            ref={this.payload}
+            pathName={this.props?.pathName}
+            renewData={this.props?.renewData}
+          />
+        );
     }
   }
   handleNext() {
@@ -114,23 +141,44 @@ class ServiceForm extends Component {
         Object.keys(this.state.requirement),
         Object.values(this.state.requirement)
       );
-      const response = await this.#axios.post(
-        "/services/businessPermit",
-        {
-          ...this.state.basicInfo,
-          ...this.state.otherInfo,
-          ...this.state.businessActivity,
-          ...this.state.signatures,
-          ...formData,
-          applicantPosition,
-          type: 1,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const response = this.props?.pathName?.includes("/renew")
+        ? await this.#axios.put(
+            `/services/businessPermit/${this.renewData.id}`,
+            {
+              ...this.state.basicInfo,
+              ...this.state.otherInfo,
+              ...this.state.businessActivity,
+              ...this.state.signatures,
+              ...formData,
+              applicantPosition,
+              type: 2,
+              queueNo: "",
+              qrCode: "",
+            }
+          )
+        : await this.#axios.post(
+            "/services/businessPermit",
+            {
+              ...this.state.basicInfo,
+              ...this.state.otherInfo,
+              ...this.state.businessActivity,
+              ...this.state.signatures,
+              ...formData,
+              applicantPosition,
+              type: 1,
+              queueNo: "",
+              qrCode: "",
+            },
+            {
+              withCredentials: true,
+            }
+          );
       this.setState({ response: response.data });
     } catch (error) {
+      console.log(
+        "🚀 ~ file: form.js:178 ~ ServiceForm ~ handleSubmit ~ error:",
+        error
+      );
       let response;
       response = errorResponse(error.response);
       this.setState({ errorMessage: response });
@@ -151,10 +199,6 @@ class ServiceForm extends Component {
 
   async handleValidate() {
     await this.payload.current.handleSubmit();
-    console.log(
-      "🚀 ~ file: form.js:147 ~ ServiceForm ~ handleValidate ~ this.payload.current:",
-      this.payload.current
-    );
 
     setTimeout(() => {
       if (
@@ -224,6 +268,8 @@ class ServiceForm extends Component {
   }
 
   render() {
+    // const innerWidth = useWindowSize();
+
     return (
       <>
         <Grid container spacing={3}>
@@ -246,6 +292,17 @@ class ServiceForm extends Component {
                     }}
                   >
                     Application form for Business Permit
+                  </Typography>
+                  <Typography
+                    component="h1"
+                    variant="h6"
+                    align="center"
+                    color="tertiary.main"
+                    sx={{
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {this.props?.pathName?.includes("/renew") ? "RENEW" : "NEW"}
                   </Typography>
                   <Typography
                     component="h1"
@@ -293,9 +350,7 @@ class ServiceForm extends Component {
                   <Stepper
                     activeStep={this.state.activeStep}
                     sx={{ pt: 3, pb: 5, maxWidth: 10 }}
-                    // orientation={
-                    //   window.innerWidth < 720 ? "vertical" : "horizontal"
-                    // }
+                    // orientation={innerWidth < 720 ? "vertical" : "horizontal"}
                   >
                     {this.#steps.map((label, index) => (
                       <Step key={label}>

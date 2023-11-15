@@ -9,6 +9,8 @@ import { usePathname, useSearchParams } from "next/navigation";
 
 export default function AccountPage() {
   const pathName = usePathname();
+  const searchParams = useSearchParams();
+
   return (
     <ThemeProvider theme={theme}>
       <Dashboard route={pathName} isUser={true} pageName={<TrackingPage />} />

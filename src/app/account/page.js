@@ -6,11 +6,12 @@ import Copyright from "../ui/common/component/copyright";
 import Dashboard from "../ui/admin/dashboard/dashboard.js";
 import TrackingPage from "../ui/users/pages/page1";
 import theme from "../ui/config/theme";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function AccountPage() {
   const pathName = usePathname();
-  const paramss = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const cookies = new Cookies();
   const [session, setSession] = useState(cookies.get("session"));
   return (
@@ -19,7 +20,11 @@ export default function AccountPage() {
         route={pathName}
         isUser={true}
         pageName={
-          <TrackingPage route={pathName} params={paramss} session={session} />
+          <TrackingPage
+            route={pathName}
+            session={session}
+            searchParams={searchParams}
+          />
         }
       />
       <Copyright />

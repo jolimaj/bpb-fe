@@ -58,7 +58,10 @@ class Sidebar extends Component {
         icon: (
           <ServiceIcon
             color={
-              props.pathName === USERS_ENDPOINTS.SERVICES ? "primary" : "fourth"
+              props.pathName === USERS_ENDPOINTS.SERVICES ||
+              props.pathName.includes(USERS_ENDPOINTS.SERVICES)
+                ? "primary"
+                : "fourth"
             }
           />
         ),

@@ -23,11 +23,11 @@ import { errorResponse } from "@/app/ui/common/erroResponse";
 
 export default class BasicInfoForm extends Component {
   #serviceConfig;
-  #axiosAdmin;
   #axios;
   #axiosPermit;
   constructor(props) {
     super(props);
+    this.renewData = this.props.renewData?.BasicInfos[0];
     this.state = {
       dateOfApplication: new Date(),
       dtiRegNo: "",
@@ -40,8 +40,10 @@ export default class BasicInfoForm extends Component {
       lName: "",
       mName: "",
       taxPayerName: "",
-      businessName: "",
-      tradeFranchiseName: "",
+      businessName: this.renewData ? this.renewData?.businessName : "",
+      tradeFranchiseName: this.renewData
+        ? this.renewData?.tradeFranchiseName
+        : "",
       amendementFrom: 1,
       amendementTo: 2,
       paymentTypeID: 1,
@@ -58,9 +60,6 @@ export default class BasicInfoForm extends Component {
     this.#serviceConfig = new ServiceConfig();
     this.#axios = new AxiosInterceptor(
       this.#serviceConfig.getServicesConfig(SERVICES.MAIN)
-    ).axios;
-    this.#axiosAdmin = new AxiosInterceptor(
-      this.#serviceConfig.getServicesConfig(SERVICES.ADMIN)
     ).axios;
     this.#axiosPermit = new AxiosInterceptor(
       this.#serviceConfig.getServicesConfig(SERVICES.USER)
@@ -464,6 +463,8 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="businessName"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.businessName}
               onChange={(e) => {
                 this.setState({ businessName: e.target.value });
               }}
@@ -478,6 +479,8 @@ export default class BasicInfoForm extends Component {
               fullWidth
               autoComplete="tradeName"
               variant="outlined"
+              disabled={this.renewData}
+              value={this.state.tradeFranchiseName}
               onChange={(e) => {
                 this.setState({ tradeFranchiseName: e.target.value });
               }}
