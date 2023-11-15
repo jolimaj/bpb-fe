@@ -75,7 +75,7 @@ export default class TrackingContent extends Component {
       this.setState({ permitList: data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        window.location.href = "/signin";
+        if (typeof window !== "undefined") window.location.href = "/signin";
       }
       return error;
     }
@@ -313,7 +313,7 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.put(`/services/requirements/${id}`, formData, {
         withCredentials: true,
       });
-      window.location.reload(true);
+      if (typeof window !== "undefined") window.location.reload(true);
     } catch (error) {
       return error;
     }
@@ -327,7 +327,7 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.post(`/services/requirements`, formData, {
         withCredentials: true,
       });
-      window.location.reload(true);
+      if (typeof window !== "undefined") window.location.reload(true);
     } catch (error) {
       return error;
     }

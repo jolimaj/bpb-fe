@@ -172,7 +172,10 @@ export default class ViewerFile extends Component {
 
       this.setState({ permitList: data });
     } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
+      if (
+        typeof window !== "undefined" &&
+        error?.response?.data?.code === "LOGIN_FIRST"
+      ) {
         window.location.href = "/signin";
       }
       return error;
