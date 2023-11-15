@@ -42,11 +42,10 @@ export default class BFP extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    if (this.#basic.responseCode === "LOGIN_FIRST") {
-      console.log(
-        "🚀 ~ file: bfpForms.js:40 ~ BFP ~ componentDidMount ~ this.#basic.responseCode:",
-        this.#basic.responseCode
-      );
+    if (
+      typeof window !== "undefined" &&
+      this.#basic.responseCode === "LOGIN_FIRST"
+    ) {
       window.location.href = "/signin";
     }
   }

@@ -66,8 +66,11 @@ class Page1 extends Component {
       });
       return data;
     } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
-        // window.location.href = "/signin";
+      if (
+        typeof window !== "undefined" &&
+        error?.response?.data?.code === "LOGIN_FIRST"
+      ) {
+        window.location.href = "/signin";
       }
       return error;
     }
@@ -82,20 +85,18 @@ class Page1 extends Component {
     }
   }
   handleOpen(code) {
-    window.location.href = `account?requirements=${code}`;
+    if (typeof window !== "undefined")
+      window.location.href = `account?requirements=${code}`;
   }
   handleCrumbs() {
-    window.location.href = `account`;
+    if (typeof window !== "undefined") window.location.href = `account`;
   }
 
   handleCrumbs2(key) {
-    window.location.href = `account?requirements=${key}`;
+    if (typeof window !== "undefined")
+      window.location.href = `account?requirements=${key}`;
   }
   render() {
-    console.log(
-      "🚀 ~ file: page1.js:94 ~ Page1 ~ render ~ render:",
-      this.#url.includes("view")
-    );
     const ButtonItem = styled(Button)(({ theme }) => ({
       padding: 5,
       width: 200,

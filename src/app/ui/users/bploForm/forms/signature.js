@@ -50,7 +50,10 @@ export default class SignatureForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    if (this.props.basicFormData.responseCode === "LOGIN_FIRST") {
+    if (
+      typeof window !== "undefined" &&
+      this.props.basicFormData.responseCode === "LOGIN_FIRST"
+    ) {
       window.location.href = "/signin";
     }
   }

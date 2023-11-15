@@ -75,7 +75,7 @@ export default class TrackingContent extends Component {
       this.setState({ permitList: data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        // window.location.href = "/signin";
+        window.location.href = "/signin";
       }
       return error;
     }
@@ -297,11 +297,13 @@ export default class TrackingContent extends Component {
   }
 
   handleOpen(code) {
-    window.location.href = `account?requirements=${code}`;
+    if (typeof window !== "undefined")
+      window.location.href = `account?requirements=${code}`;
   }
 
   handleViewFile(key, id) {
-    window.location.href = `${window.location.href}&permitId=${id}&view=${key}`;
+    if (typeof window !== "undefined")
+      window.location.href = `${window.location.href}&permitId=${id}&view=${key}`;
   }
 
   async handleSave(name, files, id) {

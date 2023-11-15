@@ -93,8 +93,11 @@ export default class BasicInfoForm extends Component {
         withCredentials: true,
       });
     } catch (error) {
-      if (error?.response?.data?.code === "LOGIN_FIRST") {
-        // window.location.href = "/signin";
+      if (
+        typeof window !== "undefined" &&
+        error?.response?.data?.code === "LOGIN_FIRST"
+      ) {
+        window.location.href = "/signin";
       }
       return error;
     }
