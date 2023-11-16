@@ -61,7 +61,7 @@ class ProfilePage extends Component {
   async updateUserData() {
     try {
       await this.#axios.put(`/profile`, this.state);
-      this.props.reloadPage();
+      window.location.reload(true);
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");

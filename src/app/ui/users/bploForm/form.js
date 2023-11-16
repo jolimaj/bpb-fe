@@ -145,20 +145,21 @@ class ServiceForm extends Component {
         Object.keys(this.state.requirement),
         Object.values(this.state.requirement)
       );
+      const updatePayload = {
+        ...this.state.basicInfo,
+        ...this.state.otherInfo,
+        ...this.state.businessActivity,
+        ...this.state.signatures,
+        ...formData,
+        applicantPosition,
+        type: 2,
+        updatedAt: new Date(),
+      };
+
       const response = this.props?.pathName?.includes("/renew")
         ? await this.#axios.put(
-            `/services/businessPermit/${this.renewData.id}`,
-            {
-              ...this.state.basicInfo,
-              ...this.state.otherInfo,
-              ...this.state.businessActivity,
-              ...this.state.signatures,
-              ...formData,
-              applicantPosition,
-              type: 2,
-              queueNo: "",
-              qrCode: "",
-            }
+            `/services/businessPermit/${this.state.signatures.businessPermitID}`,
+            updatePayload
           )
         : await this.#axios.post(
             "/services/businessPermit",
@@ -264,7 +265,7 @@ class ServiceForm extends Component {
   }
 
   handleReload() {
-    this.props.reloadPage();
+    window.location.reload(true);
   }
 
   handleCheckBasic() {

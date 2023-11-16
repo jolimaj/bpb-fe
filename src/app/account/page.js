@@ -6,12 +6,7 @@ import Copyright from "../ui/common/component/copyright";
 import Dashboard from "../ui/admin/dashboard/dashboard.js";
 import TrackingPage from "../ui/users/pages/page1";
 import theme from "../ui/config/theme";
-import {
-  usePathname,
-  useRouter,
-  useSearchParams,
-  redirect,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function AccountPage() {
   const pathName = usePathname();
@@ -23,8 +18,12 @@ export default function AccountPage() {
   function redirectPage(path) {
     router.push(path);
   }
+  async function replacePage(path, newPath) {
+    console.log("🚀 ~ file: page.js:22 ~ replacePage ~ path:", path);
+    router.replace(path, newPath);
+  }
   function reloadPage() {
-    router.reload();
+    router.refresh();
   }
   return (
     <ThemeProvider theme={theme}>
@@ -38,6 +37,7 @@ export default function AccountPage() {
             searchParams={searchParams}
             redirect={redirectPage}
             reloadPage={reloadPage}
+            replacePage={replacePage}
           />
         }
         reloadPage={reloadPage}

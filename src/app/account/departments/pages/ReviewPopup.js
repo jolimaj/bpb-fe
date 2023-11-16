@@ -59,7 +59,7 @@ export default function FormDialog(props) {
         data
       );
       props.handleClose();
-      this.props.reloadPage();
+      window.location.reload(true);
     } catch (error) {
       return error;
     }

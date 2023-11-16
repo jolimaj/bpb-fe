@@ -131,7 +131,7 @@ class StaffPage extends Component {
       });
       this.setState({ openForm: false });
       await this.getStaffList();
-      this.props.reloadPage();
+      window.location.reload(true);
 
       return req;
     } catch (error) {
@@ -157,7 +157,7 @@ class StaffPage extends Component {
           credentials: "include",
         }
       );
-      this.props.reloadPage();
+      window.location.reload(true);
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {

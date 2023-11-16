@@ -32,6 +32,10 @@ export default class TrackingContent extends Component {
 
   constructor(props) {
     super(props);
+    console.log(
+      "🚀 ~ file: requirements.js:35 ~ TrackingContent ~ constructor ~ props:",
+      props
+    );
     this.state = {
       brgyBusinessClearance: "",
       dtiReg: "",
@@ -218,10 +222,6 @@ export default class TrackingContent extends Component {
   }
 
   mtoList(req, type) {
-    console.log(
-      "🚀 ~ file: requirements.js:221 ~ TrackingContent ~ mtoList ~ req:",
-      req[0]?.cedula
-    );
     return [
       {
         name:
@@ -297,11 +297,11 @@ export default class TrackingContent extends Component {
   }
 
   handleOpen(code) {
-    this.props.redirect(`account?requirements=${code}`);
+    window.location.replace(`account?requirements=${code}`);
   }
 
   handleViewFile(key, id) {
-    this.props.redirect(`${this.props.route}&permitId=${id}&view=${key}`);
+    window.location.href = `${this.props.url}&permitId=${id}&view=${key}`;
   }
 
   async handleSave(name, files, id) {
@@ -311,7 +311,7 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.put(`/services/requirements/${id}`, formData, {
         withCredentials: true,
       });
-      this.props.reloadPage();
+      window.location.reload(true);
     } catch (error) {
       return error;
     }
@@ -325,13 +325,17 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.post(`/services/requirements`, formData, {
         withCredentials: true,
       });
-      this.props.reloadPage();
+      window.location.reload(true);
     } catch (error) {
       return error;
     }
   }
 
   render() {
+    console.log(
+      "🚀 ~ file: requirements.js:335 ~ TrackingContent ~ render ~ render:",
+      this.props.url
+    );
     return (
       <Grid item xs={12} sm={12} md={12}>
         {this.props.url.includes("view") ? (
@@ -342,7 +346,7 @@ export default class TrackingContent extends Component {
           />
         ) : (
           <>
-            {this.props.permitList.map((item) => (
+            {this.props?.permitList?.map((item) => (
               <Grid item xs={12} sm={12} md={12} key={item.id}>
                 <Typography
                   component="h1"
@@ -367,7 +371,7 @@ export default class TrackingContent extends Component {
                     this.props.code,
                     item.Requirements,
                     item.type
-                  ).map((values) => (
+                  )?.map((values) => (
                     <Box sx={{ minWidth: 200, marginY: 5 }}>
                       <Card variant="outlined">
                         {values.file ? (

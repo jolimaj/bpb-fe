@@ -33,6 +33,7 @@ class Page1 extends Component {
       permitList: [],
       openRequirements: false,
       deptId: null,
+      open: false,
     };
     this.#queryRequirements = props.searchParams.get("requirements");
     this.#queryView = props.searchParams.get("view");
@@ -49,6 +50,9 @@ class Page1 extends Component {
     ).axios;
     this.getDepartmentList = this.getDepartmentList.bind(this);
     this.getMyPermit = this.getMyPermit.bind(this);
+    this.handleCrumbs = this.handleCrumbs.bind(this);
+    this.handleCrumbs2 = this.handleCrumbs2.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
   }
 
   async componentDidMount() {
@@ -82,14 +86,14 @@ class Page1 extends Component {
     }
   }
   handleOpen(code) {
-    this.props.redirect(`account?requirements=${code}`);
+    window.location.replace(`/account?requirements=${code}`);
   }
   handleCrumbs() {
-    this.props.redirect(`account`);
+    window.location.replace(`/account`);
   }
 
   handleCrumbs2(key) {
-    this.props.redirect(`account?requirements=${key}`);
+    window.location.replace(`/account?requirements=${key}`);
   }
   render() {
     const ButtonItem = styled(Button)(({ theme }) => ({
