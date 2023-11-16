@@ -6,20 +6,37 @@ import Copyright from "../../../ui/common/component/copyright";
 import Dashboard from "../../../ui/admin/dashboard/dashboard.js";
 import BusinessPermitPage from "../pages/businessPermitPage";
 import theme from "../../../ui/config/theme";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Department() {
   const pathName = usePathname();
   const cookies = new Cookies();
+  const router = useRouter();
 
   const [session, setSession] = useState(cookies.get("session"));
+
+  async function redirectPage(path) {
+    router.push(path);
+  }
+
+  async function reloadPage() {
+    router.reload();
+  }
 
   return (
     <ThemeProvider theme={theme}>
       <Dashboard
         route={pathName}
         isUser={false}
-        pageName={<BusinessPermitPage session={session} />}
+        pageName={
+          <BusinessPermitPage
+            session={session}
+            redirect={redirectPage}
+            reloadPage={reloadPage}
+          />
+        }
+        reloadPage={reloadPage}
+        redirect={redirectPage}
       />
       <Copyright />
     </ThemeProvider>

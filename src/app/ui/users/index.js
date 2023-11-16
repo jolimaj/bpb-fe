@@ -14,7 +14,7 @@ import Slider from "../common/component/slider";
 import Header from "../common/component/appBar";
 class LandingPage extends Component {
   handleLogin() {
-    if (typeof window !== "undefined") window.location.href = "/signin";
+    this.props.redirect("/signin");
   }
   render() {
     return (
@@ -22,7 +22,7 @@ class LandingPage extends Component {
         <Grid item xs={12}>
           <Header />
           <Grid item xs={12}>
-            <Grid container spacing={2} xs={6} sm={12}>
+            <Grid container spacing={2}>
               <Grid item xs={12} sm={12} md={6}>
                 <Box
                   sx={{

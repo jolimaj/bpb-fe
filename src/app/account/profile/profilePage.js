@@ -51,7 +51,7 @@ class ProfilePage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -61,7 +61,7 @@ class ProfilePage extends Component {
   async updateUserData() {
     try {
       await this.#axios.put(`/profile`, this.state);
-      if (typeof window !== "undefined") window.location.reload(true);
+      this.props.reloadPage();
     } catch (error) {
       this.setState({ errorResponse: error.message });
       return error;

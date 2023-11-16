@@ -75,7 +75,7 @@ export default class TrackingContent extends Component {
       this.setState({ permitList: data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -297,13 +297,11 @@ export default class TrackingContent extends Component {
   }
 
   handleOpen(code) {
-    if (typeof window !== "undefined")
-      window.location.href = `account?requirements=${code}`;
+    this.props.redirect(`account?requirements=${code}`);
   }
 
   handleViewFile(key, id) {
-    if (typeof window !== "undefined")
-      window.location.href = `${window.location.href}&permitId=${id}&view=${key}`;
+    this.props.redirect(`${this.props.route}&permitId=${id}&view=${key}`);
   }
 
   async handleSave(name, files, id) {
@@ -313,7 +311,7 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.put(`/services/requirements/${id}`, formData, {
         withCredentials: true,
       });
-      if (typeof window !== "undefined") window.location.reload(true);
+      this.props.reloadPage();
     } catch (error) {
       return error;
     }
@@ -327,7 +325,7 @@ export default class TrackingContent extends Component {
       await this.#axiosUser.post(`/services/requirements`, formData, {
         withCredentials: true,
       });
-      if (typeof window !== "undefined") window.location.reload(true);
+      this.props.reloadPage();
     } catch (error) {
       return error;
     }

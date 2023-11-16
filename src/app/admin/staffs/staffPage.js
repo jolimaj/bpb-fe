@@ -87,10 +87,6 @@ class StaffPage extends Component {
   }
 
   async getDepartmentList() {
-    // const data = this.state.session;
-    // if (!data) {
-    //   window.location.href = "/signin";
-    // }
     try {
       const req = await this.#axios.get(`/departments`, {
         withCredentials: true,
@@ -99,7 +95,7 @@ class StaffPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorMessage: error.message });
       return error;
@@ -114,7 +110,7 @@ class StaffPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -135,12 +131,12 @@ class StaffPage extends Component {
       });
       this.setState({ openForm: false });
       await this.getStaffList();
-      if (typeof window !== "undefined") window.location.reload(true);
+      this.props.reloadPage();
 
       return req;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       const response = errorResponse(error.response);
 
@@ -161,11 +157,11 @@ class StaffPage extends Component {
           credentials: "include",
         }
       );
-      if (typeof window !== "undefined") window.location.reload(true);
+      this.props.reloadPage();
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -185,7 +181,7 @@ class StaffPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }

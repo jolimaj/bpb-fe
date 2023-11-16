@@ -74,31 +74,35 @@ class DashboardPage extends Component {
   }
 
   #userPage(index) {
+    let pathName;
     switch (index) {
       case 0:
-        window.location.href = "/account";
+        pathName = "/account";
         break;
       case 1:
-        window.location.href = "/account/services";
+        pathName = "/account/services";
         break;
       default:
-        window.location.href = "/account";
+        pathName = "/account";
     }
+    this.props.redirect(pathName);
   }
   #adminPage(index) {
+    let pathName;
     switch (index) {
       case 0:
-        window.location.href = "/admin";
+        pathName = "/admin";
         break;
       case 1:
-        window.location.href = "/admin/departments";
+        pathName = "/admin/departments";
         break;
       case 3:
-        window.location.href = "/admin/staff";
+        pathName = "/admin/staff";
         break;
       default:
-        window.location.href = "/admin";
+        pathName = "/admin";
     }
+    this.props.redirect(pathName);
   }
   selectPage(event, index) {
     if (this.isUser) {
@@ -120,19 +124,19 @@ class DashboardPage extends Component {
     const logoutData = await this.#axios.post("/sign-out");
     if (logoutData) {
       this.cookies.remove("session");
-      window.location.href = ADMIN_ENDPOINTS.SIGN_IN;
+      this.props.redirect(ADMIN_ENDPOINTS.SIGN_IN);
     }
   }
   async handleClick(event) {
     switch (event) {
       case 1:
-        window.location.href = this.pathName.includes(
-          ADMIN_ENDPOINTS.ADMIN_DASHBOARD
-        )
-          ? ADMIN_ENDPOINTS.PROFILE
-          : this.pathName.includes(USERS_ENDPOINTS.USERS_DASHBOARD)
-          ? USERS_ENDPOINTS.PROFILE
-          : STAFF_ENDPOINTS.PROFILE;
+        this.props.redirect(
+          this.pathName.includes(ADMIN_ENDPOINTS.ADMIN_DASHBOARD)
+            ? ADMIN_ENDPOINTS.PROFILE
+            : this.pathName.includes(USERS_ENDPOINTS.USERS_DASHBOARD)
+            ? USERS_ENDPOINTS.PROFILE
+            : STAFF_ENDPOINTS.PROFILE
+        );
         break;
       case 2:
         this.setState({ open: !this.state.open });
@@ -284,7 +288,12 @@ class DashboardPage extends Component {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <Sidebar selectPage={this.selectPage} pathName={this.pathName} />
+            <Sidebar
+              selectPage={this.selectPage}
+              pathName={this.pathName}
+              reloadPage={this.props.reloadPage}
+              redirect={this.props.redirect}
+            />
           </List>
         </Drawer>
         <Box

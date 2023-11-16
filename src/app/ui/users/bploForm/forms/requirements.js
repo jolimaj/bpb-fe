@@ -48,11 +48,8 @@ export default class RequiremenstInfo extends Component {
   }
 
   componentDidMount() {
-    if (
-      typeof window !== "undefined" &&
-      this.props.basicFormData.responseCode === "LOGIN_FIRST"
-    ) {
-      if (typeof window !== "undefined") window.location.href = "/signin";
+    if (this.props.basicFormData.responseCode === "LOGIN_FIRST") {
+      this.props.redirect("/signin");
     }
   }
 

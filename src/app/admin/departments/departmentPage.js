@@ -87,17 +87,13 @@ class DepartmentPage extends Component {
       this.setState({ openForm: false });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
     }
   }
   async getDepartmentList() {
-    // const data = this.state.session;
-    // if (!data) {
-    //   window.location.href = "/signin";
-    // }
     try {
       const req = await this.#axios.get(`/departments`, {
         withCredentials: true,
@@ -105,7 +101,7 @@ class DepartmentPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -119,7 +115,7 @@ class DepartmentPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -137,7 +133,7 @@ class DepartmentPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }

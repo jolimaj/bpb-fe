@@ -66,9 +66,6 @@ class DashBoardPage extends Component {
     this.getDashBoardData();
   }
   async getDashBoardData() {
-    // if (!this.state.session) {
-    //   window.location.href = "/signin";
-    // }
     try {
       const req = await this.#axios.get(`/dashboard`, {
         withCredentials: true,
@@ -123,7 +120,7 @@ class DashBoardPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }

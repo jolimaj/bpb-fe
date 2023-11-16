@@ -92,7 +92,7 @@ export default class BusinessPermitPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -116,7 +116,7 @@ export default class BusinessPermitPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -135,7 +135,7 @@ export default class BusinessPermitPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -157,7 +157,7 @@ export default class BusinessPermitPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -246,6 +246,7 @@ export default class BusinessPermitPage extends Component {
             handleClose={this.handleReviewClose}
             applicantDetails={this.state.applicantDetails}
             departmentData={this.state.departmentData}
+            reloadPage={this.props.reloadPage}
           />
         )}
         <Typography

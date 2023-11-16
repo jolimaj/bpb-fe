@@ -6,20 +6,34 @@ import Copyright from "../../ui/common/component/copyright";
 import Dashboard from "../../ui/admin/dashboard/dashboard.js";
 import DepartmentPage from "./departmentPage";
 import theme from "../../ui/config/theme";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 export default function Department() {
   const pathName = usePathname();
+  const router = useRouter();
   const cookies = new Cookies();
 
   const [session, setSession] = useState(cookies.get("session"));
-
+  async function redirectPage(path) {
+    router.push(path);
+  }
+  async function reloadPage() {
+    router.reload();
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dashboard
         route={pathName}
         isUser={false}
-        pageName={<DepartmentPage session={session} />}
+        pageName={
+          <DepartmentPage
+            session={session}
+            redirect={redirectPage}
+            reloadPage={reloadPage}
+          />
+        }
+        reloadPage={reloadPage}
+        redirect={redirectPage}
       />
       <Copyright />
     </ThemeProvider>

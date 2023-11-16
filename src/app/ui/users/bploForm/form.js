@@ -1,5 +1,4 @@
 import React, { Component, createRef } from "react";
-import useWindowSize from "@rooks/use-window-size";
 import {
   Box,
   Container,
@@ -260,7 +259,7 @@ class ServiceForm extends Component {
   }
 
   handleReload() {
-    if (typeof window !== "undefined") window.location.reload(true);
+    this.props.reloadPage();
   }
 
   handleCheckBasic() {
@@ -268,8 +267,6 @@ class ServiceForm extends Component {
   }
 
   render() {
-    // const innerWidth = useWindowSize();
-
     return (
       <>
         <Grid container spacing={3}>

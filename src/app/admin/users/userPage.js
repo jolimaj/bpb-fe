@@ -73,10 +73,6 @@ class UserPage extends Component {
   }
 
   async getUserList() {
-    // const data = this.state.session;
-    // if (!data) {
-    //   window.location.href = "/signin";
-    // }
     try {
       const req = await this.#axios.get(`/users`, {
         withCredentials: true,
@@ -84,7 +80,7 @@ class UserPage extends Component {
       return req.data;
     } catch (error) {
       if (error?.response.data.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
       return error;
@@ -104,7 +100,7 @@ class UserPage extends Component {
       return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       }
       return error;
     }

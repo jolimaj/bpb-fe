@@ -66,11 +66,8 @@ class Page1 extends Component {
       });
       return data;
     } catch (error) {
-      if (
-        typeof window !== "undefined" &&
-        error?.response?.data?.code === "LOGIN_FIRST"
-      ) {
-        if (typeof window !== "undefined") window.location.href = "/signin";
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
       }
       return error;
     }
@@ -85,16 +82,14 @@ class Page1 extends Component {
     }
   }
   handleOpen(code) {
-    if (typeof window !== "undefined")
-      window.location.href = `account?requirements=${code}`;
+    this.props.redirect(`account?requirements=${code}`);
   }
   handleCrumbs() {
-    if (typeof window !== "undefined") window.location.href = `account`;
+    this.props.redirect(`account`);
   }
 
   handleCrumbs2(key) {
-    if (typeof window !== "undefined")
-      window.location.href = `account?requirements=${key}`;
+    this.props.redirect(`account?requirements=${key}`);
   }
   render() {
     const ButtonItem = styled(Button)(({ theme }) => ({
@@ -226,6 +221,8 @@ class Page1 extends Component {
                           route={this.props.route}
                           permitList={permitList}
                           url={this.#url}
+                          reloadPage={this.props.reloadPage}
+                          redirect={this.props.redirect}
                         />
                       </Grid>
                     </Grid>

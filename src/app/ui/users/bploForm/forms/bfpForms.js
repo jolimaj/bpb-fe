@@ -42,11 +42,8 @@ export default class BFP extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
-    if (
-      typeof window !== "undefined" &&
-      this.#basic.responseCode === "LOGIN_FIRST"
-    ) {
-      if (typeof window !== "undefined") window.location.href = "/signin";
+    if (this.#basic.responseCode === "LOGIN_FIRST") {
+      this.props.redirect("/signin");
     }
   }
   async handleSubmit() {

@@ -73,8 +73,7 @@ class ActivatePage extends Component {
   async componentDidMount() {
     await this.handleCheckExpiry();
     setTimeout(() => {
-      if (this.state.timePassed)
-        if (typeof window !== "undefined") window.location.href = "/signin";
+      if (this.state.timePassed) this.props.redirect("/signin");
     }, 1000);
   }
   async handleCheckExpiry() {
@@ -124,7 +123,7 @@ class ActivatePage extends Component {
           password: this.state.password,
         }
       );
-      if (typeof window !== "undefined") window.location.href = "/signin";
+      this.props.redirect("/signin");
     } catch (error) {
       const response = errorResponse(error.response);
 
@@ -141,7 +140,7 @@ class ActivatePage extends Component {
     this.setState({ showConfirmPassword: !this.state.showConfirmPassword });
   }
   handleCancel() {
-    if (typeof window !== "undefined") window.location.href = "/signin";
+    this.props.redirect("/signin");
   }
   render() {
     return (
@@ -155,6 +154,7 @@ class ActivatePage extends Component {
           }
           pathName={this.#pathName}
           params={this.#params}
+          redirect={this.props.redirect}
         />
         <Grid
           item

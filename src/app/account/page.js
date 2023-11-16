@@ -6,7 +6,12 @@ import Copyright from "../ui/common/component/copyright";
 import Dashboard from "../ui/admin/dashboard/dashboard.js";
 import TrackingPage from "../ui/users/pages/page1";
 import theme from "../ui/config/theme";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+  redirect,
+} from "next/navigation";
 
 export default function AccountPage() {
   const pathName = usePathname();
@@ -14,6 +19,13 @@ export default function AccountPage() {
   const searchParams = useSearchParams();
   const cookies = new Cookies();
   const [session, setSession] = useState(cookies.get("session"));
+
+  function redirectPage(path) {
+    router.push(path);
+  }
+  function reloadPage() {
+    router.reload();
+  }
   return (
     <ThemeProvider theme={theme}>
       <Dashboard
@@ -24,8 +36,12 @@ export default function AccountPage() {
             route={pathName}
             session={session}
             searchParams={searchParams}
+            redirect={redirectPage}
+            reloadPage={reloadPage}
           />
         }
+        reloadPage={reloadPage}
+        redirect={redirectPage}
       />
       <Copyright />
     </ThemeProvider>

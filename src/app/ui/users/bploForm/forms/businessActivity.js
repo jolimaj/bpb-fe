@@ -159,7 +159,7 @@ export default class BusinessActivity extends Component {
   }
   componentDidMount() {
     if (this.props.basicFormData.responseCode === "LOGIN_FIRST") {
-      if (typeof window !== "undefined") window.location.href = "/signin";
+      this.props.redirect("/signin");
     }
 
     if (this.state.selectedFile) {

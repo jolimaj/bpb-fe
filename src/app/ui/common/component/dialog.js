@@ -18,7 +18,7 @@ export default function AlertDialog(props) {
       case `${INITIAL_ACCOUNT.FORGOT}/${props.uuid}`:
       case `${INITIAL_ACCOUNT.PASSWORD_CREATION}/${props.params}/${props.uuid}`:
       case `${INITIAL_ACCOUNT.SIGNUP}`:
-        window.location.href = INITIAL_ACCOUNT.SIGNIN;
+        this.props.redirect(INITIAL_ACCOUNT.SIGNIN);
         break;
         break;
       default:

@@ -18,6 +18,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { redirect } from "next/navigation";
 
 import { INITIAL_ACCOUNT } from "../common/constant/endpoints/users";
 import Modal from "../common/component/dialog";
@@ -84,7 +85,7 @@ class SignIn extends Component {
       this.setState({ modal: true, expired: response });
 
       if (response === "This link was already expired.")
-        if (typeof window !== "undefined") window.location.href = "/signin";
+        this.props.redirect("/signin");
       return response;
     }
   }
@@ -109,18 +110,19 @@ class SignIn extends Component {
     }
   }
   async handlePageRedirect(roleID) {
-    if (typeof window !== "undefined")
-      switch (roleID) {
-        case 1:
-          window.location.href = "/admin";
-          break;
-        case 2:
-          window.location.href = "/account";
-          break;
-        case 3:
-          window.location.href = "/account/departments";
-          break;
-      }
+    let pathname;
+    switch (roleID) {
+      case 1:
+        pathname = "/admin";
+        break;
+      case 2:
+        pathname = "/account";
+        break;
+      case 3:
+        pathname = "/account/departments";
+        break;
+    }
+    this.props.redirect(pathname);
   }
   async handleSignIn() {
     try {
@@ -167,6 +169,7 @@ class SignIn extends Component {
                 alertMessage={this.state.alert}
                 pathName={this.#pathName}
                 params={this.props.params}
+                redirect={this.props.redirect}
               />
             )}
             <Grid
