@@ -1,11 +1,8 @@
-/** @type {import('next').NextConfig} */
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  httpAgentOptions: {
-    keepAlive: false,
-  },
+  /* config options here */
 };
 
 module.exports = nextConfig;
