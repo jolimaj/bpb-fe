@@ -39,6 +39,7 @@ class ServiceForm extends Component {
       requirement: {},
       signatures: {},
       errorPayload: "",
+      innerWidth: 1900,
     };
     this.payload = createRef();
     this.#steps = [
@@ -60,6 +61,10 @@ class ServiceForm extends Component {
     this.#axios = new AxiosInterceptor(
       this.#serviceConfig.getServicesConfig(SERVICES.USER)
     ).axios;
+  }
+
+  componentDidMount() {
+    this.setState({ innerWidth: window.innerWidth });
   }
 
   getStepContent(step) {
@@ -270,7 +275,8 @@ class ServiceForm extends Component {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Container component="main" sx={{ mb: 4, p: 5 }}>
               <Paper
                 variant="outlined"
@@ -347,7 +353,9 @@ class ServiceForm extends Component {
                   <Stepper
                     activeStep={this.state.activeStep}
                     sx={{ pt: 3, pb: 5, maxWidth: 10 }}
-                    // orientation={innerWidth < 720 ? "vertical" : "horizontal"}
+                    orientation={
+                      this.state.innerWidth <= 720 ? "vertical" : "horizontal"
+                    }
                   >
                     {this.#steps.map((label, index) => (
                       <Step key={label}>

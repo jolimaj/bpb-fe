@@ -25,7 +25,8 @@ export default class Tab3 extends Component {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
@@ -80,11 +81,12 @@ export default class Tab3 extends Component {
               </Table>
             </TableContainer>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Divider light />
           </Grid>
-          <Grid item xs={12} sm={6}></Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}></Grid>
+          <Grid item xs={12} sm={12} md={6}>
             <Box
               sx={{
                 backgroundImage: `url(${this.details.applicantSignature})`,
@@ -95,8 +97,8 @@ export default class Tab3 extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}></Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}></Grid>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography
               variant="body2"
               sx={{

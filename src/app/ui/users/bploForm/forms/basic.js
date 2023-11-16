@@ -209,14 +209,15 @@ export default class BasicInfoForm extends Component {
           BASIC INFORMATION:
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
               </Alert>
             )}
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               select // tell TextField to render select
               name="paymentTypeID"
@@ -235,7 +236,7 @@ export default class BasicInfoForm extends Component {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 fullwidth
@@ -254,7 +255,7 @@ export default class BasicInfoForm extends Component {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 fullwidth
@@ -271,7 +272,7 @@ export default class BasicInfoForm extends Component {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="dtiRegNo"
               name="dtiRegNo"
@@ -286,7 +287,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               required
               id="tinNo"
@@ -301,7 +302,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               required
               select // tell TextField to render select
@@ -320,7 +321,7 @@ export default class BasicInfoForm extends Component {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               required
               select // tell TextField to render select
@@ -339,7 +340,7 @@ export default class BasicInfoForm extends Component {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               select // tell TextField to render select
               name="amendmentTo"
@@ -358,12 +359,12 @@ export default class BasicInfoForm extends Component {
               ))}
             </TextField>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <FormLabel id="demo-row-radio-buttons-group-label">
               Are you enjoying tax incentive from any Government Entity?
             </FormLabel>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={12} md={2}>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
@@ -378,7 +379,7 @@ export default class BasicInfoForm extends Component {
             </RadioGroup>
           </Grid>
 
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               required
               id="specifyEntity"
@@ -393,7 +394,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -407,7 +408,7 @@ export default class BasicInfoForm extends Component {
               Name of Taxpayer / Registrant
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               required
               id="lName"
@@ -423,7 +424,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               required
               id="fName"
@@ -439,7 +440,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="mName"
               name="mName"
@@ -454,7 +455,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               required
               id="businessName"
@@ -470,7 +471,7 @@ export default class BasicInfoForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               required
               id="tradeName"

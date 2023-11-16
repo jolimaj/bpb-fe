@@ -19,7 +19,7 @@ export default class BFPForm extends Component {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -27,12 +27,12 @@ export default class BFPForm extends Component {
               Date:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.#handleDateString(this.bfpForm.createdAt)}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -40,10 +40,10 @@ export default class BFPForm extends Component {
               Application No.:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">{`0000-${this.props.details.id}`}</Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -51,10 +51,10 @@ export default class BFPForm extends Component {
               Name of Applicant / Owner:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">{this.bfpForm.ownersName}</Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -62,10 +62,10 @@ export default class BFPForm extends Component {
               Name of Business:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">{this.bfpForm.businessName}</Typography>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -73,12 +73,12 @@ export default class BFPForm extends Component {
               Total Floor Area:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Typography variant="body2">
               {this.bfpForm.totalFloorArea}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -86,12 +86,12 @@ export default class BFPForm extends Component {
               Contact No.:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Typography variant="body2">
               {this.otherInfo.businessMobile}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -99,16 +99,17 @@ export default class BFPForm extends Component {
               Address of Establishment:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.otherInfo.businessAddress}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Divider light />
           </Grid>
-          <Grid item xs={12} sm={6}></Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}></Grid>
+          <Grid item xs={12} sm={12} md={6}>
             <Box
               sx={{
                 backgroundImage: `url(${this.props.details.applicantSignature})`,
@@ -119,7 +120,7 @@ export default class BFPForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Box
               sx={{
                 backgroundImage: `url(${this.details.applicantSignature})`,
@@ -130,7 +131,7 @@ export default class BFPForm extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <Typography
               variant="body2"
               sx={{

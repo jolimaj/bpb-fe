@@ -124,7 +124,8 @@ export default class Tab4 extends Component {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.departmentData.id === 7 ? (
               <BFPForm details={this.details} />
             ) : (

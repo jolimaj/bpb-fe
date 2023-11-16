@@ -89,14 +89,16 @@ export default class BFP extends Component {
           III. CITY / MUNICIPALITY FIRE STATION SECTION
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
               </Alert>
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -108,7 +110,8 @@ export default class BFP extends Component {
               {`Date of Application: ${new Date().toISOString().split("T")[0]}`}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -122,7 +125,8 @@ export default class BFP extends Component {
               (TO BE FILLED UP BY THE APPLICANT / OWNER){" "}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="applicantName"
               name="applicantName"
@@ -137,7 +141,8 @@ export default class BFP extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="nameOfBusiness"
               name="nameOfBusiness"
@@ -152,7 +157,8 @@ export default class BFP extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="floorArea"
               name="floorArea"
@@ -166,7 +172,7 @@ export default class BFP extends Component {
               }}
             />
           </Grid>
-          {/* <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="contactNumber"
               name="contactNumber"
@@ -179,8 +185,7 @@ export default class BFP extends Component {
               disabled
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <TextField
+<Grid item xs={12} sm={12} md={12}>            <TextField
               id="address"
               name="address"
               label="Address of Establishment"

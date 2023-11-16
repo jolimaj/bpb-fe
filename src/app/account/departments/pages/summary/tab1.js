@@ -55,7 +55,7 @@ export default class Tab1 extends Component {
     return (
       <>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -63,12 +63,12 @@ export default class Tab1 extends Component {
               Date of Application:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.#handleDateString(this.details.createdAt)}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -76,12 +76,12 @@ export default class Tab1 extends Component {
               Mode of Payment:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.#handlePaymentTypeString(this.details.paymentTypeID)}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -89,10 +89,10 @@ export default class Tab1 extends Component {
               TIN No.:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">{this.basicInfo.tinNo}</Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -100,10 +100,10 @@ export default class Tab1 extends Component {
               DTI/SEC/CDA Registration No.:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2"> {this.basicInfo.dtiRegNo}</Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -111,12 +111,12 @@ export default class Tab1 extends Component {
               DTI/SEC/CDA Registration Date.:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.#handleDateString(this.basicInfo.dtiRegDate)}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -124,12 +124,12 @@ export default class Tab1 extends Component {
               Type of Business:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.#handleBusinessType(this.basicInfo.businessTypeID)}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -137,10 +137,10 @@ export default class Tab1 extends Component {
               Ammendement:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2"></Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -148,17 +148,19 @@ export default class Tab1 extends Component {
               Are you enjoying tax incentive from any Government Entity?
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography variant="body2">
               {this.basicInfo.enjoyTaxIncentive
                 ? "Yes"
                 : `No because ${this.basicInfo.notEnjoyTaxIncentive}`}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Divider light />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               sx={{
@@ -171,7 +173,7 @@ export default class Tab1 extends Component {
               Name of Taxpayer / Registrant
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -179,12 +181,12 @@ export default class Tab1 extends Component {
               Name:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.basicInfo.taxPayerName}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -192,12 +194,12 @@ export default class Tab1 extends Component {
               Business Name:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.basicInfo.businessName}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <Typography
               variant="body2"
               sx={{ fontWeight: "bold", color: "fifth.main" }}
@@ -205,7 +207,7 @@ export default class Tab1 extends Component {
               Trade/ Franchise:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
               {this.basicInfo.tradeFranchiseName}
             </Typography>

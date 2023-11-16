@@ -98,14 +98,16 @@ export default class SignatureForm extends Component {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
               </Alert>
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -121,7 +123,8 @@ export default class SignatureForm extends Component {
               other defiiencies within 30 days from release f business permit.
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="position"
               name="position"
@@ -131,7 +134,8 @@ export default class SignatureForm extends Component {
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"

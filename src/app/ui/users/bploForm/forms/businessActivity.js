@@ -187,14 +187,16 @@ export default class BusinessActivity extends Component {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
               </Alert>
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -207,7 +209,7 @@ export default class BusinessActivity extends Component {
               Line of Business
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="line1"
               name="line1"
@@ -221,7 +223,7 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="line2"
               name="line2"
@@ -234,7 +236,7 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="line3"
               name="line3"
@@ -247,7 +249,8 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -260,7 +263,7 @@ export default class BusinessActivity extends Component {
               Number of Units
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="units1"
               name="units1"
@@ -274,7 +277,7 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="units2"
               name="units2"
@@ -288,7 +291,7 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="units3"
               name="units3"
@@ -304,7 +307,8 @@ export default class BusinessActivity extends Component {
           </Grid>
           {!this.renewData ? (
             <>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={12}>
+                {" "}
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -317,7 +321,7 @@ export default class BusinessActivity extends Component {
                   Capitalization
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextField
                   id="capital1"
                   name="capital1"
@@ -332,7 +336,7 @@ export default class BusinessActivity extends Component {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextField
                   id="capital2"
                   name="capital2"
@@ -346,7 +350,7 @@ export default class BusinessActivity extends Component {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
+              <Grid item xs={12} sm={12} md={4}>
                 <TextField
                   id="capital3"
                   name="capital3"
@@ -363,8 +367,10 @@ export default class BusinessActivity extends Component {
             </>
           ) : (
             <>
-              <Grid item xs={12} sm={12}>
-                <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={12}>
+                {" "}
+                <Grid item xs={12} sm={12} md={12}>
+                  {" "}
                   <Typography
                     variant="subtitle1"
                     fontWeight="bold"
@@ -380,7 +386,8 @@ export default class BusinessActivity extends Component {
                   </Typography>
                 </Grid>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    {" "}
                     <Typography
                       variant="subtitle1"
                       fontWeight="bold"
@@ -393,7 +400,7 @@ export default class BusinessActivity extends Component {
                       Esssential
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossEssential1"
                       name="grossEssential1"
@@ -408,7 +415,7 @@ export default class BusinessActivity extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossEssential2"
                       name="grossEssential2"
@@ -422,7 +429,7 @@ export default class BusinessActivity extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossEssential4"
                       name="grossEssential4"
@@ -438,7 +445,8 @@ export default class BusinessActivity extends Component {
                   </Grid>
                 </Grid>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={12} sm={12} md={12}>
+                    {" "}
                     <Typography
                       variant="subtitle1"
                       fontWeight="bold"
@@ -451,7 +459,7 @@ export default class BusinessActivity extends Component {
                       Non-Esssential
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossNonEssential1"
                       name="grossNonEssential1"
@@ -466,7 +474,7 @@ export default class BusinessActivity extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossNonEssential2"
                       name="grossNonEssential2"
@@ -480,7 +488,7 @@ export default class BusinessActivity extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={4}>
+                  <Grid item xs={12} sm={12} md={4}>
                     <TextField
                       id="grossNonEssential3"
                       name="grossNonEssential3"

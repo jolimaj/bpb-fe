@@ -169,14 +169,16 @@ export default class OtherInformation extends Component {
           OTHER INFORMATION:
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
               </Alert>
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="businessAddress"
               name="businessAddress"
@@ -190,7 +192,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="postalCode"
               name="postalCode"
@@ -205,7 +207,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="emailAddress"
               name="emailAddress"
@@ -221,7 +223,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="telephoneNumber"
               name="telephoneNumber"
@@ -238,7 +240,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="mobileNumber"
               name="mobileNumber"
@@ -255,7 +257,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               required
               id="ownersAddress"
@@ -269,7 +272,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="postalCode1"
               name="postalCode1"
@@ -284,7 +287,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="emailAddress1"
               name="emailAddress1"
@@ -300,7 +303,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="telephoneNumber1"
               name="telephoneNumber1"
@@ -315,7 +318,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="mobileNumber1"
               name="mobileNumber1"
@@ -332,7 +335,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="guardian"
               name="guardian"
@@ -348,7 +352,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="guardianNumber"
               name="guardianNumber"
@@ -364,7 +368,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="guardianAddress"
               name="guardianAddress"
@@ -380,7 +384,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <TextField
               id="businessArea"
               name="businessArea"
@@ -394,12 +398,12 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={12} md={3}>
             <Typography variant="subtitle1">
               Total No. Employees in Establishment:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={12} md={2}>
             <TextField
               id="femaleNo"
               name="femaleNo"
@@ -413,7 +417,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={12} md={2}>
             <TextField
               id="maleNo"
               name="maleNo"
@@ -427,7 +431,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={12} md={2}>
             <TextField
               id="lgu"
               name="lgu"
@@ -441,7 +445,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <Typography
               variant="subtitle1"
               fontWeight="bold"
@@ -455,7 +460,8 @@ export default class OtherInformation extends Component {
               NOTE : FILL UP ONLY IF BUSINESS PLACE IS RENTED
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="lessorName"
               name="lessorName"
@@ -468,7 +474,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="lessorAddress"
               name="lessorAddress"
@@ -481,7 +488,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="lessorContact"
               name="lessorContact"
@@ -494,7 +501,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="lessorRent"
               name="lessorRent"
@@ -508,7 +515,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="buildingName"
               name="buildingName"
@@ -521,7 +529,8 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             <TextField
               id="buildingAddress"
               name="buildingAddress"

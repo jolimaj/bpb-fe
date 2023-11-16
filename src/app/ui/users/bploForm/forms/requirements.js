@@ -126,7 +126,8 @@ export default class RequiremenstInfo extends Component {
           REQUIRMENTS:
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={12} md={12}>
+            {" "}
             {this.state.errorMessage && (
               <Alert severity="error" style={{ textTransform: "capitalize" }}>
                 {this.state.errorMessage}
@@ -135,7 +136,7 @@ export default class RequiremenstInfo extends Component {
           </Grid>
           {this.renewData ? (
             <>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -219,7 +220,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -301,7 +302,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -383,7 +384,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -465,7 +466,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -547,7 +548,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>{" "}
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -672,7 +673,8 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={12}>
+                {" "}
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -686,7 +688,7 @@ export default class RequiremenstInfo extends Component {
                   For Verification
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -768,7 +770,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>{" "}
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -852,7 +854,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>{" "}
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -939,7 +941,7 @@ export default class RequiremenstInfo extends Component {
             </>
           ) : (
             <>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1023,7 +1025,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1105,7 +1107,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1189,7 +1191,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1271,7 +1273,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1353,7 +1355,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1435,7 +1437,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1517,7 +1519,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1642,7 +1644,8 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={12}>
+                {" "}
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1656,7 +1659,7 @@ export default class RequiremenstInfo extends Component {
                   If Applicable
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1740,7 +1743,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1822,7 +1825,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1906,7 +1909,8 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={12}>
+              <Grid item xs={12} sm={12} md={12}>
+                {" "}
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -1921,7 +1925,7 @@ export default class RequiremenstInfo extends Component {
                 </Typography>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -2003,7 +2007,7 @@ export default class RequiremenstInfo extends Component {
                   </Box>
                 )}
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12} md={6}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
