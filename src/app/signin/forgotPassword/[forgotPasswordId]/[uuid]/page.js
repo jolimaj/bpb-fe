@@ -11,11 +11,11 @@ export default function SignInPage() {
   const params = useParams();
   const router = useRouter();
 
-  async function redirectPage(path) {
+  function redirectPage(path) {
     router.push(path);
   }
 
-  async function reloadPage() {
+  function reloadPage() {
     router.reload();
   }
   return (

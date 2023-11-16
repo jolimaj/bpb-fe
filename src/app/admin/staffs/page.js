@@ -14,11 +14,11 @@ export default function UsersPage() {
   const [session, setSession] = useState(cookies.get("session"));
   const router = useRouter();
 
-  async function redirectPage(path) {
+  function redirectPage(path) {
     router.push(path);
   }
 
-  async function reloadPage() {
+  function reloadPage() {
     router.reload();
   }
   return (

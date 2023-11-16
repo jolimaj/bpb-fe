@@ -11,7 +11,7 @@ export default function FormsPage() {
   const params = useParams();
   const router = useRouter();
 
-  async function redirectPage(path) {
+  function redirectPage(path) {
     router.push(path);
   }
 
