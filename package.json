@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@cyntler/react-doc-viewer": "^1.14.1",
-    "@dhaiwat10/react-link-preview": "^1.15.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@mui/base": "^5.0.0-alpha.126",
