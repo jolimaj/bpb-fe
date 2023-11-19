@@ -9,7 +9,6 @@ import {
   Chip,
   Button,
   Typography,
-  Breadcrumbs,
 } from "@mui/material";
 import Table from "../../../ui/common/component/table";
 import RenewalForm from "../../../ui/users/bploForm/form";
@@ -117,21 +116,58 @@ export default class BusinessList extends Component {
     }
     return name;
   }
-  handleStatusColor(id) {
+
+  handleLabel(id, type) {
+    let color;
+    switch (id) {
+      case 0:
+        if (type === 2) {
+          color = "Renew Processing";
+        } else {
+          color = "Processing";
+        }
+        break;
+      case 1:
+        if (type === 2) {
+          color = "For Renewal";
+        } else {
+          color = "Approved";
+        }
+        break;
+      case 3:
+        color = "Renew Approved";
+        break;
+      default:
+        if (type === 2) {
+          color = "Renew Rejected";
+        } else {
+          color = "Rejected";
+        }
+        break;
+    }
+    return color;
+  }
+  handleStatusColor(id, type) {
     let color;
     switch (id) {
       case 1:
-        color = "success";
+        if (type === 2) {
+          color = "warning";
+        } else {
+          color = "success";
+        }
         break;
       case -1:
         color = "error";
+        break;
+      case 3:
+        color = "success";
         break;
       default:
         break;
     }
     return color;
   }
-
   handleReview(data) {
     this.setState({ review: true, applicantDetails: data });
   }
@@ -202,14 +238,14 @@ export default class BusinessList extends Component {
 
                                 <TableCell align="center">
                                   <Chip
-                                    label={
-                                      row.status === 0
-                                        ? "Processing"
-                                        : row.status > 1
-                                        ? "Accepted"
-                                        : "Rejected"
-                                    }
-                                    color={this.handleStatusColor(row.status)}
+                                    label={this.handleLabel(
+                                      row.status,
+                                      row.type
+                                    )}
+                                    color={this.handleStatusColor(
+                                      row.status,
+                                      row.type
+                                    )}
                                   />
                                 </TableCell>
                                 <TableCell align="center">
@@ -225,7 +261,8 @@ export default class BusinessList extends Component {
                                   <Button
                                     disabled={
                                       new Date(row.createdAt).getFullYear() ===
-                                      new Date().getFullYear()
+                                        new Date().getFullYear() &&
+                                      row.status === 1
                                     }
                                     key={row.id}
                                     onClick={(e) =>

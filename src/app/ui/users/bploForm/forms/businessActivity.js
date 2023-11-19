@@ -127,28 +127,11 @@ export default class BusinessActivity extends Component {
           withCredentials: true,
         }
       );
-      console.log(
-        "🚀 ~ file: businessActivity.js:124 ~ BusinessActivity ~ handleSubmit ~ response:",
-        response
-      );
       this.setState({
         response,
         businessActivityData: {
           response: "valid",
-          line1,
-          line2,
-          line3,
-          type: "1",
-          // noOfUnits,
-          units1,
-          units2,
-          units3,
-          // capitalization,
-          capital1,
-          capital2,
-          capital3,
-          // applicantSignature,
-          //applicantPosition,
+          payloads,
         },
       });
     } catch (error) {

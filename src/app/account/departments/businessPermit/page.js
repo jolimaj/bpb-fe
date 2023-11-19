@@ -6,12 +6,13 @@ import Copyright from "../../../ui/common/component/copyright";
 import Dashboard from "../../../ui/admin/dashboard/dashboard.js";
 import BusinessPermitPage from "../pages/businessPermitPage";
 import theme from "../../../ui/config/theme";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Department() {
   const pathName = usePathname();
   const cookies = new Cookies();
   const router = useRouter();
+  const params = useSearchParams();
 
   const [session, setSession] = useState(cookies.get("session"));
 
@@ -33,6 +34,7 @@ export default function Department() {
             session={session}
             redirect={redirectPage}
             reloadPage={reloadPage}
+            params={params}
           />
         }
         reloadPage={reloadPage}

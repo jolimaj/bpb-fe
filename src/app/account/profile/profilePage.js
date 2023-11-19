@@ -147,7 +147,7 @@ class ProfilePage extends Component {
                     fullWidth
                     disabled={this.state.role === 1}
                     variant="outlined"
-                    value={this.state.role === 1 ? this.state.mobile : ""}
+                    value={this.state.mobile}
                     onChange={(e) => {
                       this.setState({ mobile: e.target.value });
                     }}

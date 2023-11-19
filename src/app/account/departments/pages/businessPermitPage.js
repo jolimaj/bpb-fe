@@ -39,6 +39,7 @@ export default class BusinessPermitPage extends Component {
       review: false,
       applicantDetails: "",
       departmentData: "",
+      params: props?.params?.get("tab"),
     };
     this.newApplicationColumn = [
       { id: "ID", label: "Application No.", width: 20 },
@@ -69,10 +70,11 @@ export default class BusinessPermitPage extends Component {
 
   componentDidMount() {
     this.getList();
+    if (this.state.params) this.setState({ value: this?.state?.params });
   }
 
   async getList() {
-    if (this.state.value === "2") {
+    if (this?.state?.params === "2") {
       await this.#renewApplication();
     } else {
       await this.#newApplication();
@@ -145,7 +147,7 @@ export default class BusinessPermitPage extends Component {
     try {
       const query = this.state.name;
       const req = await this.#axios.get(
-        `businessPermit/new?searchQuery=${query}`,
+        `businessPermit/renew?searchQuery=${query}`,
         {
           withCredentials: true,
         }
@@ -163,7 +165,7 @@ export default class BusinessPermitPage extends Component {
     }
   }
   handleChange(event, newValue) {
-    this.setState({ value: newValue });
+    window.location.href = `/account/departments/businessPermit?tab=${newValue}`;
   }
 
   async searchData() {
@@ -214,14 +216,51 @@ export default class BusinessPermitPage extends Component {
     }
     return name;
   }
-  handleStatusColor(id) {
+  handleLabel(id, type) {
+    let color;
+    switch (id) {
+      case 0:
+        if (type === 2) {
+          color = "Renew Processing";
+        } else {
+          color = "Processing";
+        }
+        break;
+      case 1:
+        if (type === 2) {
+          color = "For Renewal";
+        } else {
+          color = "Approved";
+        }
+        break;
+      case 3:
+        color = "Renew Approved";
+        break;
+      default:
+        if (type === 2) {
+          color = "Renew Rejected";
+        } else {
+          color = "Rejected";
+        }
+        break;
+    }
+    return color;
+  }
+  handleStatusColor(id, type) {
     let color;
     switch (id) {
       case 1:
-        color = "success";
+        if (type === 2) {
+          color = "warning";
+        } else {
+          color = "success";
+        }
         break;
       case -1:
         color = "error";
+        break;
+      case 3:
+        color = "success";
         break;
       default:
         break;
@@ -234,10 +273,10 @@ export default class BusinessPermitPage extends Component {
   }
   handleReviewClose() {
     this.setState({ review: false });
+    window.location.reload(true);
   }
   render() {
     const da = this.state.departmentData;
-    console.log(da[0]?.code);
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         {this.state.review && (
@@ -245,7 +284,7 @@ export default class BusinessPermitPage extends Component {
             review={this.state.review}
             handleClose={this.handleReviewClose}
             applicantDetails={this.state.applicantDetails}
-            departmentData={this.state.departmentData}
+            departmentData={da}
             reloadPage={this.props.reloadPage}
           />
         )}
@@ -344,13 +383,7 @@ export default class BusinessPermitPage extends Component {
 
                                 <TableCell align="center">
                                   <Chip
-                                    label={
-                                      row.status === 0
-                                        ? "Processing"
-                                        : row.status > 1
-                                        ? "Accepted"
-                                        : "Rejected"
-                                    }
+                                    label={this.handleLabel(row.status)}
                                     color={this.handleStatusColor(row.status)}
                                   />
                                 </TableCell>
@@ -367,6 +400,7 @@ export default class BusinessPermitPage extends Component {
                                   <Button
                                     key={row.id}
                                     onClick={() => this.handleReview(row)}
+                                    disabled={row.status === 1}
                                   >
                                     Review
                                   </Button>
@@ -441,14 +475,14 @@ export default class BusinessPermitPage extends Component {
 
                                 <TableCell align="center">
                                   <Chip
-                                    label={
-                                      row.status === 0
-                                        ? "Processing"
-                                        : row.status > 1
-                                        ? "Accepted"
-                                        : "Rejected"
-                                    }
-                                    color={this.handleStatusColor(row.status)}
+                                    label={this.handleLabel(
+                                      row.status,
+                                      row.type
+                                    )}
+                                    color={this.handleStatusColor(
+                                      row.status,
+                                      row.type
+                                    )}
                                   />
                                 </TableCell>
                                 <TableCell align="center">
@@ -464,6 +498,7 @@ export default class BusinessPermitPage extends Component {
                                   <Button
                                     key={row.id}
                                     onClick={() => this.handleReview(row)}
+                                    disabled={row.status === 3}
                                   >
                                     Review
                                   </Button>

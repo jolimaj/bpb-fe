@@ -29,7 +29,7 @@ export default class BFPForm extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.#handleDateString(this.bfpForm.createdAt)}
+              {this.#handleDateString(this.bfpForm?.createdAt)}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -52,7 +52,7 @@ export default class BFPForm extends Component {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <Typography variant="body2">{this.bfpForm.ownersName}</Typography>
+            <Typography variant="body2">{this.bfpForm?.ownersName}</Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <Typography
@@ -63,7 +63,9 @@ export default class BFPForm extends Component {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <Typography variant="body2">{this.bfpForm.businessName}</Typography>
+            <Typography variant="body2">
+              {this.bfpForm?.businessName}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Typography
@@ -75,7 +77,7 @@ export default class BFPForm extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Typography variant="body2">
-              {this.bfpForm.totalFloorArea}
+              {this.bfpForm?.totalFloorArea}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
@@ -123,7 +125,7 @@ export default class BFPForm extends Component {
           <Grid item xs={12} sm={12} md={6}>
             <Box
               sx={{
-                backgroundImage: `url(${this.details.applicantSignature})`,
+                backgroundImage: `url(${this.props.details.applicantSignature})`,
                 maxWidth: 500,
                 padding: 10,
                 backgroundSize: "cover",

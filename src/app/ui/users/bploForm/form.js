@@ -139,7 +139,8 @@ class ServiceForm extends Component {
   async handleSubmit() {
     try {
       const formData = new FormData();
-      const { applicantSignature, applicantPosition } = this.state;
+      const { applicantSignature, applicantPosition, businessPermitID } =
+        this.state;
       formData.append("applicantPosition", applicantPosition);
       formData.append(
         Object.keys(this.state.requirement),
@@ -152,13 +153,17 @@ class ServiceForm extends Component {
         ...this.state.signatures,
         ...formData,
         applicantPosition,
-        type: 2,
+        type: "2",
         updatedAt: new Date(),
       };
+      console.log(
+        "🚀 ~ file: form.js:159 ~ ServiceForm ~ handleSubmit ~ };:",
+        this.state.businessActivity
+      );
 
       const response = this.props?.pathName?.includes("/renew")
         ? await this.#axios.put(
-            `/services/businessPermit/${this.state.signatures.businessPermitID}`,
+            `/services/businessPermit/${this.props?.renewData?.id}`,
             updatePayload
           )
         : await this.#axios.post(
@@ -170,7 +175,7 @@ class ServiceForm extends Component {
               ...this.state.signatures,
               ...formData,
               applicantPosition,
-              type: 1,
+              type: "1",
               queueNo: "",
               qrCode: "",
             },
@@ -180,10 +185,6 @@ class ServiceForm extends Component {
           );
       this.setState({ response: response.data });
     } catch (error) {
-      console.log(
-        "🚀 ~ file: form.js:178 ~ ServiceForm ~ handleSubmit ~ error:",
-        error
-      );
       let response;
       response = errorResponse(error.response);
       this.setState({ errorMessage: response });
@@ -257,7 +258,7 @@ class ServiceForm extends Component {
         this.payload.current.state?.signatureData
       ) {
         this.setState({
-          signatures: this.payload.current.state,
+          signatures: this.payload.current.state.signatureData,
         });
         this.handleNext();
       }

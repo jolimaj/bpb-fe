@@ -25,36 +25,39 @@ export default class Tab4 extends Component {
       urlToTinyImageFile: "",
       caption: "",
       view: false,
+      signatureMTO: "",
+      signatureBFP: "",
+      signatureBPLO: "",
     };
     this.details = props.details.applicantDetails;
     this.requirements = this.details.Requirements[0];
-    this.departmentData = props.details.departmentData.departmentData;
+    this.departmentData = props.details.departmentData[0];
   }
 
   displayRequirements() {
     let component;
-    switch (this.departmentData.id) {
+    switch (this.departmentData?.id) {
       case 1:
         component = [
           {
             name: "Brgy. Business Clearance",
-            file: this.requirements.locationalClearance,
+            file: this.requirements?.locationalClearance,
           },
           {
             name: "DTI/SEC/CDA Registration",
-            file: this.requirements.dtiReg,
+            file: this.requirements?.dtiReg,
           },
           {
             name: "Lease Contract (if applicable)",
-            file: this.requirements.leaseContract,
+            file: this.requirements?.leaseContract,
           },
           {
             name: "Picture 2x2 (2pcs.)",
-            file: this.requirements.picture,
+            file: this.requirements?.picture,
           },
           {
             name: "SSS Cert, of Compliance",
-            file: this.requirements.picture,
+            file: this.requirements?.certOfCompliance,
           },
         ];
         break;
@@ -62,7 +65,7 @@ export default class Tab4 extends Component {
         component = [
           {
             name: "Zoning Certification/ Locational Clearance",
-            file: this.requirements.locationalClearance,
+            file: this.requirements?.locationalClearance,
           },
         ];
         break;
@@ -74,11 +77,11 @@ export default class Tab4 extends Component {
           },
           {
             name: "Water (Optional)",
-            file: this.requirements.water,
+            file: this.requirements?.water,
           },
           {
             name: "ASSESSMENT RECORD FROM THE MUNICIPAL TREASURER'S OFFICE",
-            file: this.requirements.mtoAssestmentRecord,
+            file: this.requirements?.mtoAssestmentRecord,
           },
         ];
         break;
@@ -86,7 +89,7 @@ export default class Tab4 extends Component {
         component = [
           {
             name: "Municipal Environmental Certificate",
-            file: this.requirements.menroCert,
+            file: this.requirements?.menroCert,
           },
         ];
         break;
@@ -94,7 +97,7 @@ export default class Tab4 extends Component {
         component = [
           {
             name: "Renovation / Building Permit",
-            file: this.requirements.buidingpermit,
+            file: this.requirements?.buidingpermit,
           },
         ];
         break;
@@ -102,7 +105,7 @@ export default class Tab4 extends Component {
         component = [
           {
             name: "Municipal Health Office (Sanitation) Permit",
-            file: this.requirements.sanityPermit,
+            file: this.requirements?.sanityPermit,
           },
         ];
         break;
@@ -126,7 +129,7 @@ export default class Tab4 extends Component {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} md={12}>
             {" "}
-            {this.departmentData.id === 7 ? (
+            {this.departmentData?.id === 7 ? (
               <BFPForm details={this.details} />
             ) : (
               <>

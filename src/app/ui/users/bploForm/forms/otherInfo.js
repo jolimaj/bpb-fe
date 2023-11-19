@@ -19,12 +19,14 @@ export default class OtherInformation extends Component {
       businessPermitID: "",
       businessAddress: "",
       businessPostalCode: "",
-      businessTelephone: this.renewData ? this.renewData.businessTelephone : "",
+      businessTelephone: this.renewData
+        ? this.renewData.businessTelephone
+        : null,
       businessMobile: this.renewData ? this.renewData.businessMobile : "",
       businessEmail: this.renewData ? this.renewData.businessEmail : "",
       ownersAddress: "",
       ownersPostalCode: "",
-      ownersTelephone: "",
+      ownersTelephone: null,
       ownersMobile: this.#basic?.userData?.mobile,
       ownersEmail: this.#basic?.userData?.email, // optional
       emergencyPerson: this.renewData ? this.renewData.emergencyPerson : "",
@@ -230,7 +232,6 @@ export default class OtherInformation extends Component {
               label="Telephone Number"
               fullWidth
               type="number"
-              required
               autoComplete="telephone-number"
               variant="outlined"
               disabled={this.renewData}
@@ -310,7 +311,6 @@ export default class OtherInformation extends Component {
               label="Telephone Number"
               fullWidth
               type="number"
-              required
               autoComplete="telephone-number1"
               variant="outlined"
               onChange={(e) => {
@@ -384,7 +384,7 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={12} md={6}>
             <TextField
               id="businessArea"
               name="businessArea"
@@ -398,17 +398,18 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={3}>
+          <Grid item xs={12} sm={12} md={12}>
             <Typography variant="subtitle1">
               Total No. Employees in Establishment:
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="femaleNo"
               name="femaleNo"
               label="Female"
               required
+              fullWidth
               type="number"
               autoComplete="female-no"
               variant="outlined"
@@ -417,13 +418,14 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="maleNo"
               name="maleNo"
               label="Male"
               required
               type="number"
+              fullWidth
               autoComplete="male-no"
               variant="outlined"
               onChange={(e) => {
@@ -431,13 +433,13 @@ export default class OtherInformation extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid item xs={12} sm={12} md={4}>
             <TextField
               id="lgu"
               name="lgu"
               label="No. of Employees Residing within  LGU"
-              required
               type="number"
+              fullWidth
               autoComplete="male-no"
               variant="outlined"
               onChange={(e) => {
