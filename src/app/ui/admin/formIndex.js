@@ -18,7 +18,6 @@ import {
   IconButton,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { redirect } from "next/navigation";
 
 import { INITIAL_ACCOUNT } from "../common/constant/endpoints/users";
 import Modal from "../common/component/dialog";
@@ -140,6 +139,7 @@ class SignIn extends Component {
         }
       );
       this.setState({ session });
+      this.props.saveTerms();
       await this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
