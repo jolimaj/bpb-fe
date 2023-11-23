@@ -130,7 +130,7 @@ export default function FormDialog(props) {
         formData,
         data
       );
-      props.handleClose();
+      // props.handleClose();
     } catch (error) {
       return error;
     }

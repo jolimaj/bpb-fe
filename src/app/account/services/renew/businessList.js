@@ -66,7 +66,7 @@ export default class BusinessList extends Component {
 
   async getList() {
     try {
-      const req = await this.#axios.get("/services/businessPermit", {
+      const req = await this.#axios.get("/services/businessPermit/renew", {
         withCredentials: true,
       });
       this.setState({ rows: req.data, departmentData: req.data });
@@ -121,28 +121,18 @@ export default class BusinessList extends Component {
     let color;
     switch (id) {
       case 0:
-        if (type === 2) {
-          color = "Renew Processing";
-        } else {
-          color = "Processing";
-        }
+        color = "Renew Processing";
+
         break;
       case 1:
-        if (type === 2) {
-          color = "For Renewal";
-        } else {
-          color = "Approved";
-        }
+        color = "For Renewal";
         break;
       case 3:
         color = "Renew Approved";
         break;
       default:
-        if (type === 2) {
-          color = "Renew Rejected";
-        } else {
-          color = "Rejected";
-        }
+        color = "Rejected";
+
         break;
     }
     return color;
@@ -151,11 +141,8 @@ export default class BusinessList extends Component {
     let color;
     switch (id) {
       case 1:
-        if (type === 2) {
-          color = "warning";
-        } else {
-          color = "success";
-        }
+        color = "warning";
+
         break;
       case -1:
         color = "error";
@@ -259,11 +246,7 @@ export default class BusinessList extends Component {
                                 </TableCell>
                                 <TableCell>
                                   <Button
-                                    disabled={
-                                      new Date(row.createdAt).getFullYear() ===
-                                        new Date().getFullYear() &&
-                                      row.status === 1
-                                    }
+                                    disabled={row.status === 3}
                                     key={row.id}
                                     onClick={(e) =>
                                       this.handleRenewBusiness(row)

@@ -7,7 +7,6 @@ import {
   Paper,
   IconButton,
   TextField,
-  InputAdornment,
   TableBody,
   TableCell,
   TableRow,
@@ -268,9 +267,30 @@ export default class BusinessPermitPage extends Component {
     return color;
   }
 
-  handleReview(data) {
-    this.setState({ review: true, applicantDetails: data });
+  async handleReview(data) {
+    const { status, assignedToDepartmentID } = data;
+    if (status === 1 && assignedToDepartmentID === 1) {
+      await this.handleRelease(data?.id);
+    } else {
+      this.setState({ review: true, applicantDetails: data });
+    }
   }
+
+  async handleRelease(id) {
+    try {
+      await this.#axios.put(
+        `businessPermit/${id}`,
+        { release: true },
+        {
+          withCredentials: true,
+        }
+      );
+      // props.handleClose();
+    } catch (error) {
+      return error;
+    }
+  }
+
   handleReviewClose() {
     this.setState({ review: false });
     window.location.reload(true);
@@ -400,9 +420,9 @@ export default class BusinessPermitPage extends Component {
                                   <Button
                                     key={row.id}
                                     onClick={() => this.handleReview(row)}
-                                    disabled={row.status === 1}
+                                    disabled={row.isRelease}
                                   >
-                                    Review
+                                    {row.status === 1 ? "Release" : "Review"}
                                   </Button>
                                 </TableCell>
                               </TableRow>
@@ -498,9 +518,9 @@ export default class BusinessPermitPage extends Component {
                                   <Button
                                     key={row.id}
                                     onClick={() => this.handleReview(row)}
-                                    disabled={row.status === 3}
+                                    disabled={row.isRelease}
                                   >
-                                    Review
+                                    {row.status === 1 ? "Release" : "Review"}
                                   </Button>
                                 </TableCell>
                               </TableRow>
