@@ -90,7 +90,7 @@ export default class BFPForm extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={3}>
             <Typography variant="body2">
-              {this.otherInfo.businessMobile}
+              {this.otherInfo?.businessMobile}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -103,7 +103,7 @@ export default class BFPForm extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessAddress}
+              {this.otherInfo?.businessAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
