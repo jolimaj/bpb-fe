@@ -67,8 +67,8 @@ export default class TrackingContent extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
   }
-  componentDidMount() {
-    this.getMyPermit();
+  async componentDidMount() {
+    await this.getMyPermit();
   }
 
   async getMyPermit() {
