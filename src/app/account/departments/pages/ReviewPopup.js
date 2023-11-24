@@ -24,6 +24,7 @@ import { SERVICES } from "../../../ui/common/constant/services-constant";
 import Signature from "./signatures";
 
 export default function FormDialog(props) {
+  console.log("🚀 ~ file: ReviewPopup.js:27 ~ FormDialog ~ props:", props);
   const serviceConfig = new ServiceConfig();
   const { axios } = new AxiosInterceptor(
     serviceConfig.getServicesConfig(SERVICES.STAFF)
