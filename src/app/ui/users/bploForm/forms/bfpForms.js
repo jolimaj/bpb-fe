@@ -14,10 +14,7 @@ export default class BFP extends Component {
   #axiosPermit;
   constructor(props) {
     super(props);
-    console.log(
-      "🚀 ~ file: bfpForms.js:17 ~ BFP ~ constructor ~ props:",
-      props
-    );
+
     this.#basic = props.basicFormData;
 
     this.state = {

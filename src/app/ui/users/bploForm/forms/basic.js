@@ -78,10 +78,6 @@ export default class BasicInfoForm extends Component {
         mName: rw?.data?.middleName,
         userData: rw?.data,
       });
-      console.log(
-        "🚀 ~ file: basic.js:83 ~ BasicInfoForm ~ componentDidMount ~ }:",
-        this.state.response
-      );
     }
     await this.getBusinessType();
     await this.getPaymentType();

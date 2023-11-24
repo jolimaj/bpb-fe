@@ -156,10 +156,6 @@ class ServiceForm extends Component {
         type: "2",
         updatedAt: new Date(),
       };
-      console.log(
-        "🚀 ~ file: form.js:159 ~ ServiceForm ~ handleSubmit ~ };:",
-        this.state.businessActivity
-      );
 
       const response = this.props?.pathName?.includes("/renew")
         ? await this.#axios.put(

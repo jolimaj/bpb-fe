@@ -15,10 +15,6 @@ class AxiosInterceptor {
         config.headers[key] = value;
       });
     });
-    console.log(
-      "🚀 ~ file: interceptor.js:11 ~ AxiosInterceptor ~ #configure ~ config:",
-      config
-    );
 
     return config;
   }

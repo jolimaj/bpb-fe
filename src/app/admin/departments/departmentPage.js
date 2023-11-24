@@ -80,7 +80,10 @@ class DepartmentPage extends Component {
     try {
       await this.#axios.put(
         `/departments/${this.state.departmentID}`,
-        this.state
+        this.state,
+        {
+          withCredentials: true,
+        }
       );
       const departmentData = await this.getDepartmentList();
       this.setState({ rows: departmentData });

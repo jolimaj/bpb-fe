@@ -5,7 +5,7 @@ export default class Tab2 extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.details = props.details.applicantDetails;
+    this.details = props.details?.applicantDetails;
     this.otherInfo = this.details.OtherInfos[0];
   }
 

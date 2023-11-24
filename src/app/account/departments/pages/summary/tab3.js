@@ -17,8 +17,8 @@ export default class Tab3 extends Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.details = props.details.applicantDetails;
-    this.businessActivity = this.details.BusinessActivities;
+    this.details = props?.details?.applicantDetails;
+    this.businessActivity = this.details?.BusinessActivities;
   }
 
   render() {
@@ -46,7 +46,7 @@ export default class Tab3 extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {this.businessActivity.map((row) => (
+                  {this.businessActivity?.map((row) => (
                     <TableRow
                       key={row.lineOfBusiness}
                       sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -89,7 +89,7 @@ export default class Tab3 extends Component {
           <Grid item xs={12} sm={12} md={6}>
             <Box
               sx={{
-                backgroundImage: `url(${this.details.applicantSignature})`,
+                backgroundImage: `url(${this.details?.applicantSignature})`,
                 maxWidth: 500,
                 padding: 10,
                 backgroundSize: "cover",

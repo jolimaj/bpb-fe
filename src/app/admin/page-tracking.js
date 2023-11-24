@@ -70,10 +70,6 @@ class DashBoardPage extends Component {
       const req = await this.#axios.get(`/dashboard`, {
         withCredentials: true,
       });
-      console.log(
-        "🚀 ~ file: page-tracking.js:75 ~ DashBoardPage ~ getDashBoardData ~ req:",
-        req
-      );
 
       const renewData = this.month.map((value, index) => {
         return req.data.monthlyReNew.map((item) => {

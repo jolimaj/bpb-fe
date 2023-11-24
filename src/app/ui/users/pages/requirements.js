@@ -32,10 +32,6 @@ export default class TrackingContent extends Component {
 
   constructor(props) {
     super(props);
-    console.log(
-      "🚀 ~ file: requirements.js:35 ~ TrackingContent ~ constructor ~ props:",
-      props
-    );
     this.state = {
       brgyBusinessClearance: "",
       dtiReg: "",
@@ -332,10 +328,6 @@ export default class TrackingContent extends Component {
   }
 
   render() {
-    console.log(
-      "🚀 ~ file: requirements.js:335 ~ TrackingContent ~ render ~ render:",
-      this.props.url
-    );
     return (
       <Grid item xs={12} sm={12} md={12}>
         {this.props.url.includes("view") ? (

@@ -15,7 +15,6 @@ import {
 } from "@mui/icons-material";
 import BFPForm from "./bfp-form";
 import ModalImage from "react-modal-image";
-import { padding } from "@mui/system";
 
 export default class Tab4 extends Component {
   constructor(props) {
@@ -29,9 +28,9 @@ export default class Tab4 extends Component {
       signatureBFP: "",
       signatureBPLO: "",
     };
-    this.details = props.details.applicantDetails;
-    this.requirements = this.details.Requirements[0];
-    this.departmentData = props.details.departmentData[0];
+    this.details = props?.details?.applicantDetails;
+    this.requirements = this.details?.Requirements[0];
+    this.departmentData = props.details?.departmentData[0];
   }
 
   displayRequirements() {
@@ -73,7 +72,7 @@ export default class Tab4 extends Component {
         component = [
           {
             name: "Cedula/ Community Tax Certificate",
-            file: this.details.applicantSignature,
+            file: this.details?.applicantSignature,
           },
           {
             name: "Water (Optional)",

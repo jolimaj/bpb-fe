@@ -126,10 +126,10 @@ class SignIn extends Component {
   async handleSignIn() {
     try {
       const { password, email } = this.state;
-      const session = cookies.set(
-        "session",
-        JSON.stringify({ password, email })
-      );
+      // const session = cookies.set(
+      //   "session",
+      //   JSON.stringify({ password, email })
+      // );
 
       const res = await this.#axios.post(
         `/sign-in`,
@@ -138,8 +138,8 @@ class SignIn extends Component {
           withcredentials: true,
         }
       );
-      this.setState({ session });
-      this.props.saveTerms();
+      // this.setState({ session });
+      // this.props.saveTerms();
       await this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);

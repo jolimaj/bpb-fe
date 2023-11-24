@@ -4,10 +4,9 @@ import { Grid, Typography, Divider } from "@mui/material";
 export default class Tab1 extends Component {
   constructor(props) {
     super(props);
-    console.log("🚀 ~ file: tab1.js:9 ~ Tab1 ~ constructor ~ props:", props);
     this.state = {};
-    this.details = props.details.applicantDetails;
-    this.basicInfo = this.details.BasicInfos[0];
+    this.details = props.details?.applicantDetails;
+    this.basicInfo = this.details?.BasicInfos[0];
   }
   #handleDateString(date) {
     return new Date(date).toLocaleDateString("en-us", {

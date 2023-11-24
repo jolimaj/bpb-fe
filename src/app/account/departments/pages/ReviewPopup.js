@@ -34,15 +34,9 @@ export default function FormDialog(props) {
   const [isSIg, setSig] = useState(true);
   const signatures = useRef(null);
   const [signatureMTO, setSigMTO] = useState("");
-  console.log(
-    "🚀 ~ file: ReviewPopup.js:37 ~ FormDialog ~ signatureMTO:",
-    signatureMTO
-  );
+
   const [signatureBFP, setSigBFP] = useState("");
-  console.log(
-    "🚀 ~ file: ReviewPopup.js:39 ~ FormDialog ~ signatureBFP:",
-    signatureBFP
-  );
+
   const [signatureBPLO, setSigBPLO] = useState("");
 
   function handleChange(event, newValue) {
@@ -122,7 +116,6 @@ export default function FormDialog(props) {
     formData.append("signatureBFP", signatureBFP);
     formData.append("signatureBPLO", signatureBPLO);
     formData.append("result", "approve");
-    console.log("🚀 ~ file: ReviewPopup.js:90 ~ handleApprove ~ isSIg:", isSIg);
     const payload = isCheck ? formData : { result: "approve" };
     try {
       await axios.put(

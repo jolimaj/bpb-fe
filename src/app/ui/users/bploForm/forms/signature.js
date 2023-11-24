@@ -27,15 +27,8 @@ export default class SignatureForm extends Component {
   #axiosPermit;
   constructor(props) {
     super(props);
-    console.log(
-      "🚀 ~ file: signature.js:30 ~ SignatureForm ~ constructor ~ props:",
-      props
-    );
     this.renewData = this.props.renewData;
-    console.log(
-      "🚀 ~ file: signature.js:35 ~ SignatureForm ~ constructor ~ this.renewData:",
-      this.renewData
-    );
+
     this.#formData = new FormData();
     this.state = {
       selectedFile: "",
@@ -90,17 +83,10 @@ export default class SignatureForm extends Component {
         response: "valid",
       };
       if (this.renewData) {
-        console.log(
-          "🚀 ~ file: signature.js:85 ~ SignatureForm ~ handleSubmit ~ this.renewData:",
-          this.renewData
-        );
         signatureData.businessPermitID = this.renewData.id;
         signatureData.assignedToDepartmentID = 1;
       }
-      console.log(
-        "🚀 ~ file: signature.js:99 ~ SignatureForm ~ handleSubmit ~ signatureData:",
-        signatureData
-      );
+
       this.setState({
         response: "valid",
         signatureData,
