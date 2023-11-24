@@ -7,7 +7,7 @@ export default class Tab2 extends Component {
     super(props);
     this.state = {};
     this.details = props.details?.applicantDetails;
-    this.otherInfo = this.details.OtherInfos[0];
+    this.otherInfo = this.details?.OtherInfos[0];
   }
 
   render() {
@@ -24,7 +24,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessAddress}
+              {this.otherInfo?.businessAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -37,7 +37,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessPostalCode}
+              {this.otherInfo?.businessPostalCode}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -50,7 +50,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessTelephone}
+              {this.otherInfo?.businessTelephone}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -63,7 +63,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessMobile}
+              {this.otherInfo?.businessMobile}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -76,7 +76,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.businessEmail}
+              {this.otherInfo?.businessEmail}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -89,7 +89,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.ownersAddress}
+              {this.otherInfo?.ownersAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -102,7 +102,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.ownersPostalCode}
+              {this.otherInfo?.ownersPostalCode}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -115,7 +115,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.ownersTelephone}
+              {this.otherInfo?.ownersTelephone}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -128,7 +128,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.ownersMobile}
+              {this.otherInfo?.ownersMobile}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -141,7 +141,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.ownersEmail}
+              {this.otherInfo?.ownersEmail}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -158,7 +158,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <Typography variant="body2">
-              {this.otherInfo.emergencyPerson}
+              {this.otherInfo?.emergencyPerson}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -171,7 +171,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.emergencyMobile}
+              {this.otherInfo?.emergencyMobile}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -184,7 +184,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.emergencyAddress}
+              {this.otherInfo?.emergencyAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -201,7 +201,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {`${this.otherInfo.businessArea} (in sq m.)`}
+              {`${this.otherInfo?.businessArea} (in sq m.)`}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -228,7 +228,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.maleEmployee}
+              {this.otherInfo?.maleEmployee}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -241,7 +241,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.femaleEmployee}
+              {this.otherInfo?.femaleEmployee}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -254,7 +254,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.lguEmployee}
+              {this.otherInfo?.lguEmployee}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -284,7 +284,9 @@ export default class Tab2 extends Component {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
-            <Typography variant="body2">{this.otherInfo.lessorName}</Typography>
+            <Typography variant="body2">
+              {this.otherInfo?.lessorName}
+            </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
             <Typography
@@ -296,7 +298,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.lessorAddress}
+              {this.otherInfo?.lessorAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -309,7 +311,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.lessorMobile}
+              {this.otherInfo?.lessorMobile}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -322,7 +324,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.buildingName}
+              {this.otherInfo?.buildingName}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -335,7 +337,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.buildingAddress}
+              {this.otherInfo?.buildingAddress}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
@@ -348,7 +350,7 @@ export default class Tab2 extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={8}>
             <Typography variant="body2">
-              {this.otherInfo.monthlyRental}
+              {this.otherInfo?.monthlyRental}
             </Typography>
           </Grid>
         </Grid>
