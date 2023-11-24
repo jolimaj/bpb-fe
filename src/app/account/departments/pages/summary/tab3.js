@@ -15,6 +15,7 @@ import {
 
 export default class Tab3 extends Component {
   constructor(props) {
+    console.log("🚀 ~ file: tab3.js:18 ~ Tab3 ~ constructor ~ props:", props);
     super(props);
     this.state = {};
     this.details = props?.details?.applicantDetails;

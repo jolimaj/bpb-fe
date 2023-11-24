@@ -3,6 +3,7 @@ import { Grid, Typography, Divider } from "@mui/material";
 
 export default class Tab2 extends Component {
   constructor(props) {
+    console.log("🚀 ~ file: tab2.js:6 ~ Tab2 ~ constructor ~ props:", props);
     super(props);
     this.state = {};
     this.details = props.details?.applicantDetails;

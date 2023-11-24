@@ -19,6 +19,7 @@ import ModalImage from "react-modal-image";
 export default class Tab4 extends Component {
   constructor(props) {
     super(props);
+    console.log("🚀 ~ file: tab4.js:22 ~ Tab4 ~ constructor ~ props:", props);
     this.state = {
       urlToHugeImageFile: "",
       urlToTinyImageFile: "",
