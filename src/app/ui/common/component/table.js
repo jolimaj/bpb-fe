@@ -30,10 +30,10 @@ class TableComponent extends Component {
     this.setState({ page: newPage });
   }
 
-  handleChangeRowsPerPage(event) {
+  async handleChangeRowsPerPage(event) {
     this.setState({ rowsPerPage: +event.target.value });
-    this.props.handleLimit(+event.target.value);
     this.setState({ page: 0 });
+    await this.props.handleLimit(+event.target.value);
   }
   initChild = () => {
     if (this.rowData.length > 0) {

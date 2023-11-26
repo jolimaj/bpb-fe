@@ -37,6 +37,7 @@ class DepartmentPage extends Component {
       approverList: [],
       userID: "",
       departmentID: "",
+      limit: 10,
     };
     this.columns = [
       { id: "ID", label: "Dept ID", minWidth: 100 },
@@ -119,6 +120,7 @@ class DepartmentPage extends Component {
         withCredentials: true,
       });
       this.setState({ rows: req.data });
+      return req;
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
