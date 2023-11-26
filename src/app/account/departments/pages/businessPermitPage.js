@@ -520,7 +520,7 @@ export default class BusinessPermitPage extends Component {
                                     onClick={() => this.handleReview(row)}
                                     disabled={row.isRelease}
                                   >
-                                    {row.status === 1 ? "Release" : "Review"}
+                                    {row.status === 3 ? "Release" : "Review"}
                                   </Button>
                                 </TableCell>
                               </TableRow>
