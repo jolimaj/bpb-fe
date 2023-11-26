@@ -1477,7 +1477,9 @@ export default class RequiremenstInfo extends Component {
                       accept=".jpg, .png, .jpeg, .pdf"
                       hidden
                       onChange={(e) => {
-                        this.setState({ certOfCompliance: e.target.files[0] });
+                        this.setState({
+                          mtoAssestmentRecord: e.target.files[0],
+                        });
                       }}
                     />
                   </IconButton>
