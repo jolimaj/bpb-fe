@@ -210,7 +210,7 @@ class DepartmentPage extends Component {
                             Search Code
                           </InputAdornment>
                         ),
-                        endAdornment: (
+                        endAdornment: this.state.code ? (
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
@@ -220,7 +220,7 @@ class DepartmentPage extends Component {
                               <CloseIcon />
                             </IconButton>
                           </InputAdornment>
-                        ),
+                        ) : null,
                       }}
                       onChange={(e) => {
                         this.setState({ code: e.target.value });

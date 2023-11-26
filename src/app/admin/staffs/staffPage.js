@@ -255,7 +255,7 @@ class StaffPage extends Component {
                             Search First Name
                           </InputAdornment>
                         ),
-                        endAdornment: (
+                        endAdornment: this.start.firstName ? (
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
@@ -265,7 +265,7 @@ class StaffPage extends Component {
                               <CloseIcon />
                             </IconButton>
                           </InputAdornment>
-                        ),
+                        ) : null,
                       }}
                       onChange={(e) => {
                         this.setState({ firstName: e.target.value });
