@@ -24,12 +24,13 @@ class TableComponent extends Component {
     this.rowData = props.rows;
     this.columnData = props.columns;
     this.serviceName = props.serviceName;
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
   }
   handleChangePage(event, newPage) {
     this.setState({ page: newPage });
   }
 
-  chandleChangeRowsPerPage(event) {
+  handleChangeRowsPerPage(event) {
     this.setState({ rowsPerPage: +event.target.value });
     this.setState({ page: 0 });
   }
