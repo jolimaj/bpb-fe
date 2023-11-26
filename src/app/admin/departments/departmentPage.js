@@ -65,6 +65,7 @@ class DepartmentPage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.updateApprover = this.updateApprover.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   async componentDidMount() {

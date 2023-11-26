@@ -13,7 +13,7 @@ import {
   Chip,
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon, Close as CloseIcon } from "@mui/icons-material";
 
 import { AxiosInterceptor } from "../../ui/common/interceptor";
 import ServiceConfig from "../../ui/common/service-config";
@@ -30,6 +30,7 @@ class UserPage extends Component {
       page: 0,
       rowsPerPage: 10,
       session: props.session,
+      firstName: "",
     };
     this.columns = [
       { id: "ID", label: "User ID", minWidth: 100 },
@@ -65,6 +66,7 @@ class UserPage extends Component {
 
     this.getUserList = this.getUserList.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   async componentDidMount() {
@@ -114,6 +116,10 @@ class UserPage extends Component {
     }
   }
 
+  handleClear() {
+    this.setState({ firstName: "" });
+    window.location.reload(true);
+  }
   render() {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -155,6 +161,17 @@ class UserPage extends Component {
                             Search First Name
                           </InputAdornment>
                         ),
+                        endAdornment: this.state.firstName ? (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={this.handleClear}
+                              edge="end"
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          </InputAdornment>
+                        ) : null,
                       }}
                       onChange={(e) => {
                         this.setState({ firstName: e.target.value });

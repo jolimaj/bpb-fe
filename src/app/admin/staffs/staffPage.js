@@ -76,6 +76,7 @@ class StaffPage extends Component {
     this.handleAddStaff = this.handleAddStaff.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.addStaff = this.addStaff.bind(this);
+    this.handleClear = this.handleClear.bind(this);
   }
 
   async componentDidMount() {
@@ -255,7 +256,7 @@ class StaffPage extends Component {
                             Search First Name
                           </InputAdornment>
                         ),
-                        endAdornment: this.start.firstName ? (
+                        endAdornment: this.state.firstName ? (
                           <InputAdornment position="end">
                             <IconButton
                               aria-label="toggle password visibility"
