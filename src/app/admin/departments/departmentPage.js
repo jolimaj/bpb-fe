@@ -118,7 +118,7 @@ class DepartmentPage extends Component {
       const req = await this.#axios.get(`/departments?limit=${limit}`, {
         withCredentials: true,
       });
-      return req.data;
+      this.setState({ rows: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");

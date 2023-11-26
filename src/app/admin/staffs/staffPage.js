@@ -220,7 +220,7 @@ class StaffPage extends Component {
       const req = await this.#axios.get(`/staff?limit=${limit}`, {
         withCredentials: true,
       });
-      return req.data;
+      this.setState({ rows: req.data });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
