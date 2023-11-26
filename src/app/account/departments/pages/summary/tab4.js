@@ -82,6 +82,10 @@ export default class Tab4 extends Component {
             name: "ASSESSMENT RECORD FROM THE MUNICIPAL TREASURER'S OFFICE",
             file: this.requirements?.mtoAssestmentRecord,
           },
+          {
+            name: "Payment",
+            file: this.requirements?.mtoPayment,
+          },
         ];
         break;
       case 4:
