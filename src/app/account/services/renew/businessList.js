@@ -52,6 +52,7 @@ export default class BusinessList extends Component {
     this.handleBusinessType = this.handleBusinessType.bind(this);
     this.handleReview = this.handleReview.bind(this);
     this.handleReviewClose = this.handleReviewClose.bind(this);
+    this.handleLimit = this.handleLimit.bind(this);
 
     //api
     this.#serviceConfig = new ServiceConfig();
@@ -166,6 +167,27 @@ export default class BusinessList extends Component {
     this.setState({ renew: !this.state.renew, renewData: rowe });
   }
 
+  async handleLimit(limit) {
+    try {
+      const req = await this.#axios.get(
+        `/services/businessPermit/renew?limit=${limit}`,
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        renewApplicationList: req.data.results,
+        departmentData: req.data.departmentData,
+      });
+      return req;
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   render() {
     return (
       <>
@@ -201,6 +223,7 @@ export default class BusinessList extends Component {
                   rows={this.state.rows}
                   columns={this.newApplicationColumn}
                   pageLength={this.state?.rows?.length ?? 0}
+                  handleLimit={this.handleLimit}
                   tableBody={
                     this.state.rows.length > 0 ? (
                       <TableBody>

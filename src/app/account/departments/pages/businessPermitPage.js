@@ -59,6 +59,7 @@ export default class BusinessPermitPage extends Component {
     this.handleReviewClose = this.handleReviewClose.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.searchData = this.searchData.bind(this);
+    this.handleLimit = this.handleLimit.bind(this);
 
     //api
     this.#serviceConfig = new ServiceConfig();
@@ -295,6 +296,29 @@ export default class BusinessPermitPage extends Component {
     this.setState({ review: false });
     window.location.reload(true);
   }
+
+  async handleLimit(limit) {
+    try {
+      const name = this?.state?.params === "2" ? "renew" : "new";
+      const req = await this.#axios.get(
+        `businessPermit/${name}?limit=${limit}`,
+        {
+          withCredentials: true,
+        }
+      );
+      this.setState({
+        renewApplicationList: req.data.results,
+        departmentData: req.data.departmentData,
+      });
+      return req;
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   render() {
     const da = this.state.departmentData;
     return (
@@ -355,6 +379,7 @@ export default class BusinessPermitPage extends Component {
                 <Table
                   rows={this.state.rows}
                   columns={this.newApplicationColumn}
+                  handleLimit={this.handleLimit}
                   pageLength={this.state?.rows?.length ?? 0}
                   searchComponent={
                     <>
@@ -447,6 +472,7 @@ export default class BusinessPermitPage extends Component {
                 <Table
                   rows={this.state.renewApplicationList}
                   columns={this.newApplicationColumn}
+                  handleLimit={this.handleLimit}
                   pageLength={this.state.renewApplicationList.length}
                   searchComponent={
                     <>

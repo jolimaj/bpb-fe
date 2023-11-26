@@ -67,6 +67,7 @@ class UserPage extends Component {
     this.getUserList = this.getUserList.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleLimit = this.handleLimit.bind(this);
   }
 
   async componentDidMount() {
@@ -81,7 +82,7 @@ class UserPage extends Component {
       });
       return req.data;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
@@ -120,6 +121,20 @@ class UserPage extends Component {
     this.setState({ firstName: "" });
     window.location.reload(true);
   }
+  async handleLimit(limit) {
+    try {
+      const req = await this.#axios.get(`/users?limit=${limit}`, {
+        withCredentials: true,
+      });
+      return req.data;
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   render() {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -149,6 +164,7 @@ class UserPage extends Component {
                 rows={this.state.rows}
                 columns={this.columns}
                 pageLength={this.state.rows.length}
+                handleLimit={this.handleLimit}
                 searchComponent={
                   <>
                     <TextField

@@ -44,6 +44,7 @@ class StaffPage extends Component {
       openForm: false,
       departmentList: [],
       session: props.session,
+      limit: 10,
     };
     this.columns = [
       { id: "ID", label: "Staff ID", minWidth: 100 },
@@ -77,6 +78,7 @@ class StaffPage extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.addStaff = this.addStaff.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleLimit = this.handleLimit.bind(this);
   }
 
   async componentDidMount() {
@@ -95,7 +97,7 @@ class StaffPage extends Component {
       this.setState({ departmentList: req.data });
       return req.data;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
       }
       this.setState({ errorMessage: error.message });
@@ -110,7 +112,7 @@ class StaffPage extends Component {
       });
       return req.data;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
@@ -136,7 +138,7 @@ class StaffPage extends Component {
 
       return req;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
       }
       const response = errorResponse(error.response);
@@ -213,6 +215,20 @@ class StaffPage extends Component {
     this.setState({ firstName: "" });
     window.location.reload(true);
   }
+  async handleLimit(limit) {
+    try {
+      const req = await this.#axios.get(`/staff?limit=${limit}`, {
+        withCredentials: true,
+      });
+      return req.data;
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   render() {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -244,6 +260,7 @@ class StaffPage extends Component {
                 serviceName="Staff"
                 pageLength={this.state.rows.length}
                 handleAdd={this.handleAddStaff}
+                handleLimit={this.handleLimit}
                 searchComponent={
                   <>
                     <TextField

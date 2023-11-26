@@ -66,6 +66,7 @@ class DepartmentPage extends Component {
     this.handleClose = this.handleClose.bind(this);
     this.updateApprover = this.updateApprover.bind(this);
     this.handleClear = this.handleClear.bind(this);
+    this.handleLimit = this.handleLimit.bind(this);
   }
 
   async componentDidMount() {
@@ -111,6 +112,21 @@ class DepartmentPage extends Component {
       return error;
     }
   }
+
+  async handleLimit(limit) {
+    try {
+      const req = await this.#axios.get(`/departments?limit=${limit}`, {
+        withCredentials: true,
+      });
+      return req.data;
+    } catch (error) {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
+        this.props.redirect("/signin");
+      }
+      this.setState({ errorResponse: error.message });
+      return error;
+    }
+  }
   async getStaffList() {
     try {
       const req = await this.#axios.get(`/staff`, {
@@ -118,7 +134,7 @@ class DepartmentPage extends Component {
       });
       return req.data;
     } catch (error) {
-      if (error?.response.data.code === "LOGIN_FIRST") {
+      if (error?.response?.data?.code === "LOGIN_FIRST") {
         this.props.redirect("/signin");
       }
       this.setState({ errorResponse: error.message });
@@ -199,6 +215,7 @@ class DepartmentPage extends Component {
                 rows={this.state.rows}
                 columns={this.columns}
                 pageLength={this.state.rows.length}
+                handleLimit={this.handleLimit}
                 searchComponent={
                   <>
                     <TextField
