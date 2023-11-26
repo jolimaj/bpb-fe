@@ -262,6 +262,7 @@ export default function FormDialog(props) {
             <Button
               variant="contained"
               color="error"
+              disabled={!signaturePop}
               onClick={handleDisApprove}
             >
               Disapprove
