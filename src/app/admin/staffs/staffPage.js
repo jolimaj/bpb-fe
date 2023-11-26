@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
 import RemoveApproverForm from "../formDialog";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon, Close as CloseIcon } from "@mui/icons-material";
 import { errorResponse } from "../../ui/common/erroResponse";
 
 import { AxiosInterceptor } from "../../ui/common/interceptor";
@@ -208,6 +208,10 @@ class StaffPage extends Component {
   handleClose() {
     this.setState({ openForm: false });
   }
+  handleClear() {
+    this.setState({ firstName: "" });
+    window.location.reload(true);
+  }
   render() {
     return (
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -249,6 +253,17 @@ class StaffPage extends Component {
                         startAdornment: (
                           <InputAdornment position="start">
                             Search First Name
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={this.handleClear}
+                              edge="end"
+                            >
+                              <CloseIcon />
+                            </IconButton>
                           </InputAdornment>
                         ),
                       }}

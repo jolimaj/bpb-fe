@@ -14,7 +14,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import Table from "../../ui/common/component/table";
-import { Search as SearchIcon } from "@mui/icons-material";
+import { Search as SearchIcon, Close as CloseIcon } from "@mui/icons-material";
 import RemoveApproverForm from "../formDialog";
 
 import { AxiosInterceptor } from "../../ui/common/interceptor";
@@ -156,11 +156,18 @@ class DepartmentPage extends Component {
     this.setState({ rowsPerPage: +event.target.value });
     this.setState({ page: 0 });
   }
+
   async handleChange(e) {
     this.setState({ openForm: !this.state.openForm, departmentID: e });
   }
+
   handleClose() {
     this.setState({ openForm: false });
+  }
+
+  handleClear() {
+    this.setState({ code: "" });
+    window.location.reload(true);
   }
   render() {
     return (
@@ -201,6 +208,17 @@ class DepartmentPage extends Component {
                         startAdornment: (
                           <InputAdornment position="start">
                             Search Code
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={this.handleClear}
+                              edge="end"
+                            >
+                              <CloseIcon />
+                            </IconButton>
                           </InputAdornment>
                         ),
                       }}
