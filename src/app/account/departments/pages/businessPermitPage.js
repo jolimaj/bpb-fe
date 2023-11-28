@@ -277,15 +277,11 @@ export default class BusinessPermitPage extends Component {
   }
 
   async handleRelease(id) {
+    const data = props.session;
+
     try {
-      await this.#axios.put(
-        `businessPermit/${id}`,
-        { release: true },
-        {
-          withCredentials: true,
-        }
-      );
-      // props.handleClose();
+      await this.#axios.put(`businessPermit/${id}`, { release: true }, data);
+      window.location.reload(true);
     } catch (error) {
       return error;
     }
