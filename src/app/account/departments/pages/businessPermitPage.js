@@ -269,7 +269,10 @@ export default class BusinessPermitPage extends Component {
 
   async handleReview(data) {
     const { status, assignedToDepartmentID } = data;
-    if (status === 1 && assignedToDepartmentID === 1) {
+    if (
+      (status === 1 && assignedToDepartmentID === 1) ||
+      (status === 3 && assignedToDepartmentID === 1)
+    ) {
       await this.handleRelease(data?.id);
     } else {
       this.setState({ review: true, applicantDetails: data });
