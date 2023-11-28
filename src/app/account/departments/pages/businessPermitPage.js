@@ -42,7 +42,6 @@ export default class BusinessPermitPage extends Component {
     };
     this.newApplicationColumn = [
       { id: "ID", label: "Application No.", width: 20 },
-      { id: "taxPayerName", label: "Application Name" },
       { id: "businessName", label: "Business Name", width: 100 },
       { id: "businessType", label: "Business Type" },
       { id: "status", label: "Status" },
@@ -415,9 +414,6 @@ export default class BusinessPermitPage extends Component {
                               <TableRow key={row.id}>
                                 <TableCell align="center">{row.id}</TableCell>
                                 <TableCell align="center">
-                                  {row?.BasicInfos[0]?.taxPayerName}
-                                </TableCell>
-                                <TableCell align="center">
                                   {row?.BasicInfos[0]?.businessName}
                                 </TableCell>
                                 <TableCell align="center">
@@ -507,9 +503,6 @@ export default class BusinessPermitPage extends Component {
                             return (
                               <TableRow key={row.id}>
                                 <TableCell align="center">{row.id}</TableCell>
-                                <TableCell align="center">
-                                  {row?.BasicInfos[0]?.taxPayerName}
-                                </TableCell>
                                 <TableCell align="center">
                                   {row?.BasicInfos[0]?.businessName}
                                 </TableCell>
