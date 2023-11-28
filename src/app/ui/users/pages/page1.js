@@ -86,14 +86,14 @@ class Page1 extends Component {
     }
   }
   handleOpen(code) {
-    window.location.href(`/account?requirements=${code}`);
+    window.location.href = `/account?requirements=${code}`;
   }
   handleCrumbs() {
-    window.location.href(`/account`);
+    window.location.href = `/account`;
   }
 
   handleCrumbs2(key) {
-    window.location.href(`/account?requirements=${key}`);
+    window.location.href = `/account?requirements=${key}`;
   }
   render() {
     const ButtonItem = styled(Button)(({ theme }) => ({
