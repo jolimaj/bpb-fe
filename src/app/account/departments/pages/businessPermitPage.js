@@ -288,7 +288,7 @@ export default class BusinessPermitPage extends Component {
           withCredentials: true,
         }
       );
-      // window.location.reload(true);
+      window.location.reload(true);
     } catch (error) {
       return error;
     }
