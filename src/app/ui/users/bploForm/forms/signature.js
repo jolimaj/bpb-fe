@@ -57,19 +57,8 @@ export default class SignatureForm extends Component {
     }
   }
   async handleSubmit() {
-    if (this.state.applicantSignature === "") {
-      this.setState({
-        errorMessage: "Applicant Signature is Required",
-      });
-    }
-    if (this.state.applicantPosition === "") {
-      this.setState({
-        errorMessage: "Applicant Position is Required",
-      });
-    }
-
     if (
-      this.state.applicantPosition === "" &&
+      this.state.applicantPosition === "" ||
       this.state.applicantSignature === ""
     ) {
       this.setState({
@@ -77,19 +66,27 @@ export default class SignatureForm extends Component {
       });
     } else {
       const { applicantSignature, applicantPosition } = this.state;
-      const signatureData = {
-        applicantSignature,
-        applicantPosition,
-        response: "valid",
-      };
+
       if (this.renewData) {
-        signatureData.businessPermitID = this.renewData.id;
-        signatureData.assignedToDepartmentID = 1;
+        this.setState({
+          response: "valid",
+          signatureData: {
+            applicantSignature,
+            applicantPosition,
+            response: "valid",
+            businessPermitID: this.renewData.id,
+            assignedToDepartmentID: 1,
+          },
+        });
       }
 
       this.setState({
         response: "valid",
-        signatureData,
+        signatureData: {
+          applicantSignature,
+          applicantPosition,
+          response: "valid",
+        },
       });
     }
   }
@@ -140,6 +137,9 @@ export default class SignatureForm extends Component {
               fullWidth
               autoComplete="position"
               variant="outlined"
+              onChange={(e) => {
+                this.setState({ applicantPosition: e.target.value });
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>

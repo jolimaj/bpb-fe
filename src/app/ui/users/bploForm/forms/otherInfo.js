@@ -27,7 +27,9 @@ export default class OtherInformation extends Component {
       ownersAddress: "",
       ownersPostalCode: "",
       ownersTelephone: null,
-      ownersMobile: this.#basic?.userData?.mobile,
+      ownersMobile: this.#basic?.userData?.mobile.includes("+")
+        ? parseInt(this.#basic?.userData?.mobile.split("+")[1])
+        : this.#basic?.userData?.mobile,
       ownersEmail: this.#basic?.userData?.email, // optional
       emergencyPerson: this.renewData ? this.renewData.emergencyPerson : "",
       emergencyAddress: this.renewData ? this.renewData.emergencyAddress : "",
@@ -391,6 +393,7 @@ export default class OtherInformation extends Component {
               label="Business Area (in sq m.)"
               fullWidth
               required
+              type="number"
               autoComplete="business-area"
               variant="outlined"
               onChange={(e) => {

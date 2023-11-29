@@ -90,7 +90,7 @@ export default class BasicInfoForm extends Component {
       });
     } catch (error) {
       if (error?.response?.data?.code === "LOGIN_FIRST") {
-        this.props.redirect("/signin");
+        window.location.href = "/signin";
       }
       return error;
     }

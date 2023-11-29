@@ -364,7 +364,7 @@ export default class TrackingContent extends Component {
                     item.Requirements,
                     item.type
                   )?.map((values) => (
-                    <Box sx={{ minWidth: 200, marginY: 5 }}>
+                    <Box sx={{ minWidth: 200, marginY: 5 }} key={values.name}>
                       <Card variant="outlined">
                         {values.file ? (
                           <CardMedia

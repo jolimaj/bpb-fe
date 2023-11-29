@@ -136,49 +136,191 @@ class ServiceForm extends Component {
     this.setState({ activeStep: this.state.activeStep + 1 });
   }
 
+  handleMapper(payload, requirement) {}
+
   async handleSubmit() {
     try {
-      const formData = new FormData();
-      const { applicantSignature, applicantPosition, businessPermitID } =
-        this.state;
-      formData.append("applicantPosition", applicantPosition);
-      formData.append(
-        Object.keys(this.state.requirement),
-        Object.values(this.state.requirement)
-      );
+      const { applicantSignature, applicantPosition } =
+        this.payload.current.state;
+
       const updatePayload = {
         ...this.state.basicInfo,
-        ...this.state.otherInfo,
         ...this.state.businessActivity,
         ...this.state.signatures,
-        ...formData,
+        ...this.state.otherInfo,
         applicantPosition,
+        applicantSignature,
         type: "2",
         updatedAt: new Date(),
       };
+      const newPayload = {
+        ...this.state.basicInfo,
+        ...this.state.businessActivity,
+        ...this.state.requirement,
+        ...this.state.otherInfo,
+        applicantPosition,
+        applicantSignature,
+        type: "1",
+        queueNo: "",
+        qrCode: "",
+      };
+      const {
+        brgyBusinessClearance,
+        dtiReg,
+        locationalClearance,
+        leaseContract,
+        picture,
+        certOfCompliance,
+        nationalAgencyAccredetation,
+        marketClearance,
+        homeOwnersClearance,
+        cedula,
+        buidingpermit,
+        sanityPermit,
+        menroCert,
+        fireSafetyCert,
+        water,
+        mtoAssestmentRecord,
+        mtoPayment,
+      } = this.state?.requirement;
+      const formData = new FormData();
+      const {
+        amendementFrom,
+        amendementTo,
+        buildingAddress,
+        buildingName,
+        businessAddress,
+        businessArea,
+        businessEmail,
+        businessMobile,
+        businessName,
+        businessPermitID,
+        businessPostalCode,
+        businessTelephone,
+        businessTypeID,
+        businessTypeList,
+        capital1,
+        dateOfApplication,
+        dtiRegDate,
+        dtiRegNo,
+        emergencyAddress,
+        emergencyMobile,
+        emergencyPerson,
+        enjoyTaxIncentive,
+        fName,
+        femaleEmployee,
+        grossEssential1,
+        grossNonEssential1,
+        lName,
+        lessorAddress,
+        lessorEmail,
+        lessorMobile,
+        lessorName,
+        lguEmployee,
+        line1,
+        mName,
+        maleEmployee,
+        monthlyRental,
+        notEnjoyTaxIncentive,
+        ownersAddress,
+        ownersEmail,
+        ownersMobile,
+        ownersPostalCode,
+        ownersTelephone,
+        paymentTypeID,
+        progress,
+        qrCode,
+        queueNo,
+        taxPayerName,
+        tinNo,
+        tradeFranchiseName,
+        type,
+        units1,
+      } = newPayload;
 
-      const response = this.props?.pathName?.includes("/renew")
-        ? await this.#axios.put(
-            `/services/businessPermit/${this.props?.renewData?.id}`,
-            updatePayload
-          )
-        : await this.#axios.post(
-            "/services/businessPermit",
-            {
-              ...this.state.basicInfo,
-              ...this.state.otherInfo,
-              ...this.state.businessActivity,
-              ...this.state.signatures,
-              ...formData,
-              applicantPosition,
-              type: "1",
-              queueNo: "",
-              qrCode: "",
-            },
-            {
-              withCredentials: true,
-            }
-          );
+      formData.append("amendementFrom", amendementFrom);
+      formData.append("amendementTo", amendementTo);
+      formData.append("buildingAddress", buildingAddress);
+      formData.append("buildingName", buildingName);
+      formData.append("businessAddress", businessAddress);
+      formData.append("businessArea", businessArea);
+      formData.append("businessEmail", businessEmail);
+      formData.append("businessMobile", businessMobile);
+      formData.append("businessName", businessName);
+      formData.append("businessPermitID", businessPermitID);
+      formData.append("businessPostalCode", businessPostalCode);
+      formData.append("businessTelephone", businessTelephone);
+      formData.append("businessTypeID", businessTypeID);
+      formData.append("businessTypeList", businessTypeList);
+      formData.append("capital1", capital1);
+      formData.append("dateOfApplication", dateOfApplication);
+      formData.append("dtiRegDate", dtiRegDate);
+      formData.append("dtiRegNo", dtiRegNo);
+      formData.append("emergencyMobile", emergencyMobile);
+      formData.append("emergencyAddress", emergencyAddress);
+      formData.append("emergencyPerson", emergencyPerson);
+      formData.append("enjoyTaxIncentive", enjoyTaxIncentive);
+      formData.append("femaleEmployee", femaleEmployee);
+      formData.append("taxPayerName", `${fName} ${mName} ${lName}`);
+      formData.append("grossNonEssential1", grossNonEssential1);
+      formData.append("grossEssential1", grossEssential1);
+      formData.append("lessorAddress", lessorAddress);
+      formData.append("lessorEmail", lessorEmail);
+      formData.append("lessorMobile", lessorMobile);
+      formData.append("lessorName", lessorName);
+      formData.append("lguEmployee", lguEmployee);
+      formData.append("line1", line1);
+      formData.append("maleEmployee", maleEmployee);
+      formData.append("monthlyRental", monthlyRental);
+      formData.append("notEnjoyTaxIncentive", notEnjoyTaxIncentive);
+      formData.append("ownersAddress", ownersAddress);
+      formData.append("ownersEmail", ownersEmail);
+      formData.append("ownersMobile", ownersMobile);
+      formData.append("ownersPostalCode", ownersPostalCode);
+      formData.append("ownersTelephone", ownersTelephone);
+      formData.append("paymentTypeID", paymentTypeID);
+      formData.append("qrCode", qrCode);
+      formData.append("queueNo", queueNo);
+      formData.append("tinNo", tinNo);
+      formData.append("tradeFranchiseName", tradeFranchiseName);
+      formData.append("type", type);
+      formData.append("units1", units1);
+      formData.append("applicantSignature", applicantSignature);
+      formData.append("brgyBusinessClearance", brgyBusinessClearance);
+      formData.append("dtiReg", dtiReg);
+      formData.append("locationalClearance", locationalClearance);
+      formData.append("leaseContract", leaseContract);
+      formData.append("picture", picture);
+      formData.append("certOfCompliance", certOfCompliance);
+      formData.append(
+        "nationalAgencyAccredetation",
+        nationalAgencyAccredetation
+      );
+      formData.append("marketClearance", marketClearance);
+      formData.append("homeOwnersClearance", homeOwnersClearance);
+      formData.append("cedula", cedula);
+      formData.append("buidingpermit", buidingpermit);
+      formData.append("sanityPermit", sanityPermit);
+      formData.append("menroCert", menroCert);
+      formData.append("fireSafetyCert", fireSafetyCert);
+      formData.append("water", water);
+      formData.append("mtoAssestmentRecord", mtoAssestmentRecord);
+      formData.append("mtoPayment", mtoPayment);
+      let response;
+      if (this.props?.pathName?.includes("/renew")) {
+        response = await this.#axios.put(
+          `/services/businessPermit/${this.props?.renewData?.id}`,
+          { updatePayload, formData }
+        );
+      } else {
+        response = await this.#axios.post(
+          "/services/businessPermit",
+          formData,
+          {
+            withCredentials: true,
+          }
+        );
+      }
       this.setState({ response: response.data });
     } catch (error) {
       let response;

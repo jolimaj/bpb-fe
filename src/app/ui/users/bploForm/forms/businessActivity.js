@@ -18,7 +18,6 @@ export default class BusinessActivity extends Component {
       selectedFile: "",
       fileName: "",
       progress: 10,
-      businessPermitID: "",
       // lineOfBusiness: 0,
       line1: "",
       line2: "",
@@ -192,7 +191,7 @@ export default class BusinessActivity extends Component {
               Line of Business
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               id="line1"
               name="line1"
@@ -206,32 +205,7 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <TextField
-              id="line2"
-              name="line2"
-              label="2"
-              fullWidth
-              autoComplete="line2"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ line2: e.target.value });
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <TextField
-              id="line3"
-              name="line3"
-              label="3"
-              fullWidth
-              autoComplete="line3"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ line3: e.target.value });
-              }}
-            />
-          </Grid>
+
           <Grid item xs={12} sm={12} md={12}>
             {" "}
             <Typography
@@ -246,7 +220,7 @@ export default class BusinessActivity extends Component {
               Number of Units
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
+          <Grid item xs={12} sm={12} md={12}>
             <TextField
               id="units1"
               name="units1"
@@ -260,38 +234,9 @@ export default class BusinessActivity extends Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <TextField
-              id="units2"
-              name="units2"
-              label="2"
-              type="number"
-              fullWidth
-              autoComplete="units2"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ units2: e.target.value });
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={4}>
-            <TextField
-              id="units3"
-              name="units3"
-              type="number"
-              label="3"
-              fullWidth
-              autoComplete="units3"
-              variant="outlined"
-              onChange={(e) => {
-                this.setState({ units3: e.target.value });
-              }}
-            />
-          </Grid>
           {!this.renewData ? (
             <>
               <Grid item xs={12} sm={12} md={12}>
-                {" "}
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -304,7 +249,7 @@ export default class BusinessActivity extends Component {
                   Capitalization
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={12} md={4}>
+              <Grid item xs={12} sm={12} md={12}>
                 <TextField
                   id="capital1"
                   name="capital1"
@@ -316,34 +261,6 @@ export default class BusinessActivity extends Component {
                   variant="outlined"
                   onChange={(e) => {
                     this.setState({ capital1: e.target.value });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                <TextField
-                  id="capital2"
-                  name="capital2"
-                  type="number"
-                  label="2"
-                  fullWidth
-                  autoComplete="capital2"
-                  variant="outlined"
-                  onChange={(e) => {
-                    this.setState({ capital2: e.target.value });
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} md={4}>
-                <TextField
-                  id="capital3"
-                  name="capital3"
-                  label="3"
-                  fullWidth
-                  type="number"
-                  autoComplete="units3"
-                  variant="outlined"
-                  onChange={(e) => {
-                    this.setState({ capital3: e.target.value });
                   }}
                 />
               </Grid>
@@ -383,7 +300,7 @@ export default class BusinessActivity extends Component {
                       Esssential
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
+                  <Grid item xs={12} sm={12} md={12}>
                     <TextField
                       id="grossEssential1"
                       name="grossEssential1"
@@ -395,34 +312,6 @@ export default class BusinessActivity extends Component {
                       variant="outlined"
                       onChange={(e) => {
                         this.setState({ grossEssential1: e.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <TextField
-                      id="grossEssential2"
-                      name="grossEssential2"
-                      type="number"
-                      label="2"
-                      fullWidth
-                      autoComplete="grossEssential2"
-                      variant="outlined"
-                      onChange={(e) => {
-                        this.setState({ grossEssential2: e.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <TextField
-                      id="grossEssential4"
-                      name="grossEssential4"
-                      label="3"
-                      fullWidth
-                      type="number"
-                      autoComplete="units3"
-                      variant="outlined"
-                      onChange={(e) => {
-                        this.setState({ grossEssential4: e.target.value });
                       }}
                     />
                   </Grid>
@@ -442,7 +331,7 @@ export default class BusinessActivity extends Component {
                       Non-Esssential
                     </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
+                  <Grid item xs={12} sm={12} md={12}>
                     <TextField
                       id="grossNonEssential1"
                       name="grossNonEssential1"
@@ -454,34 +343,6 @@ export default class BusinessActivity extends Component {
                       variant="outlined"
                       onChange={(e) => {
                         this.setState({ grossNonEssential1: e.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <TextField
-                      id="grossNonEssential2"
-                      name="grossNonEssential2"
-                      type="number"
-                      label="2"
-                      fullWidth
-                      autoComplete="grossNonEssential2"
-                      variant="outlined"
-                      onChange={(e) => {
-                        this.setState({ grossNonEssential2: e.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={4}>
-                    <TextField
-                      id="grossNonEssential3"
-                      name="grossNonEssential3"
-                      label="3"
-                      fullWidth
-                      type="number"
-                      autoComplete="units3"
-                      variant="outlined"
-                      onChange={(e) => {
-                        this.setState({ grossNonEssential3: e.target.value });
                       }}
                     />
                   </Grid>

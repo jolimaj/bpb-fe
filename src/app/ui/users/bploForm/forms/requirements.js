@@ -95,12 +95,12 @@ export default class RequiremenstInfo extends Component {
           brgyBusinessClearance,
           dtiReg,
           locationalClearance,
-          leaseContract, //optional
+          leaseContract,
           picture,
           certOfCompliance,
-          nationalAgencyAccredetation, //optional
-          marketClearance, //optional
-          homeOwnersClearance, //optional
+          nationalAgencyAccredetation,
+          marketClearance,
+          homeOwnersClearance,
           cedula,
           buidingpermit,
           sanityPermit,
