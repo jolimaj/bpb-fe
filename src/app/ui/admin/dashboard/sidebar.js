@@ -188,6 +188,10 @@ class Sidebar extends Component {
     this.setState({ open: !this.state.open });
   }
   render() {
+    console.log(
+      "🚀 ~ file: sidebar.js:191 ~ Sidebar ~ render ~ render:",
+      this.sideBars
+    );
     return (
       <main>
         {this.sideBars.map((value, index) => (
