@@ -173,7 +173,7 @@ class Sidebar extends Component {
     ];
     this.sideBars = props.pathName.includes(ADMIN_ENDPOINTS.ADMIN_DASHBOARD)
       ? this.#adminSide
-      : props.pathName.includes(STAFF_ENDPOINTS.USERS_DASHBOARD)
+      : props.pathName.includes("/departments")
       ? this.#staffSide
       : this.#userSide;
     this.state = {
