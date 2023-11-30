@@ -276,6 +276,9 @@ export default class BasicInfoForm extends Component {
               fullWidth
               type="number"
               required
+              inputProps={{
+                maxLength: 7,
+              }}
               autoComplete="shipping address-line2"
               variant="outlined"
               onChange={(e) => {
@@ -291,6 +294,9 @@ export default class BasicInfoForm extends Component {
               label="Tin No."
               fullWidth
               type="number"
+              inputProps={{
+                maxLength: 12,
+              }}
               autoComplete="tin no."
               variant="outlined"
               onChange={(e) => {
