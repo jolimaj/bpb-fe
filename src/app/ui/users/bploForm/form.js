@@ -323,7 +323,8 @@ class ServiceForm extends Component {
   }
 
   handleBack() {
-    this.setState({ activeStep: this.state.activeStep - 1 });
+    // this.setState({ activeStep: this.state.activeStep - 1 });
+    window.location.href = "/account";
   }
 
   async handleClick() {
