@@ -133,9 +133,9 @@ class DashboardPage extends Component {
         this.props.redirect(
           this.pathName.includes(ADMIN_ENDPOINTS.ADMIN_DASHBOARD)
             ? ADMIN_ENDPOINTS.PROFILE
-            : this.pathName.includes(USERS_ENDPOINTS.USERS_DASHBOARD)
-            ? USERS_ENDPOINTS.PROFILE
-            : STAFF_ENDPOINTS.PROFILE
+            : this.pathName.includes("/departments")
+            ? STAFF_ENDPOINTS.PROFILE
+            : USERS_ENDPOINTS.PROFILE
         );
         break;
       case 2:
