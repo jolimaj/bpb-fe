@@ -138,7 +138,8 @@ class SignIn extends Component {
           withcredentials: true,
         }
       );
-      // this.setState({ session });
+      this.setState({ session });
+      this.props.saveTerms();
       this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
@@ -287,9 +288,7 @@ class SignIn extends Component {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            inputProps={{
-                              maxLength: 7,
-                            }}
+                            maxLength={10}
                             variant="outlined"
                             onChange={(e) => {
                               this.setState({ mobile: e.target.value });
