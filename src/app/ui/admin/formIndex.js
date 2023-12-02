@@ -138,8 +138,8 @@ class SignIn extends Component {
           withcredentials: true,
         }
       );
-      this.setState({ session });
-      this.props.saveTerms();
+      // this.setState({ session });
+      // this.props.saveTerms();
       this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
