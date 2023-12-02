@@ -89,8 +89,12 @@ class SignIn extends Component {
     }
   }
   async handleSignUp() {
+    const { password, email, fName, lName, mName, mobile } = this.state;
+    if (!mobile.substring(0, 1) === "9") {
+      this.setState({ errorMessage: "Incorrect mobile Number" });
+    }
+
     try {
-      const { password, email, fName, lName, mName, mobile } = this.state;
       const req = await this.#axios.post(`/sign-up`, {
         password,
         email,
@@ -108,7 +112,7 @@ class SignIn extends Component {
       this.setState({ errorMessage: response });
     }
   }
-  async handlePageRedirect(roleID) {
+  handlePageRedirect(roleID) {
     let pathname;
     switch (roleID) {
       case 1:
@@ -121,16 +125,12 @@ class SignIn extends Component {
         pathname = "/account/departments";
         break;
     }
+    this.props.saveTerms();
     this.props.redirect(pathname);
   }
   async handleSignIn() {
     try {
       const { password, email } = this.state;
-      // const session = cookies.set(
-      //   "session",
-      //   JSON.stringify({ password, email })
-      // );
-
       const res = await this.#axios.post(
         `/sign-in`,
         { password, email },
@@ -139,8 +139,7 @@ class SignIn extends Component {
         }
       );
       // this.setState({ session });
-      // this.props.saveTerms();
-      await this.handlePageRedirect(res.data.roleID);
+      this.handlePageRedirect(res.data.roleID);
     } catch (error) {
       const response = errorResponse(error.response);
       this.setState({ errorMessage: response });
@@ -287,6 +286,9 @@ class SignIn extends Component {
                             fullWidth
                             InputLabelProps={{
                               shrink: true,
+                            }}
+                            inputProps={{
+                              maxLength: 7,
                             }}
                             variant="outlined"
                             onChange={(e) => {
