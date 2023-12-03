@@ -22,6 +22,7 @@ import { AxiosInterceptor } from "../../../ui/common/interceptor";
 import ServiceConfig from "../../../ui/common/service-config";
 import { SERVICES } from "../../../ui/common/constant/services-constant";
 import Signature from "./signatures";
+import Disapprove from "./disapprove";
 
 export default function FormDialog(props) {
   console.log("🚀 ~ file: ReviewPopup.js:27 ~ FormDialog ~ props:", props);
@@ -31,6 +32,7 @@ export default function FormDialog(props) {
   );
   const [value, setValue] = useState("1");
   const [signaturePop, setSignature] = useState(false);
+  const [disapprovedForm, setDisapprovedForm] = useState(false);
   const [isCheck, setCheck] = useState(false);
   const [isSIg, setSig] = useState(true);
   const signatures = useRef(null);
@@ -130,13 +132,16 @@ export default function FormDialog(props) {
     }
   }
 
-  async function handleDisApprove() {
+  function handleReject() {
+    setDisapprovedForm(true);
+  }
+  async function handleDisApprove(reason) {
     const data = props.session;
 
     try {
       await axios.put(
         `businessPermit/${props.applicantDetails?.id}`,
-        { result: "disapproved" },
+        { result: "disapproved", reason },
         data
       );
       props.handleClose();
@@ -262,8 +267,8 @@ export default function FormDialog(props) {
             <Button
               variant="contained"
               color="error"
-              disabled={!signaturePop}
-              onClick={handleDisApprove}
+              // disabled={!signaturePop}
+              onClick={handleReject}
             >
               Disapprove
             </Button>
@@ -278,6 +283,13 @@ export default function FormDialog(props) {
             setSigMTO={setSigMTO}
             setSigBPLO={setSigBPLO}
             setCheck={setCheck}
+          />
+        ) : null}
+        {disapprovedForm ? (
+          <Disapprove
+            disapprovedPop={disapprovedForm}
+            setDisapprovedForm={setDisapprovedForm}
+            handleDisApprove={handleDisApprove}
           />
         ) : null}
       </Dialog>
