@@ -101,7 +101,7 @@ class SignIn extends Component {
         fName,
         lName,
         mName,
-        mobile: `$+63${mobile}`,
+        mobile: `+63${mobile}`,
         roleID: 2,
       });
       this.setState({ modal: true, signUpSucess: true });
