@@ -90,8 +90,18 @@ class SignIn extends Component {
   }
   async handleSignUp() {
     const { password, email, fName, lName, mName, mobile } = this.state;
-    if (!mobile.substring(0, 1) === "9") {
-      this.setState({ errorMessage: "Incorrect mobile Number" });
+    if (!email && !fName && !lName && !mName && !mobile) {
+      this.setState({
+        errorMessage: "All fields is required!",
+      });
+      return;
+    }
+    if (mobile.substring(0, 2) !== "09") {
+      this.setState({
+        errorMessage:
+          "Incorrect mobile Number! The mobile number should be 09xxxxxxxxx.",
+      });
+      return;
     }
 
     try {
@@ -101,7 +111,7 @@ class SignIn extends Component {
         fName,
         lName,
         mName,
-        mobile: `+63${mobile}`,
+        mobile: `+639${mobile?.split("09")[1]}`,
         roleID: 2,
       });
       this.setState({ modal: true, signUpSucess: true });
@@ -288,7 +298,6 @@ class SignIn extends Component {
                             InputLabelProps={{
                               shrink: true,
                             }}
-                            maxLength={10}
                             variant="outlined"
                             onChange={(e) => {
                               this.setState({ mobile: e.target.value });
@@ -305,6 +314,7 @@ class SignIn extends Component {
                         id="email"
                         label="Email Address"
                         name="email"
+                        type="email"
                         autoFocus
                         InputLabelProps={{
                           shrink: true,
